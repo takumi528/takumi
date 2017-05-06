@@ -138,5 +138,8 @@
     <ClCompile Include="CSOver.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
+    <ClCompile Include="CSComplete.cpp">
+      <Filter>メイン ファイル</Filter>
+    </ClCompile>
   </ItemGroup>
 </Project>

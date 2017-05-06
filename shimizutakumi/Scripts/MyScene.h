@@ -6,11 +6,18 @@
 *	@author	-
 */
 
+
 #include "Suken.h"
 
 #include "Addons\Window.h"
 
+
+
+
+
 class CSTitle :public CScene {
+	int stage;
+
 	//初期化　画像のロードなども
 	void Start();
 	//処理　毎フレーム呼ばれる
@@ -30,16 +37,26 @@ struct Rect {
 	bottom(bottom){}
 };
 
+struct Killer {
+	int x, y;
+	bool flag;
+	const int width = 50, height = 30;
+};
+
 class CSGame :public CScene {
 	//～変数宣言～
+	
+
 	Graph player;
-	Graph killer,killer2, chip;
-	int x, y, vy, vx, g, kx, ky, kx2, ky2;
+	Graph killer, chip,background1,background2;
+	int x, y, vy, vx, g;
 	int scrolX;
 	int jumpf;
+	int stage;
 	const int jWidth = 50, jHeight = 30;
-	const int kWidth = 50, kHeight = 30;
 	MCE mce;
+	Killer k, K[10];
+	int test[10];
 
 	//初期化　画像のロードなども
 	void Start();
@@ -51,9 +68,25 @@ class CSGame :public CScene {
 	void End();
 
 	void HitBlock(int x1, int y1);
+	public:
+		CSGame(int stage):stage(stage){}
 };
 
 class CSOver :public CScene {
+	//～変数宣言～
+
+	//初期化　画像のロードなども
+	void Start();
+	//処理　毎フレーム呼ばれる
+	void Loop();
+	//描画　毎フレーム呼ばれる
+	void Draw();
+	//後片付け	必要なら使おう
+	void End();
+};
+
+
+class CSComplete :public CScene {
 	//～変数宣言～
 
 	//初期化　画像のロードなども

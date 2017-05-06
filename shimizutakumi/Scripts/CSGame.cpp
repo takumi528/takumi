@@ -1,23 +1,38 @@
 #include "MyScene.h"
 
-const bool autoMove = false;
+const bool autoMove = true;
 
 void CSGame::Start() {
-	kx = 1500;
-	ky = 300;
-	kx2 = 0;
-	ky2 = 0;
 	x = 375;
 	y = 350;
 	vy = 0;
 	vx = 0;
 	g = 1;//èdóÕ
 	jumpf = 2;
-	mce = "MCE/map.mce";
+	switch (stage) {
+	case 1:
+	default:
+		mce = "MCE/map.mce";
+		break;
+	case 2:
+		mce = "MCE/stage2.mce";
+		break;
+	case 3:
+		mce = "MCE/stage3.mce";
+	}
+	
 	chip = "MCE/chip.png";
 	player = "stpic/player.png";
 	killer = "stpic/killer.png";
-	killer2 = "stpic/killer.png";
+	background1 = "stpic/background1.png";
+	background2 = "stpic/background2.png";
+	
+
+	for (int i=0; i < 10; i++) {
+		K[i].x = 800;
+		K[i].y = 800;
+		K[i].flag = false;
+	}
 
 	scrolX = 0;
 }
@@ -29,8 +44,10 @@ void CSGame::Loop() {
 		vy = 15;
 	}
 	x += vx;
-	kx -= 5;
-	kx2 -= 5;
+	k.x -= 5;
+	for (int i=0; i < 10; i++) {
+		K[i].x -= 5;
+	}
 	vx = 0;
 	if (y > 600 - jHeight) {
 		vy = 0;
@@ -61,56 +78,17 @@ void CSGame::Loop() {
 	if (x+jWidth < scrolX) {
 		Game.FlipScene(new CSOver(),Flip::CROSS_FADE,4);
 	}
-	if (((x > kx && x < kx + 50) || (x + jWidth > kx && x + jWidth < kx + 50)) && ((y > ky && y < ky + 30) || (y + jHeight > ky && y + jHeight < ky + 30))) {
-		Game.FlipScene(new CSOver(), Flip::CROSS_FADE, 4);
-	}
-	if (((x > kx2 && x < kx2 + 50) || (x + jWidth > kx2 && x + jWidth < kx2 + 50)) && ((y > ky2 && y < ky2 + 30) || (y + jHeight > ky2 && y + jHeight < ky2 + 30))) {
-		Game.FlipScene(new CSOver(), Flip::CROSS_FADE, 4);
+
+	for (int i = 0; i < 10; i++) {
+		if (((x > K[i].x && x < K[i].x + k.width) || (x + jWidth > K[i].x && x + jWidth < K[i].x + k.width)) && ((y > K[i].y && y < K[i].y + k.height) || (y + jHeight > K[i].y && y + jHeight < K[i].y + k.height))) {
+			Game.FlipScene(new CSOver(), Flip::CROSS_FADE, 4);
+		}
 	}
 	
+	if (x + jWidth == 6400) {
+		Game.FlipScene(new CSComplete(), Flip::CROSS_FADE, 4);
+	}
 
-	if (x == 1000) {
-		kx = 1550;
-		ky = 90;
-	}
-	if (x == 1600) {
-		kx = 2400;
-		ky = 400;
-	}
-	if (x == 2400) {
-		kx = 3200;
-		ky = 90;
-	}
-	if (x == 3700) {
-		kx = 4600;
-		ky = 450;
-	}
-	if (x == 4800) {
-		kx = 5600;
-		ky = 450;
-	}
-	if (x == 1000) {
-		kx2 = 1550;
-		ky2 = 500;
-	}
-	if (x == 2100) {
-		kx2 = 2900;
-		ky2 = 400;
-	}
-	if (x == 3900) {
-		kx2 = 4800;
-		ky2 = 450;
-	}
-	if (x == 4800) {
-		kx2 = 5600;
-		ky2 = 290;
-	}
-	
-
-
-   /*if (kx > 800) {
-		kx = -50;
-	}*/
 
 
 
@@ -124,7 +102,6 @@ void CSGame::Loop() {
 		}
 	}*/
 
-	
 	for (int i = x/40, endI = (x + 50) / 40, endJ = (y + 30) / 40; i <= endI; ++i) {
 		for (int j = y/40; j <= endJ; ++j) {
 			if (mce.Get(mce.layer.A, i, j) == 1) {
@@ -132,12 +109,41 @@ void CSGame::Loop() {
 			}
 		}
 	}
+
+	for (int i = 0; i < 10; i++) {
+		if (K[i].x + K[i].width < scrolX) {
+			K[i].flag = false;
+		}
+	}
+
+	for (int ki = 0; ki < mce.GetWidth(); ki++) {
+		for (int kj = 0; kj < mce.GetHeight(); kj++) {
+			if (mce.Get(mce.layer.B, ki, kj) == 1 && ki * 40 - scrolX >= 800 && ki * 40 - scrolX <= 800 + 5) {
+				for (int i = 0; i < 10; i++) {
+					if (K[i].flag == false) {
+						K[i].x = ki * 40;
+						K[i].y = kj * 40;
+						K[i].flag = true;
+						break;
+					}
+				}
+			}
+		}
+	}
+
 	
+
 }
 
 void CSGame::Draw() {
-	killer(kx - scrolX, ky,true);
-	killer2(kx2 - scrolX, ky2, true);
+
+	if (stage == 1) {
+		background1(0, 0);
+	}
+
+	if (stage == 2) {
+		background2(0, 0);
+	}
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
@@ -146,6 +152,15 @@ void CSGame::Draw() {
 			}
 		}
 	}
+	
+
+
+	for (int i = 0; i < 10; i++) {
+		if (K[i].flag == true) {
+			killer(K[i].x - scrolX, K[i].y, true);
+		}
+	}
+
 	player(x - scrolX, y);
 }
 
@@ -181,6 +196,8 @@ void CSGame::HitBlock(int x1, int y1) {
 	else {
 		top = true;
 	}
+
+	
 
 	x1 *= 40;
 	y1 *= 40;
