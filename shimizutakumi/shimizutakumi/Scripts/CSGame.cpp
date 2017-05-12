@@ -1,6 +1,6 @@
 #include "MyScene.h"
 
-const bool autoMove = true;
+const bool autoMove = false;
 
 void CSGame::Start() {
 	x = 375;
@@ -41,7 +41,6 @@ void CSGame::Start() {
 	killer = "stpic/killer.png";
 	trap = "stpic/trap.png";
 	
-	
 
 
 	for (int i=0; i < 20; i++) {
@@ -66,7 +65,6 @@ void CSGame::Loop() {
 		vy = 15;
 	}
 	x += vx;
-
 	k.x -= 5;
 	for (int i=0; i < 20; i++) {
 		K[i].x -= 5;
@@ -78,8 +76,6 @@ void CSGame::Loop() {
 		y = 600 - jHeight;
 		jumpf = 2;
 	}
-		
-	
 	if (Input.GetKeyEnter(Input.key.UP) && jumpf > 0) {
 		--jumpf;
 		vy = -15;
@@ -185,7 +181,7 @@ void CSGame::Loop() {
 	
 	for (int ki = 0; ki < mce.GetWidth(); ki++) {
 		for (int kj = 0; kj < mce.GetHeight(); kj++) {
-			if (mce.Get(mce.layer.B, ki, kj) == 1 && ki * 40 - scrolX >= 1200 && ki * 40 - scrolX <= 1200 + 5) {
+			if (mce.Get(mce.layer.B, ki, kj) == 1 && ki * 40 - scrolX >= 800 && ki * 40 - scrolX <= 800 + 5) {
 				for (int i = 0; i < 20; i++) {
 					if (K[i].flag == false) {
 						K[i].x = ki * 40;
@@ -198,7 +194,6 @@ void CSGame::Loop() {
 		}
 	}
 
-
 	for (int i = 0; i < 50; i++) {
 		if (T[i].x + T[i].width < scrolX) {
 			T[i].flag = false;
@@ -207,7 +202,7 @@ void CSGame::Loop() {
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.C, i, j) == 1 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800) {
+			if (mce.Get(mce.layer.C, i, j) == 1 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800 + 5) {
 				for (int I = 0; I < 50; I++) {
 					if (T[I].flag == false) {
 						T[I].x = i * 40;
@@ -233,8 +228,6 @@ void CSGame::Draw() {
 			trap(T[i].x - scrolX, T[i].y);
 		}
 	}
-
-
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
@@ -309,7 +302,6 @@ void CSGame::HitBlock(int x1, int y1) {
 	x1 *= 40;
 	y1 *= 40;
 
-
 	if (x<x1 + 40 && x>x1 && y > y1 && y < y1 + 40) {
 		ul = true;
 	}
@@ -321,18 +313,6 @@ void CSGame::HitBlock(int x1, int y1) {
 	}
 	if (x + jWidth<x1 + 40 && x + jWidth>x1 && y + jHeight > y1 && y + jHeight < y1 + 40) {
 		dr = true;
-	}
-
-	if (x1 >= x && x1 <= x + jWidth && x1 + 40 >= x && x + 40 <= x + jWidth && y + jHeight >= y1 && y + jHeight <= y1 + 40 && right == true && left == true){
-	   dr = true;
-	   dl = true;
-		
-	}
-
-	if (x1 >= x && x1 <= x + jWidth && x1 + 40 >= x && x + 40 <= x + jWidth && y>= y1 && y<= y1 + 40 && right == true && left == true){
-	   ur = true;
-	   ul = true;
-		
 	}
 	
 	if (bottom && (ur || ul) && !dl && !dr && vy<0) {
@@ -356,5 +336,18 @@ void CSGame::HitBlock(int x1, int y1) {
 	}
 
 
-	
+/*	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 1 && mce.Get(mce.layer.A, i + 1, j) != 1 && mce.Get(mce.layer.A, i - 1, j) != 1) {
+				if (i * 40 >= x && i * 40 <= x + jWidth && (i + 1) * 40 >= x && (i + 1) * 40 == x + jWidth && (y + jHeight >= j *40 && y + jHeight <= (j + 1)* 40) || (y >= j * 40 && y <= (j + 1)* 40)) {
+					y = j * 40;
+				}
+			}
+		}
+	}*/
+
+	/*if (x1 * 40 > x && (x1 + 1) * 40 < x + jWidth && y + jHeight > y1 * 40 && y+ jHeight < (y1 + 1) * 40) {
+		y = y1 * 40;
+	}*/
+
 }

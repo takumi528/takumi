@@ -40,13 +40,13 @@ struct Rect {
 struct Killer {
 	int x, y;
 	bool flag;
-	static const int width = 50, height = 30;
+	const int width = 50, height = 30;
 };
 
 struct Trap {
 	int x, y;
 	bool flag;
-	static const int width = 40, height = 40;
+	const int width = 40, height = 40;
 };
 
 class CSGame :public CScene {
@@ -54,14 +54,14 @@ class CSGame :public CScene {
 	
 
 	Graph player;
-	Graph killer, chip,background,trap,trapbox;
+	Graph killer, chip,background,trap;
 	int x, y, vy, vx, g;
 	int scrolX;
 	int jumpf;
 	int stage;
-	static const int jWidth = 50, jHeight = 30;
+	const int jWidth = 50, jHeight = 30;
 	MCE mce;
-	Killer k,K[20];
+	Killer  k,K[20];
 	Trap t, T[50];
 	int test[10];
 
