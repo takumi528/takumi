@@ -9,17 +9,10 @@ void CSOver::Loop() {
 		Game.FlipScene(new CSTitle());
 	}
 
-	if (Input.GetKeyEnter(Input.key.NUMPADENTER) && stage == 1) {
-		Game.FlipScene(new CSGame(1));
-	}
-
-	if (Input.GetKeyEnter(Input.key.NUMPADENTER) && stage == 2) {
-		Game.FlipScene(new CSGame(2));
-	}
-
-	if (Input.GetKeyEnter(Input.key.NUMPADENTER) && stage == 3) {
-		Game.FlipScene(new CSGame(3));
-	}
+	
+		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+			Game.FlipScene(new CSGame(1));
+		}
 
 }
 

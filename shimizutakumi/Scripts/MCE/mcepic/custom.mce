@@ -1,8 +1,14 @@
 0
-#stage1
+#kari
 1
-#stage2
+#kari2
 2
+#kari3
+3
+#stage1
+4
+#stage2
+5
 #stage3
 #light
 0
@@ -13,7 +19,7 @@
 #edge
 40
 #number
-3
+6
 #graphA
 #chip
 #graphB

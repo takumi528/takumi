@@ -6,31 +6,13 @@ void CSTitle::Start() {
 
 void CSTitle::Loop() {
 
-
-
-	if (stage >= 1 && stage <= 2 && Input.GetKeyEnter(Input.key.DOWN)) {
-		stage += 1;
+	if (Input.GetKeyEnter(Input.key.RIGHT) && stage < 3){
+	stage += 1;
 	}
 
-	if (stage >= 2 && stage <= 3 && Input.GetKeyEnter(Input.key.UP)) {
-		stage -= 1;
+	if (Input.GetKeyEnter(Input.key.LEFT) && stage > 1){
+	stage -= 1;
 	}
-
-
-	if (stage == 1) {
-		SetBackGround("stpic/title.png");
-	}
-
-	if (stage == 2) {
-		SetBackGround("stpic/title2.png");
-	}
-
-	if (stage == 3) {
-		SetBackGround("stpic/title3.png");
-	}
-
-	
-
 
 	if (Input.GetKeyEnter(Input.key.NUMPADENTER) && stage == 1) {
 		Game.FlipScene(new CSGame(1), Flip::FADE_OUT_IN);
@@ -51,6 +33,29 @@ void CSTitle::Loop() {
 
 
 void CSTitle::Draw() {
+	if (stage == 3) {
+		SetBackGround("stpic/title2.png");
+	}
+	else { SetBackGround("stpic/title.png");
+	}
+
+	//ステ数　変更２
+
+	if (stage == 1){
+	SetFontSize(70);
+	DrawFormatString(560,430,YELLOW,"1");
+	}
+
+	if (stage == 2){
+	SetFontSize(70);
+	DrawFormatString(560,430,YELLOW,"2");
+	}
+
+	if (stage == 3){
+	SetFontSize(70);
+	DrawFormatString(560,430,CYAN,"3");
+	}
+
 
 }
 
