@@ -17,6 +17,8 @@
 
 class CSTitle :public CScene {
 	int stage;
+	int version;
+	Graph back[3];
 
 	//初期化　画像のロードなども
 	void Start();
@@ -55,17 +57,31 @@ struct Stone {
 	static const int width = 40, height = 40;
 };
 
+struct Fat {
+	int x, y;
+	bool flag;
+	static const int width = 70, height = 40;
+};
+
+struct Ufo {
+	int x, y;
+	bool flag;
+	bool turn;
+	static const int width = 30, height = 50;
+};
+
 
 class CSGame :public CScene {
 	//～変数宣言～
 	
 
 	Graph player;
-	Graph killer, chip,chip2,background,trap,stone,gameover;
-	int x, y, vy, vx, g,d;
+	Graph killer, chip,chip2,background,trap,stone,gameover,ufo,fat;
+	int x, y, vy, vx, g, d;
 	int scrolX;
 	int jumpf;
 	int stage;
+	int version;
 	static const int jWidth = 50, jHeight = 30;
 	bool life;
 	bool space;
@@ -73,6 +89,8 @@ class CSGame :public CScene {
 	Killer k,K[20];
 	Trap t, T[50];
 	Stone s, S[50];
+	Ufo u, U[50];
+	Fat f, F[20];
 	int test[10];
 
 	//初期化　画像のロードなども
@@ -107,6 +125,8 @@ class CSOver :public CScene {
 class CSComplete :public CScene {
 	//～変数宣言～
 
+	int stage;
+
 	//初期化　画像のロードなども
 	void Start();
 	//処理　毎フレーム呼ばれる
@@ -115,4 +135,6 @@ class CSComplete :public CScene {
 	void Draw();
 	//後片付け	必要なら使おう
 	void End();
+public:
+	CSComplete(int stage) :stage(stage) {}
 };

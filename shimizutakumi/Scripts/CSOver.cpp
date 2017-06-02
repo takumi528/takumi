@@ -11,7 +11,7 @@ void CSOver::Loop() {
 
 	
 		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
-			Game.FlipScene(new CSGame(1));
+			Game.FlipScene(new CSGame(stage));
 		}
 
 }
