@@ -5,7 +5,7 @@ const bool autoMove = true;
 void CSGame::Start() {
 	life = true;
 	x = 375;
-    y = 285;
+    y = 250;
 
 	vy = 0;
 	vx = 0;
@@ -17,7 +17,7 @@ void CSGame::Start() {
 	case 0:
 	default:
 		mce = "MCE/stage0.mce";
-		background = "stpic/background1.png";
+		background = "stpic/background0.png";
 		version = 1;
 		break;
 	case 1:
@@ -75,22 +75,31 @@ void CSGame::Start() {
 	}
 
 	
-	chip = "MCE/chip.png";
-	chip2 = "MCE/chip2.png";
-	player = "stpic/player.png";
+	chip1_1 = "stpic/chip1_1.png";
+	chip1_2 = "stpic/chip1_2.png";
+	chip2_1 = "stpic/chip2_1.png";
+	chip2_2 = "stpic/chip2_2.png";
+	chip3 = "stpic/chip3.png";
 	killer = "stpic/killer.png";
-	trap = "stpic/trap.png";
 	stone = "stpic/stone.png";
 	ufo = "stpic/ufo.png";
 	fat = "stpic/fat.png";
 	gameover = "stpic/over.png";
-	
-
+	bird.Set(LoadDivGraph("stpic/bird.png", 4, 4, 1, 50, 30),8);
+	trap.Set(LoadDivGraph("stpic/trap.png", 2, 2, 1, 40, 40), 8);
+	bat.Set(LoadDivGraph("stpic/bat.png", 4, 4, 1, 40, 80), 6);
+	player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
 
 	for (int i=0; i < 20; i++) {
 		K[i].x = 800;
 		K[i].y = 800;
 		K[i].flag = false;
+	}
+
+	for (int i = 0; i < 20; i++) {
+		B[i].x = 800;
+		B[i].y = 800;
+		B[i].flag = false;
 	}
 
 	for (int i = 0; i < 50; i++) {
@@ -114,6 +123,12 @@ void CSGame::Start() {
 		F[i].x = 800;
 		F[i].y = 800;
 		F[i].flag = false;
+	}  
+	for (int i = 0; i < 20; i++) {
+		B2[i].x = 800;
+		B2[i].y = 800;
+		B2[i].flag = false;
+		B2[i].turn = true;
 	}
 
 
@@ -125,6 +140,14 @@ void CSGame::Loop() {
 	x += vx;
 	y += vy;
 	vy += g;
+	if (life ==true) {
+		trap.PlusCount();
+		bat.PlusCount();
+		player.PlusCount();
+		bird.PlusCount();
+	}
+	else {}
+
 	if (vy > 15) {
 		vy = 15;
 	}
@@ -136,55 +159,81 @@ void CSGame::Loop() {
 	}
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
-			F[i].x -= 5;
+			B2[i].x -= 5;
 		}
-		else {}
 	}
+		for (int i = 0; i < 20; i++) {
+			if (life == true) {
+				B[i].x -= 5;
+			}
+			else {}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (life == true) {
+				F[i].x -= 5;
+			}
+			else {}
+		}
 
-	for (int i = 0; i < 50; i++) {
-		if (life == true) {
-			if (U[i].turn == true) {
-				U[i].y += 7;
-				if (U[i].y + U[i].height > 560) {
-					U[i].turn = false;
+		for (int i = 0; i < 50; i++) {
+			if (life == true) {
+				if (U[i].turn == true) {
+					U[i].y += 5;
+					if (U[i].y + U[i].height > 560) {
+						U[i].turn = false;
+					}
+				}
+				else {
+					U[i].y -= 5;
+					if (U[i].y < 40) {
+						U[i].turn = true;
+					}
 				}
 			}
-			else {
-				U[i].y -= 7;
-				if (U[i].y < 40) {
-					U[i].turn = true;
-				}
+		}
+		
+
+		vx = 0;
+
+		//ゲームオーバー
+		if (x + jWidth < scrolX) {
+			life = false;
+		}
+		if (y > 600 - jHeight) {
+			life = false;
+		}
+	
+		for (int i = 0; i < 20; i++) {
+			if (K[i].flag == true && (((x > K[i].x && x < K[i].x + k.width) || (x + jWidth > K[i].x && x + jWidth < K[i].x + k.width)) && ((y > K[i].y && y < K[i].y + k.height) || (y + jHeight > K[i].y && y + jHeight < K[i].y + k.height)))) {
+				life = false;
 			}
 		}
-	}
 
-	vx = 0;
-
-	//ゲームオーバー
-	if (x + jWidth < scrolX) {
-		life = false;
-	}
-
-
-	for (int i = 0; i < 20; i++) {
-		if (K[i].flag == true && (((x > K[i].x && x < K[i].x + k.width) || (x + jWidth > K[i].x && x + jWidth < K[i].x + k.width)) && ((y > K[i].y && y < K[i].y + k.height) || (y + jHeight > K[i].y && y + jHeight < K[i].y + k.height)))) {
-			life = false;
+		for (int i = 0; i < 20; i++) {
+			if (B2[i].flag == true && (((x > B2[i].x && x < B2[i].x + b2.width) || (x + jWidth > B2[i].x && x + jWidth < B2[i].x + b2.width)) && ((y > B2[i].y + 40 && y < B2[i].y + b2.height + 40) || (y + jHeight > B2[i].y + 40 && y + jHeight < B2[i].y + b2.height + 40)))) {
+				life = false;
+			}
 		}
-	}
 
-
-	for (int i = 0; i < 20; i++) {
-		if (F[i].flag == true && (((x > F[i].x && x < F[i].x + f.width) || (x + jWidth > F[i].x && x + jWidth < F[i].x + f.width)) && ((y > F[i].y && y < F[i].y + f.height) || (y + jHeight > F[i].y && y + jHeight < F[i].y + f.height)))) {
-			life = false;
+		for (int i = 0; i < 20; i++) {
+			if (B[i].flag == true && (((x > B[i].x && x < B[i].x + b.width) || (x + jWidth > B[i].x && x + jWidth < B[i].x + b.width)) && ((y > B[i].y && y < B[i].y + b.height) || (y + jHeight > B[i].y && y + jHeight < B[i].y + b.height)))) {
+				life = false;
+			}
 		}
-	}
 
-	for (int i = 0; i < 50; i++) {
-		if (T[i].flag == true && (((x > T[i].x && x < T[i].x + t.width) || (x + jWidth > T[i].x && x + jWidth < T[i].x + t.width)) && ((y > T[i].y && y < T[i].y + t.height) || (y + jHeight > T[i].y && y + jHeight < T[i].y + t.height)))) {
-			life = false;
 
+		for (int i = 0; i < 20; i++) {
+			if (F[i].flag == true && (((x > F[i].x && x < F[i].x + f.width) || (x + jWidth > F[i].x && x + jWidth < F[i].x + f.width)) && ((y > F[i].y && y < F[i].y + f.height) || (y + jHeight > F[i].y && y + jHeight < F[i].y + f.height)))) {
+				life = false;
+			}
 		}
-	}
+
+		for (int i = 0; i < 50; i++) {
+			if (T[i].flag == true && (((x > T[i].x && x < T[i].x + t.width) || (x + jWidth > T[i].x && x + jWidth < T[i].x + t.width)) && ((y > T[i].y && y < T[i].y + t.height) || (y + jHeight > T[i].y && y + jHeight < T[i].y + t.height)))) {
+				life = false;
+
+			}
+		}
 
 		for (int i = 0; i < 50; i++) {
 			if (S[i].flag == true && (((x > S[i].x && x < S[i].x + s.width) || (x + jWidth > S[i].x && x + jWidth < S[i].x + s.width)) && ((y > S[i].y && y < S[i].y + s.height) || (y + jHeight > S[i].y && y + jHeight < S[i].y + s.height)))) {
@@ -213,19 +262,13 @@ void CSGame::Loop() {
 					}
 				}
 				if (Input.GetKeyDown(Input.key.UP)) {
-					vy = -8;
+					vy = -7;
 				}
 				if (Input.GetKeyDown(Input.key.DOWN)) {
-					vy = 8;
+					vy = 7;
 				}
 			}
 			else {
-			
-				if (y > 600 - jHeight) {
-					vy = 0;
-					y = 600 - jHeight;
-					jumpf = 2;
-				}
 				if (Input.GetKeyEnter(Input.key.UP) && jumpf > 0) {
 					--jumpf;
 					vy = -15;
@@ -272,7 +315,7 @@ void CSGame::Loop() {
 
 		for (int i = x / 40, endI = (x + 50) / 40, endJ = (y + 30) / 40; i <= endI; ++i) {
 			for (int j = y / 40; j <= endJ; ++j) {
-				if (mce.Get(mce.layer.A, i, j) == 1) {
+				if (mce.Get(mce.layer.A, i, j) != 0) {
 					HitBlock(i, j);
 				}
 			}
@@ -283,6 +326,20 @@ void CSGame::Loop() {
 				K[i].flag = false;
 			}
 		}
+
+		for (int i = 0; i < 20; i++) {
+			if (B2[i].x + B2[i].width < scrolX) {
+				B2[i].flag = false;
+			}
+		}
+
+		for (int i = 0; i < 20; i++) {
+			if (B[i].x + B[i].width < scrolX) {
+				B[i].flag = false;
+			}
+		}
+
+
 
 		for (int i = 0; i < 20; i++) {
 			if (F[i].x + F[i].width < scrolX) {
@@ -310,42 +367,41 @@ void CSGame::Loop() {
 
 
 
-		if (version == 1) {
+		
 			for (int i = 0; i < mce.GetWidth(); i++) {
 				for (int j = 0; j < mce.GetHeight(); j++) {
 					if (mce.Get(mce.layer.B, i, j) == 1 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
 						for (int I = 0; I < 20; I++) {
-							if (K[I].flag == false) {
-								K[I].x = i * 40;
-								K[I].y = j * 40;
-								K[I].flag = true;
+							if (B[I].flag == false) {
+								B[I].x = i * 40;
+								B[I].y = j * 40;
+								B[I].flag = true;
+								break;
+						}
+					}
+				}
+			}
+		}
+		
+			for (int i = 0; i < mce.GetWidth(); i++) {
+				for (int j = 0; j < mce.GetHeight(); j++) {
+					if (mce.Get(mce.layer.B, i, j) == 2 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+						for (int I = 0; I < 20; I++) {
+							if (B2[I].flag == false) {
+								B2[I].x = i * 40;
+								B2[I].y = j * 40;
+								B2[I].flag = true;
 								break;
 							}
 						}
 					}
 				}
 			}
-		}
-		if (version == 2) {
+	
+	
 			for (int i = 0; i < mce.GetWidth(); i++) {
 				for (int j = 0; j < mce.GetHeight(); j++) {
-					if (mce.Get(mce.layer.B, i, j) == 1 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
-						for (int I = 0; I < 20; I++) {
-							if (F[I].flag == false) {
-								F[I].x = i * 40;
-								F[I].y = j * 40;
-								F[I].flag = true;
-								break;
-							}
-						}
-					}
-				}
-			}
-		}
-		if (version == 3) {
-			for (int i = 0; i < mce.GetWidth(); i++) {
-				for (int j = 0; j < mce.GetHeight(); j++) {
-					if (mce.Get(mce.layer.B, i, j) == 1 && i * 40 -scrolX>= 1200 - d && i * 40 - scrolX<= 1200 + 5 - d) {
+					if (mce.Get(mce.layer.B, i, j) == 3 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
 						for (int I = 0; I < 50; I++) {
 							if (U[I].flag == false) {
 								U[I].x = i * 40;
@@ -357,10 +413,7 @@ void CSGame::Loop() {
 					}
 				}
 			}
-		}
-		
 
-		if (version == 1 || 2 && version != 3) {
 			for (int i = 0; i < mce.GetWidth(); i++) {
 				for (int j = 0; j < mce.GetHeight(); j++) {
 					if (mce.Get(mce.layer.C, i, j) == 1 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800) {
@@ -375,11 +428,9 @@ void CSGame::Loop() {
 					}
 				}
 			}
-		}
-		if (version == 3) {
 			for (int i = 0; i < mce.GetWidth(); i++) {
 				for (int j = 0; j < mce.GetHeight(); j++) {
-					if (mce.Get(mce.layer.C, i, j) == 1 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800) {
+					if (mce.Get(mce.layer.C, i, j) == 2 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800) {
 						for (int I = 0; I < 50; I++) {
 							if (S[I].flag == false) {
 								S[I].x = i * 40;
@@ -392,17 +443,18 @@ void CSGame::Loop() {
 				}
 			}
 		}
-	}
+
 
 
 void CSGame::Draw() {
 	background(0, 0);
 
-
-	player(x - scrolX, y);
+	if (y < 600 - jHeight) {
+		player(x - scrolX, y,false,false);
+	}
 	for (int i = 0; i < 50; i++) {
 		if (T[i].flag == true) {
-			trap(T[i].x - scrolX, T[i].y);
+			trap(T[i].x - scrolX, T[i].y,false,false);
 		}
 	}
 	for (int i = 0; i < 20; i++) {
@@ -411,8 +463,18 @@ void CSGame::Draw() {
 		}
 	}
 	for (int i = 0; i < 20; i++) {
+		if (B[i].flag == true) {
+			bird(B[i].x - scrolX, B[i].y, false, false);
+		}
+	}
+	for (int i = 0; i < 20; i++) {
 		if (F[i].flag == true) {
 			fat(F[i].x - scrolX, F[i].y);
+		}
+	}
+	for (int i = 0; i < 20; i++) {
+		if (B2[i].flag == true) {
+			bat(B2[i].x - scrolX, B2[i].y, false, false);
 		}
 	}
 	for (int i = 0; i < 50; i++) {
@@ -427,27 +489,43 @@ void CSGame::Draw() {
 	}
 
 
-
-	if (version ==0 || 1 || 2 && version != 3) {
-		for (int i = 0; i < mce.GetWidth(); i++) {
-			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.A, i, j) == 1) {
-					chip(i * 40 - scrolX, j * 40);
-				}
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 1) {
+				chip1_1(i * 40 - scrolX, j * 40);
 			}
 		}
 	}
-	else {
-		for (int i = 0; i < mce.GetWidth(); i++) {
-			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.A, i, j) == 1) {
-					chip2(i * 40 - scrolX, j * 40);
-				}
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 2) {
+				chip1_2(i * 40 - scrolX, j * 40);
 			}
 		}
 	}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.A, i, j) == 3) {
+					chip2_1(i * 40 - scrolX, j * 40);
+				}
+			}
+		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.A, i, j) == 4) {
+					chip2_2(i * 40 - scrolX, j * 40);
+				}
+			}
+		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.A, i, j) == 5) {
+					chip3(i * 40 - scrolX, j * 40);
+				}
+			}
+		}
 
-		
+		bird(0, 0, false, false);
 	
 		if (life == false) {
 			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);

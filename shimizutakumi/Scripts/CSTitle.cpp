@@ -5,9 +5,21 @@ void CSTitle::Start() {
 	back[0] = "stpic/title0.png";
 	back[1] = "stpic/title.png";
 	back[2] = "stpic/title2.png";
-}
+	count = 0;
+	number.Set(LoadDivGraph("stpic/number.png", 16, 16, 1, 64, 64),8);
+	}
 
 void CSTitle::Loop() {
+	if (Input.GetKeyEnter(Input.key.RIGHT)) {
+		count = 63;
+	}
+	if (count > 0) {
+		number.PlusCount();
+	}
+
+	if (count > 0) {
+		--count;
+	}
 
 	switch (stage)
 	{
@@ -119,7 +131,7 @@ void CSTitle::Draw() {
 		SetFontSize(70);
 		DrawFormatString(560, 430, CYAN, "9");
 	}
-
+	number(0, 0, false, false);
 }
 
 void CSTitle::End() {
