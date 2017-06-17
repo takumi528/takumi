@@ -249,6 +249,11 @@ namespace suken {
 		*	@brief　アニメーションカウントを増やします
 		*/
 		void PlusCount();
+
+		/**
+		*	@brief　アニメーションカウントを減らします
+		*/
+		void MinusCount();
 	private:
 		GraphVec graph;
 		unsigned int cnt;

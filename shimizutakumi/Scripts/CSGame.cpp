@@ -17,53 +17,79 @@ void CSGame::Start() {
 	case 0:
 	default:
 		mce = "MCE/stage0.mce";
-		background = "stpic/background0.png";
-		version = 1;
+		version = 0;
 		break;
 	case 1:
 		mce = "MCE/stage1.mce";
-		background = "stpic/background1.png";
 		version = 1;
 		break;
 	case 2:
 		mce = "MCE/stage2.mce";
-		background = "stpic/background1.png";
 		version = 1;
 		break;
 	case 3:
 		mce = "MCE/stage3.mce";
-		background = "stpic/background1.png";
 		version = 1;
 		break;
 	case 4:
 		mce = "MCE/stage4.mce";
-		background = "stpic/background2.png";
 		version = 2;
 		break;
 	case 5:
 		mce = "MCE/stage5.mce";
-		background = "stpic/background2.png";
 		version = 2;
 		break;
 	case 6:
 		mce = "MCE/stage6.mce";
-		background = "stpic/background2.png";
 		version = 2;
 		break;
 	case 7:
 		mce = "MCE/stage7.mce";
-		background = "stpic/background3.png";
 		version = 3;
 		break;
 	case 8:
 		mce = "MCE/stage8.mce";
-		background = "stpic/background3.png";
 		version = 3;
 		break;
 	case 9:
 		mce = "MCE/stage9.mce";
-		background = "stpic/background3.png";
 		version = 3;
+		break;
+	case 10:
+		mce = "MCE/stage10.mce";
+		version = 4;
+		break;
+	case 11:
+		mce = "MCE/stage11.mce";
+		version = 4;
+		break;
+	case 12:
+		mce = "MCE/stage12.mce";
+		version = 4;
+		break;
+	}
+
+	switch (version) {
+	case 0:
+	default:
+		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
+		background = "stpic/background0.png";
+		break;
+	case 1:
+		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
+		background = "stpic/background1.png";
+		break;
+	case 2:
+		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
+		background = "stpic/background2.png";
+		break;
+	case 3:
+		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
+		background = "stpic/background3.png";
+		break;
+	case 4:
+		player.Set(LoadDivGraph("stpic/player4.png", 2, 2, 1, 58, 30), 10);
+		background = "stpic/background4.png";
 		break;
 	}
 
@@ -80,20 +106,36 @@ void CSGame::Start() {
 	chip2_1 = "stpic/chip2_1.png";
 	chip2_2 = "stpic/chip2_2.png";
 	chip3 = "stpic/chip3.png";
+	chip4 = "stpic/chip4.png";
 	killer = "stpic/killer.png";
 	stone = "stpic/stone.png";
-	ufo = "stpic/ufo.png";
+	urchin = "stpic/urchin.png";
 	fat = "stpic/fat.png";
 	gameover = "stpic/over.png";
+	one_two = "stpic/1 2.png";
 	bird.Set(LoadDivGraph("stpic/bird.png", 4, 4, 1, 50, 30),8);
 	trap.Set(LoadDivGraph("stpic/trap.png", 2, 2, 1, 40, 40), 8);
 	bat.Set(LoadDivGraph("stpic/bat.png", 4, 4, 1, 40, 80), 6);
-	player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
+	ufo.Set(LoadDivGraph("stpic/ufo.png", 4, 4, 1, 48, 30), 4);
+	fish.Set(LoadDivGraph("stpic/fish.png", 4, 4, 1, 55, 20), 8);
+	bubble.Set(LoadDivGraph("stpic/bubble.png", 2, 2, 1, 40, 80), 10);
 
 	for (int i=0; i < 20; i++) {
 		K[i].x = 800;
 		K[i].y = 800;
 		K[i].flag = false;
+	}
+
+	for (int i = 0; i < 20; i++) {
+		F[i].x = 800;
+		F[i].y = 800;
+		F[i].flag = false;
+	}
+
+	for (int i = 0; i < 50; i++) {
+		U2[i].x = 800;
+		U2[i].y = 800;
+		U2[i].flag = false;
 	}
 
 	for (int i = 0; i < 20; i++) {
@@ -120,9 +162,9 @@ void CSGame::Start() {
 		U[i].turn = true;
 	}
 	for (int i = 0; i < 20; i++) {
-		F[i].x = 800;
-		F[i].y = 800;
-		F[i].flag = false;
+		F2[i].x = 800;
+		F2[i].y = 800;
+		F2[i].flag = false;
 	}  
 	for (int i = 0; i < 20; i++) {
 		B2[i].x = 800;
@@ -145,15 +187,36 @@ void CSGame::Loop() {
 		bat.PlusCount();
 		player.PlusCount();
 		bird.PlusCount();
+		ufo.PlusCount();
+		fish.PlusCount();
+		bubble.PlusCount();
 	}
 	else {}
 
-	if (vy > 15) {
+	if (y < 0) {
+		y += g;
+	}
+	if (y + jHeight < 0) {
+		y = 0 - jHeight;
+	}
+
+	if (version == 4) {
+		if (vy > 6) {
+			vy = 6;
+		}
+	}
+	else if (vy > 15) {
 		vy = 15;
 	}
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
 			K[i].x -= 5;
+		}
+		else {}
+	}
+	for (int i = 0; i < 20; i++) {
+		if (life == true) {
+			F2[i].x -= 5;
 		}
 		else {}
 	}
@@ -183,6 +246,7 @@ void CSGame::Loop() {
 						U[i].turn = false;
 					}
 				}
+
 				else {
 					U[i].y -= 5;
 					if (U[i].y < 40) {
@@ -210,6 +274,12 @@ void CSGame::Loop() {
 		}
 
 		for (int i = 0; i < 20; i++) {
+			if (F2[i].flag == true && (((x > F2[i].x && x < F2[i].x + f2.width) || (x + jWidth > F2[i].x && x + jWidth < F2[i].x + f2.width)) && ((y > F2[i].y && y < F2[i].y + f2.height) || (y + jHeight > F2[i].y && y + jHeight < F2[i].y + f2.height)))) {
+				life = false;
+			}
+		}
+
+		for (int i = 0; i < 20; i++) {
 			if (B2[i].flag == true && (((x > B2[i].x && x < B2[i].x + b2.width) || (x + jWidth > B2[i].x && x + jWidth < B2[i].x + b2.width)) && ((y > B2[i].y + 40 && y < B2[i].y + b2.height + 40) || (y + jHeight > B2[i].y + 40 && y + jHeight < B2[i].y + b2.height + 40)))) {
 				life = false;
 			}
@@ -230,6 +300,13 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < 50; i++) {
 			if (T[i].flag == true && (((x > T[i].x && x < T[i].x + t.width) || (x + jWidth > T[i].x && x + jWidth < T[i].x + t.width)) && ((y > T[i].y && y < T[i].y + t.height) || (y + jHeight > T[i].y && y + jHeight < T[i].y + t.height)))) {
+				life = false;
+
+			}
+		}
+
+		for (int i = 0; i < 50; i++) {
+			if (U2[i].flag == true && (((x > U2[i].x && x < U2[i].x + u2.width) || (x + jWidth > U2[i].x && x + jWidth < U2[i].x + u2.width)) && ((y > U2[i].y && y < U2[i].y + u2.height) || (y + jHeight > U2[i].y && y + jHeight < U2[i].y + u2.height)))) {
 				life = false;
 
 			}
@@ -266,6 +343,13 @@ void CSGame::Loop() {
 				}
 				if (Input.GetKeyDown(Input.key.DOWN)) {
 					vy = 7;
+				}
+			}
+			else if (version == 4){
+				if (Input.GetKeyEnter(Input.key.UP) && jumpf > 0) {
+					--jumpf;
+					vy = -20;
+					
 				}
 			}
 			else {
@@ -328,6 +412,11 @@ void CSGame::Loop() {
 		}
 
 		for (int i = 0; i < 20; i++) {
+			if (F2[i].x + F2[i].width < scrolX) {
+				F2[i].flag = false;
+			}
+		}
+		for (int i = 0; i < 20; i++) {
 			if (B2[i].x + B2[i].width < scrolX) {
 				B2[i].flag = false;
 			}
@@ -350,6 +439,11 @@ void CSGame::Loop() {
 		for (int i = 0; i < 50; i++) {
 			if (U[i].x + U[i].width < scrolX) {
 				U[i].flag = false;
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (U2[i].x + U2[i].width < scrolX) {
+				U2[i].flag = false;
 			}
 		}
 
@@ -391,6 +485,21 @@ void CSGame::Loop() {
 								B2[I].x = i * 40;
 								B2[I].y = j * 40;
 								B2[I].flag = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+
+			for (int i = 0; i < mce.GetWidth(); i++) {
+				for (int j = 0; j < mce.GetHeight(); j++) {
+					if (mce.Get(mce.layer.B, i, j) == 4 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+						for (int I = 0; I < 20; I++) {
+							if (F2[I].flag == false) {
+								F2[I].x = i * 40;
+								F2[I].y = j * 40;
+								F2[I].flag = true;
 								break;
 							}
 						}
@@ -442,6 +551,20 @@ void CSGame::Loop() {
 					}
 				}
 			}
+			for (int i = 0; i < mce.GetWidth(); i++) {
+				for (int j = 0; j < mce.GetHeight(); j++) {
+					if (mce.Get(mce.layer.C, i, j) == 3 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800) {
+						for (int I = 0; I < 50; I++) {
+							if (U2[I].flag == false) {
+								U2[I].x = i * 40;
+								U2[I].y = j * 40;
+								U2[I].flag = true;
+								break;
+							}
+						}
+					}
+				}
+			}
 		}
 
 
@@ -449,17 +572,39 @@ void CSGame::Loop() {
 void CSGame::Draw() {
 	background(0, 0);
 
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 7) {
+				one_two(i * 40 - scrolX, j * 40);
+			}
+		}
+	}
+
 	if (y < 600 - jHeight) {
 		player(x - scrolX, y,false,false);
 	}
+	if (version == 4) {
+		bubble(x - scrolX - 40, y - 40, false, false);
+	}
+
 	for (int i = 0; i < 50; i++) {
 		if (T[i].flag == true) {
 			trap(T[i].x - scrolX, T[i].y,false,false);
 		}
 	}
+	for (int i = 0; i < 50; i++) {
+		if (U2[i].flag == true) {
+			urchin(U2[i].x - scrolX, U2[i].y);
+		}
+	}
 	for (int i = 0; i < 20; i++) {
 		if (K[i].flag == true) {
 			killer(K[i].x - scrolX, K[i].y, true);
+		}
+	}
+	for (int i = 0; i < 20; i++) {
+		if (F2[i].flag == true) {
+			fish(F2[i].x - scrolX, F2[i].y, false, false);
 		}
 	}
 	for (int i = 0; i < 20; i++) {
@@ -484,7 +629,7 @@ void CSGame::Draw() {
 	}
 	for (int i = 0; i < 50; i++) {
 		if (U[i].flag == true) {
-			ufo(U[i].x - scrolX, U[i].y);
+			ufo(U[i].x - scrolX, U[i].y, false, false);
 		}
 	}
 
@@ -524,9 +669,14 @@ void CSGame::Draw() {
 				}
 			}
 		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.A, i, j) == 6) {
+					chip4(i * 40 - scrolX, j * 40);
+				}
+			}
+		}
 
-		bird(0, 0, false, false);
-	
 		if (life == false) {
 			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 			gameover();

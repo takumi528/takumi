@@ -6,19 +6,18 @@ void CSTitle::Start() {
 	back[1] = "stpic/title.png";
 	back[2] = "stpic/title2.png";
 	count = 0;
-	number.Set(LoadDivGraph("stpic/number.png", 16, 16, 1, 64, 64),8);
+	number.Set(LoadDivGraph("stpic/number.png", 104, 104, 1, 64, 64),1);
 	}
 
 void CSTitle::Loop() {
-	if (Input.GetKeyEnter(Input.key.RIGHT)) {
-		count = 63;
-	}
 	if (count > 0) {
 		number.PlusCount();
+		--count;
 	}
 
-	if (count > 0) {
-		--count;
+	if (count < 0) {
+		number.MinusCount();
+		++count;
 	}
 
 	switch (stage)
@@ -54,16 +53,29 @@ void CSTitle::Loop() {
 	case 9:
 		version = 3;
 		break;
+	case 10:
+		version = 4;
+		break;
+	case 11:
+		version = 4;
+		break;
+	case 12:
+		version = 4;
+		break;
 	}
 
 
-	if (Input.GetKeyEnter(Input.key.RIGHT) && stage < 9){
-	stage += 1;
+	if (Input.GetKeyEnter(Input.key.RIGHT) && stage < 12){
+		stage += 1;
+		count = 8;
 	}
+	
 
 	if (Input.GetKeyEnter(Input.key.LEFT) && stage > 0){
-	stage -= 1;
+		stage -= 1;
+		count = -8;
 	}
+	
 
 	if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 		Game.FlipScene(new CSGame(stage), Flip::FADE_OUT_IN);
@@ -87,9 +99,14 @@ void CSTitle::Draw() {
 		}
 	}
 
-	if (stage == 0) {
+	/*if (stage == 0) {
 		SetFontSize(40);
 		DrawFormatString(350, 440, YELLOW, "チュートリアル");
+	}
+
+	if (stage == 0) {
+		SetFontSize(70);
+		DrawFormatString(560, 430, YELLOW, "0");
 	}
 
 	if (stage == 1){
@@ -130,8 +147,9 @@ void CSTitle::Draw() {
 	if (stage == 9) {
 		SetFontSize(70);
 		DrawFormatString(560, 430, CYAN, "9");
-	}
-	number(0, 0, false, false);
+	}*/
+	
+	number(550, 435, false, false);
 }
 
 void CSTitle::End() {

@@ -85,13 +85,25 @@ struct Ufo {
 	static const int width = 40, height = 30;
 };
 
+struct Fish {
+	int x, y;
+	bool flag;
+	static const int width = 50, height = 20;
+};
+
+struct Urchin {
+	int x, y;
+	bool flag;
+	static const int width = 40, height = 40;
+};
+
 
 class CSGame :public CScene {
 	//`•Ï”éŒ¾`
 	
 
-	Graph killer, chip1_1,chip1_2,chip2_1,chip2_2,chip3,background,stone,gameover,ufo,fat;
-	Anim bird,trap,bat,player;
+	Graph killer, chip1_1,chip1_2,chip2_1,chip2_2,chip3,chip4,background,stone,gameover,fat,urchin,one_two;
+	Anim bird,trap,bat,player,ufo,fish,bubble;
 	int x, y, vy, vx, g, d;
 	int scrolX;
 	int jumpf;
@@ -108,6 +120,8 @@ class CSGame :public CScene {
 	Fat f, F[20];
 	Bird b, B[20];
 	Bat b2, B2[20];
+	Fish f2, F2[20];
+	Urchin u2, U2[50];
 	int test[10];
 
 	//‰Šú‰»@‰æ‘œ‚Ìƒ[ƒh‚È‚Ç‚à

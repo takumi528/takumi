@@ -18,6 +18,12 @@
 #stage8
 9
 #stage9
+10
+#stage10
+11
+#stage11
+12
+#stage12
 #light
 0
 #width
@@ -27,7 +33,7 @@
 #edge
 1
 #number
-10
+13
 #graphA
 #chipA
 #graphB

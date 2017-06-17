@@ -310,6 +310,15 @@ void suken::Anim::PlusCount() {
 	++cnt;
 }
 
+void suken::Anim::MinusCount() {
+	if (cnt == 0) {
+		cnt = graph.size() - 1;
+	}
+	else {
+		--cnt;
+	}
+}
+
 suken::Font::Font() {
 	handle = NULL;
 	cnt = nullptr;
