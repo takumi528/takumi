@@ -5,7 +5,12 @@ void CSComplete::Start() {
 }
 
 void CSComplete::Loop() {
-	if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+	if (stage == 12) {
+		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+			Game.FlipScene(new CSGame(100));
+		}
+	}
+	else if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 		Game.FlipScene(new CSGame(stage + 1));
 	}
 

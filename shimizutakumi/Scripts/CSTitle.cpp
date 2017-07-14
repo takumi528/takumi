@@ -6,7 +6,7 @@ void CSTitle::Start() {
 	back[1] = "stpic/title.png";
 	back[2] = "stpic/title2.png";
 	count = 0;
-	number.Set(LoadDivGraph("stpic/number.png", 104, 104, 1, 64, 64),1);
+	number.Set(LoadDivGraph("stpic/number.png", 128, 128, 1, 64, 64),1);
 	}
 
 void CSTitle::Loop() {
@@ -27,45 +27,34 @@ void CSTitle::Loop() {
 		version = 0;
 		break;
 	case 1:
-		version = 1;
-		break;
 	case 2:
-		version = 1;
-		break;
 	case 3:
 		version = 1;
 		break;
 	case 4:
-		version = 2;
-		break;
 	case 5:
-		version = 2;
-		break;
 	case 6:
 		version = 2;
 		break;
 	case 7:
-		version = 3;
-		break;
 	case 8:
-		version = 3;
-		break;
 	case 9:
 		version = 3;
 		break;
 	case 10:
-		version = 4;
-		break;
 	case 11:
-		version = 4;
-		break;
 	case 12:
 		version = 4;
+		break;
+	case 13:
+	case 14:
+	case 15:
+		version = 5;
 		break;
 	}
 
 
-	if (Input.GetKeyEnter(Input.key.RIGHT) && stage < 12){
+	if (Input.GetKeyEnter(Input.key.RIGHT) && stage < 15){
 		stage += 1;
 		count = 8;
 	}
@@ -87,7 +76,7 @@ void CSTitle::Loop() {
 
 
 void CSTitle::Draw() {
-	if (version == 3) {
+	if (version == 5) {
 		back[2]();
 	}
 	else {

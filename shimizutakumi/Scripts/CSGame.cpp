@@ -67,33 +67,70 @@ void CSGame::Start() {
 		mce = "MCE/stage12.mce";
 		version = 4;
 		break;
+	case 13:
+		mce = "MCE/stage13.mce";
+		version = 5;
+		break;
+	case 14:
+		mce = "MCE/stage14.mce";
+		version = 5;
+		break;
+	case 15:
+		mce = "MCE/stage15.mce";
+		version = 5;
+		break;
+	case 100:
+		mce = "MCE/a.mce";
+		version = 100;
+		break;
 	}
 
 	switch (version) {
 	case 0:
 	default:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
-		background = "stpic/background0.png";
+		background1 = "stpic/background0.png";
 		break;
 	case 1:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
-		background = "stpic/background1.png";
+		background1 = "stpic/background1_1.png";
+		background2 = "stpic/background1_2.png";
+		background3 = "stpic/background1_3.png";
+		background4 = "stpic/background1_4.png";
 		break;
 	case 2:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
-		background = "stpic/background2.png";
+		background1 = "stpic/background2_1.png";
+		background2 = "stpic/background2_2.png";
+		background3 = "stpic/background2_3.png";
+		background4 = "stpic/background2_4.png";
+		background5 = "stpic/background2_5.png";
 		break;
 	case 3:
-		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
-		background = "stpic/background3.png";
+		player.Set(LoadDivGraph("stpic/player2.png", 2, 2, 1, 58, 30), 20);
+		background1 = "stpic/background3_1.png";
+		background2 = "stpic/background3_2.png";
+		background3 = "stpic/background3_3.png";
 		break;
 	case 4:
-		player.Set(LoadDivGraph("stpic/player4.png", 2, 2, 1, 58, 30), 10);
-		background = "stpic/background4.png";
+		player.Set(LoadDivGraph("stpic/player2.png", 2, 2, 1, 58, 30), 20);
+		background1 = "stpic/background4.png";
+		background2 = "stpic/background4_2.png";
+		background3 = "stpic/background4_3.png";
+		background4 = "stpic/background4_4.png";
 		break;
+	case 5:
+		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 10);
+		background1 = "stpic/background5_1.png";
+		background2 = "stpic/background5_2.png";
+		background3 = "stpic/background5_3.png";
+		background4 = "stpic/background5_4.png";
+		break;
+	case 100:
+		background1 = "stpic/12.5.png";
 	}
 
-	if (version != 3) {//重力
+	if (version != 5) {//重力
 		g = 1;
 	}
 	else {
@@ -107,23 +144,36 @@ void CSGame::Start() {
 	chip2_2 = "stpic/chip2_2.png";
 	chip3 = "stpic/chip3.png";
 	chip4 = "stpic/chip4.png";
+	chip5 = "stpic/chip5.png";
 	killer = "stpic/killer.png";
 	stone = "stpic/stone.png";
 	urchin = "stpic/urchin.png";
 	fat = "stpic/fat.png";
 	gameover = "stpic/over.png";
 	one_two = "stpic/1 2.png";
+	one_two_two = "stpic/1 2 2.png";
+	two_three = "stpic/2 3.png";
+	three_four = "stpic/3 4.png";
+	three_four_two = "stpic/3 4 2.png";
 	bird.Set(LoadDivGraph("stpic/bird.png", 4, 4, 1, 50, 30),8);
 	trap.Set(LoadDivGraph("stpic/trap.png", 2, 2, 1, 40, 40), 8);
 	bat.Set(LoadDivGraph("stpic/bat.png", 4, 4, 1, 40, 80), 6);
 	ufo.Set(LoadDivGraph("stpic/ufo.png", 4, 4, 1, 48, 30), 4);
 	fish.Set(LoadDivGraph("stpic/fish.png", 4, 4, 1, 55, 20), 8);
 	bubble.Set(LoadDivGraph("stpic/bubble.png", 2, 2, 1, 40, 80), 10);
+	bone.Set(LoadDivGraph("stpic/bone.png", 4, 4, 1, 30, 50),8);
+	eel.Set(LoadDivGraph("stpic/eel.png", 4, 4, 1, 150, 40), 8);
 
 	for (int i=0; i < 20; i++) {
 		K[i].x = 800;
 		K[i].y = 800;
 		K[i].flag = false;
+	}
+
+	for (int i = 0; i < 20; i++) {
+		E[i].x = 800;
+		E[i].y = 800;
+		E[i].flag = false;
 	}
 
 	for (int i = 0; i < 20; i++) {
@@ -172,12 +222,21 @@ void CSGame::Start() {
 		B2[i].flag = false;
 		B2[i].turn = true;
 	}
-
+	for (int i = 0; i < 20; i++) {
+		B3[i].x = 800;
+		B3[i].y = 800;
+		B3[i].flag = false;
+	}
 
 	scrolX = 0;
 }
 
 void CSGame::Loop() {
+	if (stage == 100) {
+		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+			Game.FlipScene(new CSGame(13));
+		}
+	}
 	d = 375 - (x - scrolX);
 	x += vx;
 	y += vy;
@@ -190,6 +249,8 @@ void CSGame::Loop() {
 		ufo.PlusCount();
 		fish.PlusCount();
 		bubble.PlusCount();
+		bone.PlusCount();
+		eel.PlusCount();
 	}
 	else {}
 
@@ -200,9 +261,9 @@ void CSGame::Loop() {
 		y = 0 - jHeight;
 	}
 
-	if (version == 4) {
-		if (vy > 6) {
-			vy = 6;
+	if ((version == 3) || (version == 4)) {
+		if (vy > 7) {
+			vy = 7;
 		}
 	}
 	else if (vy > 15) {
@@ -216,18 +277,24 @@ void CSGame::Loop() {
 	}
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
+			E[i].x -= 5;
+		}
+		else {}
+	}
+	for (int i = 0; i < 20; i++) {
+		if (life == true) {
 			F2[i].x -= 5;
 		}
 		else {}
 	}
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
-			B2[i].x -= 5;
+			B2[i].x -= 4;
 		}
 	}
 		for (int i = 0; i < 20; i++) {
 			if (life == true) {
-				B[i].x -= 5;
+				B[i].x -= 4;
 			}
 			else {}
 		}
@@ -237,22 +304,37 @@ void CSGame::Loop() {
 			}
 			else {}
 		}
+		for (int i = 0; i < 20; i++) {
+			if (life == true) {
+				B3[i].x -= 2;
+			}
+			else {}
+		}
 
 		for (int i = 0; i < 50; i++) {
 			if (life == true) {
 				if (U[i].turn == true) {
 					U[i].y += 5;
-					if (U[i].y + U[i].height > 560) {
+					if (U[i].y + U[i].height > 600) {
 						U[i].turn = false;
 					}
 				}
 
 				else {
 					U[i].y -= 5;
-					if (U[i].y < 40) {
+					if (U[i].y < 0) {
 						U[i].turn = true;
 					}
 				}
+			}
+		}
+
+		if (version == 5) {
+			if (y < 0) {
+				y = 0;
+			}
+			if (y + jHeight > 600) {
+				y = 600 - jHeight;
 			}
 		}
 		
@@ -260,102 +342,122 @@ void CSGame::Loop() {
 		vx = 0;
 
 		//ゲームオーバー
-		if (x + jWidth < scrolX) {
-			life = false;
-		}
-		if (y > 600 - jHeight) {
-			life = false;
-		}
-	
-		for (int i = 0; i < 20; i++) {
-			if (K[i].flag == true && (((x > K[i].x && x < K[i].x + k.width) || (x + jWidth > K[i].x && x + jWidth < K[i].x + k.width)) && ((y > K[i].y && y < K[i].y + k.height) || (y + jHeight > K[i].y && y + jHeight < K[i].y + k.height)))) {
-				life = false;
+		if (version != 100) {
+			if (x + jWidth < 6400) {
+				if (x + jWidth < scrolX) {
+					life = false;
+				}
+				if (version != 5) {
+					if (y > 600 - jHeight) {
+						if (x < 6400) {
+							life = false;
+						}
+					}
+				}
+
+				for (int i = 0; i < 20; i++) {
+					if (K[i].flag == true && (((x > K[i].x && x < K[i].x + k.width) || (x + jWidth > K[i].x && x + jWidth < K[i].x + k.width)) && ((y > K[i].y && y < K[i].y + k.height) || (y + jHeight > K[i].y && y + jHeight < K[i].y + k.height)))) {
+						life = false;
+					}
+				}
+				for (int i = 0; i < 20; i++) {
+					if (E[i].flag == true && (((x > E[i].x && x < E[i].x + e.width) || (x + jWidth > E[i].x && x + jWidth < E[i].x + e.width)) && ((y > E[i].y && y < E[i].y + e.height) || (y + jHeight > E[i].y && y + jHeight < E[i].y + e.height)))) {
+						life = false;
+					}
+				}
+
+				for (int i = 0; i < 20; i++) {
+					if (F2[i].flag == true && (((x > F2[i].x && x < F2[i].x + f2.width) || (x + jWidth > F2[i].x && x + jWidth < F2[i].x + f2.width)) && ((y > F2[i].y && y < F2[i].y + f2.height) || (y + jHeight > F2[i].y && y + jHeight < F2[i].y + f2.height)))) {
+						life = false;
+					}
+				}
+
+				for (int i = 0; i < 20; i++) {
+					if (B2[i].flag == true && (((x > B2[i].x && x < B2[i].x + b2.width) || (x + jWidth > B2[i].x && x + jWidth < B2[i].x + b2.width)) && ((y > B2[i].y + 40 && y < B2[i].y + b2.height + 40) || (y + jHeight > B2[i].y + 40 && y + jHeight < B2[i].y + b2.height + 40)))) {
+						life = false;
+					}
+				}
+
+				for (int i = 0; i < 20; i++) {
+					if (B3[i].flag == true && (((x > B3[i].x && x < B3[i].x + b3.width) || (x + jWidth > B3[i].x && x + jWidth < B3[i].x + b3.width)) && ((y > B3[i].y + 40 && y < B3[i].y + b3.height + 40) || (y + jHeight > B3[i].y + 40 && y + jHeight < B3[i].y + b3.height + 40)))) {
+						life = false;
+					}
+				}
+
+				for (int i = 0; i < 20; i++) {
+					if (B[i].flag == true && (((x > B[i].x && x < B[i].x + b.width) || (x + jWidth > B[i].x && x + jWidth < B[i].x + b.width)) && ((y > B[i].y && y < B[i].y + b.height) || (y + jHeight > B[i].y && y + jHeight < B[i].y + b.height)))) {
+						life = false;
+					}
+				}
+
+
+				for (int i = 0; i < 20; i++) {
+					if (F[i].flag == true && (((x > F[i].x && x < F[i].x + f.width) || (x + jWidth > F[i].x && x + jWidth < F[i].x + f.width)) && ((y > F[i].y && y < F[i].y + f.height) || (y + jHeight > F[i].y && y + jHeight < F[i].y + f.height)))) {
+						life = false;
+					}
+				}
+
+				for (int i = 0; i < 50; i++) {
+					if (T[i].flag == true && (((x > T[i].x && x < T[i].x + t.width) || (x + jWidth > T[i].x && x + jWidth < T[i].x + t.width)) && ((y > T[i].y && y < T[i].y + t.height) || (y + jHeight > T[i].y && y + jHeight < T[i].y + t.height)))) {
+						life = false;
+
+					}
+				}
+
+				for (int i = 0; i < 50; i++) {
+					if (U2[i].flag == true && (((x > U2[i].x && x < U2[i].x + u2.width) || (x + jWidth > U2[i].x && x + jWidth < U2[i].x + u2.width)) && ((y > U2[i].y && y < U2[i].y + u2.height) || (y + jHeight > U2[i].y && y + jHeight < U2[i].y + u2.height)))) {
+						life = false;
+
+					}
+				}
+
+				for (int i = 0; i < 50; i++) {
+					if (S[i].flag == true && (((x > S[i].x && x < S[i].x + s.width) || (x + jWidth > S[i].x && x + jWidth < S[i].x + s.width)) && ((y > S[i].y && y < S[i].y + s.height) || (y + jHeight > S[i].y && y + jHeight < S[i].y + s.height)))) {
+						life = false;
+					}
+				}
+
+				for (int i = 0; i < 50; i++) {
+					if (U[i].flag == true && (((x > U[i].x && x < U[i].x + u.width) || (x + jWidth > U[i].x && x + jWidth < U[i].x + u.width)) && ((y > U[i].y && y < U[i].y + u.height) || (y + jHeight > U[i].y && y + jHeight < U[i].y + u.height)))) {
+						life = false;
+					}
+				}
 			}
 		}
-
-		for (int i = 0; i < 20; i++) {
-			if (F2[i].flag == true && (((x > F2[i].x && x < F2[i].x + f2.width) || (x + jWidth > F2[i].x && x + jWidth < F2[i].x + f2.width)) && ((y > F2[i].y && y < F2[i].y + f2.height) || (y + jHeight > F2[i].y && y + jHeight < F2[i].y + f2.height)))) {
-				life = false;
-			}
-		}
-
-		for (int i = 0; i < 20; i++) {
-			if (B2[i].flag == true && (((x > B2[i].x && x < B2[i].x + b2.width) || (x + jWidth > B2[i].x && x + jWidth < B2[i].x + b2.width)) && ((y > B2[i].y + 40 && y < B2[i].y + b2.height + 40) || (y + jHeight > B2[i].y + 40 && y + jHeight < B2[i].y + b2.height + 40)))) {
-				life = false;
-			}
-		}
-
-		for (int i = 0; i < 20; i++) {
-			if (B[i].flag == true && (((x > B[i].x && x < B[i].x + b.width) || (x + jWidth > B[i].x && x + jWidth < B[i].x + b.width)) && ((y > B[i].y && y < B[i].y + b.height) || (y + jHeight > B[i].y && y + jHeight < B[i].y + b.height)))) {
-				life = false;
-			}
-		}
-
-
-		for (int i = 0; i < 20; i++) {
-			if (F[i].flag == true && (((x > F[i].x && x < F[i].x + f.width) || (x + jWidth > F[i].x && x + jWidth < F[i].x + f.width)) && ((y > F[i].y && y < F[i].y + f.height) || (y + jHeight > F[i].y && y + jHeight < F[i].y + f.height)))) {
-				life = false;
-			}
-		}
-
-		for (int i = 0; i < 50; i++) {
-			if (T[i].flag == true && (((x > T[i].x && x < T[i].x + t.width) || (x + jWidth > T[i].x && x + jWidth < T[i].x + t.width)) && ((y > T[i].y && y < T[i].y + t.height) || (y + jHeight > T[i].y && y + jHeight < T[i].y + t.height)))) {
-				life = false;
-
-			}
-		}
-
-		for (int i = 0; i < 50; i++) {
-			if (U2[i].flag == true && (((x > U2[i].x && x < U2[i].x + u2.width) || (x + jWidth > U2[i].x && x + jWidth < U2[i].x + u2.width)) && ((y > U2[i].y && y < U2[i].y + u2.height) || (y + jHeight > U2[i].y && y + jHeight < U2[i].y + u2.height)))) {
-				life = false;
-
-			}
-		}
-
-		for (int i = 0; i < 50; i++) {
-			if (S[i].flag == true && (((x > S[i].x && x < S[i].x + s.width) || (x + jWidth > S[i].x && x + jWidth < S[i].x + s.width)) && ((y > S[i].y && y < S[i].y + s.height) || (y + jHeight > S[i].y && y + jHeight < S[i].y + s.height)))) {
-				life = false;
-			}
-		}
-
-		for (int i = 0; i < 50; i++) {
-			if (U[i].flag == true && (((x > U[i].x && x < U[i].x + u.width) || (x + jWidth > U[i].x && x + jWidth < U[i].x + u.width)) && ((y > U[i].y && y < U[i].y + u.height) || (y + jHeight > U[i].y && y + jHeight < U[i].y + u.height)))) {
-				life = false;
-			}
-		}
-
 		if (life == true) {
-			if (version == 3) {
-				if (vy > 0) {
-					vy -= 1;
-					if (vy < 0) {
-						vy = 0;
-					}
-				}
-				if (vy < 0) {
-					vy += 1;
+			if (x + jWidth < 6400) {
+				if (version == 5) {
 					if (vy > 0) {
-						vy += 0;
+						vy -= 1;
+						if (vy < 0) {
+							vy = 0;
+						}
+					}
+					if (vy < 0) {
+						vy += 1;
+						if (vy > 0) {
+							vy = 0;
+						}
+					}
+					if (Input.GetKeyDown(Input.key.UP)) {
+						vy = -7;
+					}
+					if (Input.GetKeyDown(Input.key.DOWN)) {
+						vy = 7;
 					}
 				}
-				if (Input.GetKeyDown(Input.key.UP)) {
-					vy = -7;
+				else if ((version == 3) || (version == 4)) {
+					if (Input.GetKeyEnter(Input.key.UP) && jumpf > 0) {
+						--jumpf;
+						vy = -20;
+
+					}
 				}
-				if (Input.GetKeyDown(Input.key.DOWN)) {
-					vy = 7;
-				}
-			}
-			else if (version == 4){
-				if (Input.GetKeyEnter(Input.key.UP) && jumpf > 0) {
-					--jumpf;
-					vy = -20;
-					
-				}
-			}
-			else {
-				if (Input.GetKeyEnter(Input.key.UP) && jumpf > 0) {
-					--jumpf;
-					vy = -15;
+				else {
+					if (Input.GetKeyEnter(Input.key.UP) && jumpf > 0) {
+						--jumpf;
+						vy = -15;
+					}
 				}
 			}
 		}
@@ -373,7 +475,9 @@ void CSGame::Loop() {
 		if (autoMove) {
 			if (life == true) {
 				vx = 5;
-				scrolX += 5;
+				if (x + jWidth < 6400) {
+					scrolX += 5;
+				}
 			}
 			else {
 				vx = 0;
@@ -392,15 +496,20 @@ void CSGame::Loop() {
 
 		}
 
+		if (x + jWidth > 6400) {
+			vx = 5;
+		}
 
-		if (x + jWidth == 6400) {
+		if (x + jWidth == 6800) {
 			Game.FlipScene(new CSComplete(stage), Flip::CROSS_FADE, 8);
 		}
 
-		for (int i = x / 40, endI = (x + 50) / 40, endJ = (y + 30) / 40; i <= endI; ++i) {
-			for (int j = y / 40; j <= endJ; ++j) {
-				if (mce.Get(mce.layer.A, i, j) != 0) {
-					HitBlock(i, j);
+		if (stage != 100) {
+			for (int i = x / 40, endI = (x + 50) / 40, endJ = (y + 30) / 40; i <= endI; ++i) {
+				for (int j = y / 40; j <= endJ; ++j) {
+					if (mce.Get(mce.layer.A, i, j) != 0) {
+						HitBlock(i, j);
+					}
 				}
 			}
 		}
@@ -408,6 +517,12 @@ void CSGame::Loop() {
 		for (int i = 0; i < 20; i++) {
 			if (K[i].x + K[i].width < scrolX) {
 				K[i].flag = false;
+			}
+		}
+
+		for (int i = 0; i < 20; i++) {
+			if (E[i].x + E[i].width < scrolX) {
+				E[i].flag = false;
 			}
 		}
 
@@ -432,6 +547,12 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < 20; i++) {
 			if (F[i].x + F[i].width < scrolX) {
+				F[i].flag = false;
+			}
+		}
+
+		for (int i = 0; i < 20; i++) {
+			if (B3[i].x + B3[i].width < scrolX) {
 				F[i].flag = false;
 			}
 		}
@@ -476,6 +597,21 @@ void CSGame::Loop() {
 				}
 			}
 		}
+
+			for (int i = 0; i < mce.GetWidth(); i++) {
+				for (int j = 0; j < mce.GetHeight(); j++) {
+					if (mce.Get(mce.layer.B, i, j) == 6 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+						for (int I = 0; I < 20; I++) {
+							if (E[I].flag == false) {
+								E[I].x = i * 40;
+								E[I].y = j * 40;
+								E[I].flag = true;
+								break;
+							}
+						}
+					}
+				}
+			}
 		
 			for (int i = 0; i < mce.GetWidth(); i++) {
 				for (int j = 0; j < mce.GetHeight(); j++) {
@@ -485,6 +621,21 @@ void CSGame::Loop() {
 								B2[I].x = i * 40;
 								B2[I].y = j * 40;
 								B2[I].flag = true;
+								break;
+							}
+						}
+					}
+				}
+			}
+
+			for (int i = 0; i < mce.GetWidth(); i++) {
+				for (int j = 0; j < mce.GetHeight(); j++) {
+					if (mce.Get(mce.layer.B, i, j) == 5 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+						for (int I = 0; I < 20; I++) {
+							if (B3[I].flag == false) {
+								B3[I].x = i * 40;
+								B3[I].y = j * 40 - 10;
+								B3[I].flag = true;
 								break;
 							}
 						}
@@ -570,7 +721,17 @@ void CSGame::Loop() {
 
 
 void CSGame::Draw() {
-	background(0, 0);
+	if ((version == 0) || (version == 100)) {
+		background1(0, 0);
+	}
+	else {
+		background5(0 - scrolX * 0.2, 0);
+		background4(0 - scrolX * 0.4, 0);
+		background3(0 - scrolX * 0.6, 0);
+		background2(0 - scrolX * 0.8, 0);
+		background1(0 - scrolX, 0);
+	}
+
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
@@ -579,60 +740,50 @@ void CSGame::Draw() {
 			}
 		}
 	}
-
-	if (y < 600 - jHeight) {
-		player(x - scrolX, y,false,false);
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 8) {
+				two_three(i * 40 - scrolX, j * 40);
+			}
+		}
 	}
-	if (version == 4) {
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 12) {
+				three_four(i * 40 - scrolX, j * 40);
+			}
+		}
+	}
+	if (stage != 100) {
+		if (version != 5) {
+			if (y < 600 - jHeight) {
+				player(x - scrolX, y, false, false);
+			}
+		}
+		else {
+			player(x - scrolX, y, false, false);
+		}
+	}
+	if ((version == 3) || (version == 4)) {
 		bubble(x - scrolX - 40, y - 40, false, false);
 	}
 
-	for (int i = 0; i < 50; i++) {
-		if (T[i].flag == true) {
-			trap(T[i].x - scrolX, T[i].y,false,false);
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 10) {
+				one_two_two(i * 40 - scrolX, j * 40);
+			}
 		}
 	}
-	for (int i = 0; i < 50; i++) {
-		if (U2[i].flag == true) {
-			urchin(U2[i].x - scrolX, U2[i].y);
-		}
-	}
-	for (int i = 0; i < 20; i++) {
-		if (K[i].flag == true) {
-			killer(K[i].x - scrolX, K[i].y, true);
-		}
-	}
-	for (int i = 0; i < 20; i++) {
-		if (F2[i].flag == true) {
-			fish(F2[i].x - scrolX, F2[i].y, false, false);
-		}
-	}
-	for (int i = 0; i < 20; i++) {
-		if (B[i].flag == true) {
-			bird(B[i].x - scrolX, B[i].y, false, false);
-		}
-	}
-	for (int i = 0; i < 20; i++) {
-		if (F[i].flag == true) {
-			fat(F[i].x - scrolX, F[i].y);
-		}
-	}
-	for (int i = 0; i < 20; i++) {
-		if (B2[i].flag == true) {
-			bat(B2[i].x - scrolX, B2[i].y, false, false);
-		}
-	}
-	for (int i = 0; i < 50; i++) {
-		if (S[i].flag == true) {
-			stone(S[i].x - scrolX, S[i].y);
-		}
-	}
-	for (int i = 0; i < 50; i++) {
-		if (U[i].flag == true) {
-			ufo(U[i].x - scrolX, U[i].y, false, false);
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 13) {
+				three_four_two(i * 40 - scrolX, j * 40);
+			}
 		}
 	}
 
+	
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
@@ -676,12 +827,76 @@ void CSGame::Draw() {
 				}
 			}
 		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.A, i, j) == 11) {
+					chip5(i * 40 - scrolX, j * 40);
+				}
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (T[i].flag == true) {
+				trap(T[i].x - scrolX, T[i].y, false, false);
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (U2[i].flag == true) {
+				urchin(U2[i].x - scrolX, U2[i].y);
+			}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (K[i].flag == true) {
+				killer(K[i].x - scrolX, K[i].y, true);
+			}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (E[i].flag == true) {
+				eel(E[i].x - scrolX, E[i].y, false,false);
+			}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (F2[i].flag == true) {
+				fish(F2[i].x - scrolX, F2[i].y, false, false);
+			}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (B[i].flag == true) {
+				bird(B[i].x - scrolX, B[i].y, false, false);
+			}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (F[i].flag == true) {
+				fat(F[i].x - scrolX, F[i].y);
+			}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (B2[i].flag == true) {
+				bat(B2[i].x - scrolX, B2[i].y, false, false);
+			}
+		}
+		for (int i = 0; i < 20; i++) {
+			if (B3[i].flag == true) {
+				bone(B3[i].x - scrolX, B3[i].y, false, false);
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (S[i].flag == true) {
+				stone(S[i].x - scrolX, S[i].y);
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (U[i].flag == true) {
+				ufo(U[i].x - scrolX, U[i].y, false, false);
+			}
+		}
+
 
 		if (life == false) {
 			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 			gameover();
 
 		}
+		DrawBox(6395 - scrolX, 0, 6400 - scrolX, 600,RED,true);
 }
 
 void CSGame::End() {
