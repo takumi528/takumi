@@ -17,7 +17,7 @@
 
 class CSTitle :public CScene {
 	int stage;
-	int version;
+	int ver;
 	int count;
 	Graph back[3];
 	Anim number;
@@ -97,33 +97,112 @@ struct Urchin {
 	static const int width = 35, height = 35;
 };
 
-struct Bone {
+struct Bone1 {
 	int x, y;
+	int count;
 	bool flag;
-	static const int width = 30, height = 48;
+	static const int width = 30, height = 50;
 };
+
+struct Deadbone {
+	int x, y;
+	int count;
+	bool flag;
+	static const int width = 30, height = 30;
+};
+
 
 struct Eel {
 	int x, y;
 	bool flag;
-	static const int width = 150, height = 40;
+	static const int width = 130, height = 35;
 };
 
+struct Cactus {
+	int x, y;
+	bool flag;
+	static const int width = 30, height = 100;
+};
+
+struct Cactusleft {
+	int x, y;
+	bool flag;
+	static const int width = 30, height = 50;
+};
+
+struct Cactusright {
+	int x, y;
+	bool flag;
+	static const int width = 30, height = 50;
+};
+
+struct Scorpion0 {
+	int x, y;
+	int count;
+	bool flag;
+	static const int width = 50, height = 60;
+};
+
+struct Scorpion1 {
+	int x, y;
+	int count;
+	bool flag;
+	static const int width = 50, height = 60;
+};
+
+struct Fireball {
+	int x, y;
+	bool flag,hit;
+	static const int width = 40, height = 40;
+};
+
+  struct Groundfire {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 80;
+  };
+
+  struct Volcano1 {
+	  int x, y;
+	  int count;
+	  bool flag;
+	  static const int width = 632, height = 600;
+  };
+
+  struct Volcano2 {
+	  int x, y;
+	  bool flag;
+	  static const int width = 632, height = 600;
+  };
+
+  struct Bossbone {
+	  int x, y;
+	  static const int width = 300, height = 600;
+  };
+
+  struct Bossbonehand {
+	  int x, y;
+	  bool flag;
+	  static const int width = 60, height = 350;
+  };
 
 class CSGame :public CScene {
 	//Å`ïœêîêÈåæÅ`
 	
 
-	Graph killer, chip1_1,chip1_2,chip2_1,chip2_2,chip3,chip4,chip5,background1,background2,background3,background4,background5,stone,gameover,fat,urchin,one_two,one_two_two,two_three,three_four,three_four_two;
-	Anim bird,trap,bat,player,ufo,fish,bubble,bone,eel;
-	int x, y, vy, vx, g, d;
-	int scrolX;
+	Graph killer, chip1_1,chip1_2,chip2_1,chip2_2,chip3,chip4,chip5,chip6,chip7,chip8,background1,background2,background3,background4,background5,stone,gameover,fat,urchin,one_two,one_two_two,two_three,three_four,three_four_two,four_five,four_five_two,four_five_three,five_six,seven_eight,bone0,deadbone,player3,cactus,cactusleft,cactusright,fireball,ufo0,ufo02,volcano0,bossbonehand;
+	Anim bird,trap,bat,player,ufo,fish,bubble,bone1,bone2,eel,scorpion1,scorpion0,version,storm,groundfire,ash,volcano1,volcano2,fire,littlefire,fireballback,bossbone,bossbonehanddamage;
+	int x, y, vy, vx, g, d, wcount,fy;
+	int scrolX,scrolY;
 	int jumpf;
 	int stage;
-	int version;
+	int ver;
+	int gUP;
 	static const int jWidth = 50, jHeight = 30;
 	bool life;
 	bool space;
+	bool bflag;
+	bool Yflag;
 	MCE mce;
 	Killer k,K[20];
 	Trap t, T[50];
@@ -134,8 +213,20 @@ class CSGame :public CScene {
 	Bat b2, B2[20];
 	Fish f2, F2[20];
 	Urchin u2, U2[50];
-	Bone b3, B3[20];
 	Eel e, E[20];
+	Bone1 bo1, BO1[20];
+	Deadbone db, DB[20];
+	Cactus c, C[50];
+	Cactusleft cl, CL[50];
+	Cactusright cr, CR[50];
+	Scorpion1 s2, S2[20];
+	Scorpion0 s3, S3[20];
+	Fireball f3, F3[50];
+	Groundfire gf, GF[50];
+	Volcano1 v1, V1[10];
+	Volcano2 v2, V2[10];
+	Bossbone bb;
+	Bossbonehand bbh, BBH[10];
 	int test[10];
 
 	//èâä˙âªÅ@âÊëúÇÃÉçÅ[ÉhÇ»Ç«Ç‡
