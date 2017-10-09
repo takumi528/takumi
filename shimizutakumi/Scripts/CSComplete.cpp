@@ -10,6 +10,16 @@ void CSComplete::Loop() {
 			Game.FlipScene(new CSGame(100));
 		}
 	}
+	else if (stage == 9) {
+		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+			Game.FlipScene(new CSGame(101));
+		}
+	}
+	else if (stage == 12) {
+		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+			Game.FlipScene(new CSGame(102));
+		}
+	}
 	else if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 		Game.FlipScene(new CSGame(stage + 1));
 	}

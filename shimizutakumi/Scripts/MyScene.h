@@ -183,26 +183,50 @@ struct Fireball {
   struct Bossbonehand {
 	  int x, y;
 	  bool flag;
+	  bool damage;
 	  static const int width = 60, height = 350;
+  };
+
+  struct Battery {
+	  int x, y;
+	  bool flag;
+	  bool get;
+	  static const int width = 32, height = 60;
+  };
+
+  struct Killbone {
+	  int x, y;
+	  bool flag;
+	  static const int width = 500, height = 60;
+  };
+
+  struct Oasis {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 40;
   };
 
 class CSGame :public CScene {
 	//Å`ïœêîêÈåæÅ`
 	
 
-	Graph killer, chip1_1,chip1_2,chip2_1,chip2_2,chip3,chip4,chip5,chip6,chip7,chip8,background1,background2,background3,background4,background5,stone,gameover,fat,urchin,one_two,one_two_two,two_three,three_four,three_four_two,four_five,four_five_two,four_five_three,five_six,seven_eight,bone0,deadbone,player3,cactus,cactusleft,cactusright,fireball,ufo0,ufo02,volcano0,bossbonehand;
-	Anim bird,trap,bat,player,ufo,fish,bubble,bone1,bone2,eel,scorpion1,scorpion0,version,storm,groundfire,ash,volcano1,volcano2,fire,littlefire,fireballback,bossbone,bossbonehanddamage;
-	int x, y, vy, vx, g, d, wcount,fy;
+	Graph killer, chip1_1, chip1_2, chip2_1, chip2_2, chip3, chip4, chip5, chip6, chip7, chip8, background1, background2, background3, background4, background5, stone, gameover, fat, urchin, one_two, one_two_two, two_three, three_four, three_four_two, four_five, four_five_two, four_five_three, five_six, seven_eight, bone0, deadbone, player3, cactus, cactusleft, cactusright, fireball, ufo0, ufo02, volcano0, bossbonehand, light, battery, batterynumber0, batterynumber1,batterynumber2,batterynumber3,killbone,limitgauge;
+	Anim bird,trap,bat,player,ufo,fish,bubble,bone1,bone2,eel,scorpion1,scorpion0,version,storm,groundfire,ash,volcano1,volcano2,fire,littlefire,fireballback,bossbone,bossbonehanddamage,bossbonedamage,oasis;
+	int x, y, vy, vx, g, d, wcount,fy,lx,ly;
 	int scrolX,scrolY;
 	int jumpf;
 	int stage;
 	int ver;
 	int gUP;
+	int Lcount,batteryf,batterycount;
+	int bossbonelife,bossbonedamagecount;
+	int limit;
 	static const int jWidth = 50, jHeight = 30;
 	bool life;
 	bool space;
 	bool bflag;
 	bool Yflag;
+	bool Lflag;
 	MCE mce;
 	Killer k,K[20];
 	Trap t, T[50];
@@ -227,6 +251,9 @@ class CSGame :public CScene {
 	Volcano2 v2, V2[10];
 	Bossbone bb;
 	Bossbonehand bbh, BBH[10];
+	Battery b3, B3[20];
+	Killbone kb;
+	Oasis o, O[50];
 	int test[10];
 
 	//èâä˙âªÅ@âÊëúÇÃÉçÅ[ÉhÇ»Ç«Ç‡
