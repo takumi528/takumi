@@ -36,8 +36,6 @@ namespace suken {
 		*/
 		void FlipScene(CScene* scene, Flip::Type flipType, unsigned char speed = 10);
 
-		CScene::Debug Debug();
-
 	private:
 		Anim loadingAnim;
 		char loadingFlipTime;

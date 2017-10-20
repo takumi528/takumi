@@ -36,9 +36,7 @@ SystemSetting suken::Config() {
 
 //初期化用。ほぼ初期シーン設定用
 void suken::Awake() {
-	Game.Debug().RegistFunc("GoTitle", [] {
-		Game.FlipScene(new CSTitle);
-	});
+
 }
 
 //デバッグ用　シーンよりも先に実行される

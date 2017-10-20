@@ -79,6 +79,14 @@ namespace suken {
 			}
 		}
 
+		void Sort() {
+			std::sort(obj.begin(), obj.end(), [](Object* o1, Object* o2)->bool {
+				if (o1 == nullptr && o2 != nullptr)return true;
+				if (o2 == nullptr)return false;
+				return *o1 < *o2;
+			});
+		}
+
 		iterator Begin() {
 			return iterator(obj, true);
 		}
@@ -88,7 +96,7 @@ namespace suken {
 		}
 
 		int Size() {
-			std::distance(Begin(), End());
+			return std::distance(Begin(), End());
 		}
 
 		bool Empty() {

@@ -116,6 +116,10 @@ void CSGame::Start() {
 	case 102:
 		mce = "MCE/a.mce";
 		ver = 102;
+		break;
+	case 103:
+		mce = "MCE/a.mce";
+		ver = 103;
 	}
 
 	//è„â∫à⁄ìÆ
@@ -141,6 +145,7 @@ void CSGame::Start() {
 	jumpf = 2;
 	lx = 0;
 	ly = 0;
+	jturn = false;
 
 	
 
@@ -200,8 +205,7 @@ void CSGame::Start() {
 		break;
 	case 8:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 10);
-		background1 = "stpic/background8_1.png";
-		background2 = "stpic/background8_2.png";
+		background1 = "stpic/ufoback.png";
 		break;
 	case 100:
 		background1 = "stpic/18.5.png";
@@ -211,16 +215,22 @@ void CSGame::Start() {
 		break;
 	case 102:
 		background1 = "stpic/12.5.png";
+		break;
+	case 103:
+		background1 = "stpic/21.5.png";
 	}
 
 
 
-	if (ver != 7) {//èdóÕ
-		g = 1;
-	}
-	else {
+	if ((ver == 7) || (ver == 8)) {//èdóÕ
 		g = 0;
 	}
+	else {
+		g = 1;
+	}
+
+
+	
 
 
 	
@@ -248,7 +258,8 @@ void CSGame::Start() {
 	four_five_two = "stpic/4 5 2.png";
 	four_five_three = "stpic/4 5 3.png";
 	five_six = "stpic/5 6.png";
-	seven_eight = "stpic/7 8.png";
+	seven_eight_one = "stpic/7 8 1.png";
+	seven_eight_two = "stpic/7 8 2.png";
 	deadbone = "stpic/deadbone.png";
 	bone0 = "stpic/bone0.png";
 	player3 = "stpic/player4.png";
@@ -268,6 +279,12 @@ void CSGame::Start() {
 	batterynumber3 = "stpic/batterynumber3.png";
 	killbone = "stpic/killbone.png";
 	limitgauge = "stpic/limitgauge.png";
+	rufo = "stpic/activeufo.png";
+	lufo = "stpic/activeufo.png";
+	uufo = "stpic/activeufo.png";
+	dufo = "stpic/activeufo.png";
+	ruufo = "stpic/activeufo.png";
+	rdufo = "stpic/activeufo.png";
 	bone1.Set(LoadDivGraph("stpic/bone1.png", 7, 7, 1, 30, 50), 8);
 	bone2.Set(LoadDivGraph("stpic/bone2.png", 4, 4, 1, 30, 50), 10);
 	bird.Set(LoadDivGraph("stpic/bird.png", 4, 4, 1, 50, 30),8);
@@ -291,6 +308,44 @@ void CSGame::Start() {
 	bossbonehanddamage.Set(LoadDivGraph("stpic/bossbonehanddamage.png", 2, 2, 1, 60, 350), 8);
 	bossbonedamage.Set(LoadDivGraph("stpic/bossbonedamage.png", 4, 4, 1, 300, 600), 8);
 	oasis.Set(LoadDivGraph("stpic/oasis.png", 2, 2, 1, 40, 40), 4);
+	turnplayer.Set(LoadDivGraph("stpic/turnplayer.png", 2, 2, 1, 50, 30), 10);
+	boss.Set(LoadDivGraph("stpic/boss.png", 2, 2, 1, 800, 600), 20);
+
+	for (int i = 0; i < 50; i++) {
+		RU[i].x = 800;
+		RU[i].y = 800;
+		RU[i].flag = false;
+	}
+
+	for (int i = 0; i < 50; i++) {
+		LU[i].x = 800;
+		LU[i].y = 800;
+		LU[i].flag = false;
+	}
+
+	for (int i = 0; i < 50; i++) {
+		UU[i].x = 800;
+		UU[i].y = 800;
+		UU[i].flag = false;
+	}
+
+	for (int i = 0; i < 50; i++) {
+		DU[i].x = 800;
+		DU[i].y = 800;
+		DU[i].flag = false;
+	}
+
+	for (int i = 0; i < 50; i++) {
+		RUU[i].x = 800;
+		RUU[i].y = 800;
+		RUU[i].flag = false;
+	}
+
+	for (int i = 0; i < 50; i++) {
+		RDU[i].x = 800;
+		RDU[i].y = 800;
+		RDU[i].flag = false;
+	}
 
 	for (int i=0; i < 20; i++) {
 		K[i].x = 800;
@@ -461,6 +516,11 @@ void CSGame::Loop() {
 			Game.FlipScene(new CSGame(13));
 		}
 	}
+	if (stage == 103) {
+		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+			Game.FlipScene(new CSGame(22));
+		}
+	}
 	if (wcount > 0) {
 		wcount -= 1;
 	}
@@ -551,6 +611,7 @@ void CSGame::Loop() {
 		bossbonehanddamage.PlusCount();
 		bossbonedamage.PlusCount();
 		oasis.PlusCount();
+		boss.PlusCount();
 	}
 	else {}
 
@@ -573,9 +634,44 @@ void CSGame::Loop() {
 	else if (vy > 15) {
 		vy = 15;
 	}
+
+	for (int i = 0; i < 50; i++) {
+		if (life == true) {
+			RU[i].x += 14;
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (life == true) {
+			LU[i].x -= 4;
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (life == true) {
+			UU[i].x -= 4;
+			UU[i].y -= 8;
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (life == true) {
+			DU[i].x -= 4;
+			DU[i].y += 8;
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (life == true) {
+			RUU[i].x += 14;
+			RUU[i].y -= 8;
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (life == true) {
+			RDU[i].x += 14;
+			RDU[i].y += 8;
+		}
+	}
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
-			K[i].x -= 5;
+			K[i].x -= 4;
 		}
 		else {}
 	}
@@ -664,7 +760,7 @@ void CSGame::Loop() {
 		}
 	}
 
-	if (ver == 7) {
+	if (ver == 7 || 8) {
 		if (y < 0) {
 			y = 0;
 		}
@@ -673,6 +769,7 @@ void CSGame::Loop() {
 		}
 	}
 
+	//ì¡ï Ç»à⁄ìÆ
 	if (stage == 12) {
 		if (x > 6425) {
 			vy = -5;
@@ -682,6 +779,13 @@ void CSGame::Loop() {
 	if ((stage == 18) && (x > 6350)) {
 		vy = -3;
 	}
+
+	if (stage == 21) {
+		if (x > 6300) {
+			vy = -5;
+		}
+	}
+
 
 	vx = 0;
 
@@ -698,12 +802,12 @@ void CSGame::Loop() {
 		}
 	}
 
-	if ((ver != 100) && (ver != 101) && (ver != 102)) {
+	if ((ver != 100) && (ver != 101) && (ver != 102) && (ver != 103)) {
 		if (x + jWidth < 6400) {
 			if (x + jWidth < scrolX) {
 				life = false;
 			}
-			if (ver != 7) {
+			if (ver != 7 && 8) {
 				if (Yflag == false) {
 					if (y > 600 - jHeight) {
 						if (x < 6400) {
@@ -743,6 +847,38 @@ void CSGame::Loop() {
 					}
 				}
 			}
+
+			for (int i = 0; i < 50; i++) {
+				if (RU[i].flag == true && (((x > RU[i].x && x < RU[i].x + ru.width) || (x + jWidth > RU[i].x && x + jWidth < RU[i].x + ru.width)) && ((y > RU[i].y && y < RU[i].y + ru.height) || (y + jHeight > RU[i].y && y + jHeight < RU[i].y + ru.height)))) {
+					life = false;
+				}
+			}
+			for (int i = 0; i < 50; i++) {
+				if (LU[i].flag == true && (((x > LU[i].x && x < LU[i].x + lu.width) || (x + jWidth > LU[i].x && x + jWidth < LU[i].x + lu.width)) && ((y > LU[i].y && y < LU[i].y + lu.height) || (y + jHeight > LU[i].y && y + jHeight < LU[i].y + lu.height)))) {
+					life = false;
+				}
+			}
+			for (int i = 0; i < 50; i++) {
+				if (UU[i].flag == true && (((x > UU[i].x && x < UU[i].x + uu.width) || (x + jWidth > UU[i].x && x + jWidth < UU[i].x + uu.width)) && ((y > UU[i].y && y < UU[i].y + uu.height) || (y + jHeight > UU[i].y && y + jHeight < UU[i].y + uu.height)))) {
+					life = false;
+				}
+			}
+			for (int i = 0; i < 50; i++) {
+				if (DU[i].flag == true && (((x > DU[i].x && x < DU[i].x + du.width) || (x + jWidth > DU[i].x && x + jWidth < DU[i].x + du.width)) && ((y > DU[i].y && y < DU[i].y + du.height) || (y + jHeight > DU[i].y && y + jHeight < DU[i].y + du.height)))) {
+					life = false;
+				}
+			}
+			for (int i = 0; i < 50; i++) {
+				if (RUU[i].flag == true && (((x > RUU[i].x && x < RUU[i].x + ruu.width) || (x + jWidth > RUU[i].x && x + jWidth < RUU[i].x + ruu.width)) && ((y > RUU[i].y && y < RUU[i].y + ruu.height) || (y + jHeight > RUU[i].y && y + jHeight < RUU[i].y + ruu.height)))) {
+					life = false;
+				}
+			}
+			for (int i = 0; i < 50; i++) {
+				if (RDU[i].flag == true && (((x > RDU[i].x && x < RDU[i].x + rdu.width) || (x + jWidth > RDU[i].x && x + jWidth < RDU[i].x + rdu.width)) && ((y > RDU[i].y && y < RDU[i].y + rdu.height) || (y + jHeight > RDU[i].y && y + jHeight < RDU[i].y + rdu.height)))) {
+					life = false;
+				}
+			}
+
 				for (int i = 0; i < 20; i++) {
 					if (K[i].flag == true && (((x > K[i].x && x < K[i].x + k.width) || (x + jWidth > K[i].x && x + jWidth < K[i].x + k.width)) && ((y > K[i].y && y < K[i].y + k.height) || (y + jHeight > K[i].y && y + jHeight < K[i].y + k.height)))) {
 						life = false;
@@ -851,7 +987,7 @@ void CSGame::Loop() {
 		}
 		if (life == true) {
 			if (x + jWidth < 6400) {
-				if (ver == 7) {
+				if ((ver == 7) || (ver == 8)) {
 					if (vy > 0) {
 						vy -= 1;
 						if (vy < 0) {
@@ -942,6 +1078,23 @@ void CSGame::Loop() {
 			}
 		}
 
+		if (stage == 22) {
+			if (life == true) {
+				if (Input.GetKeyDown(Input.key.RIGHT)) {
+					vx += 5;
+					if (jturn == true) {
+						jturn = false;
+					}
+				}
+				if (Input.GetKeyDown(Input.key.LEFT)) {
+					vx -= 5;
+					if (jturn == false) {
+						jturn = true;
+					}
+				}
+			}
+		}
+
 
 		/*if (x + jWidth > 6400) {
 			vx = 5;
@@ -951,7 +1104,7 @@ void CSGame::Loop() {
 			Game.FlipScene(new CSComplete(stage), Flip::CROSS_FADE, 8);
 		}
 
-		if ((stage != 100) && (stage != 101) && (stage != 102)) {
+		if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103)) {
 			for (int i = x / 40, endI = (x + 50) / 40, endJ = (y + 30) / 40; i <= endI; ++i) {
 				for (int j = y / 40; j <= endJ; ++j) {
 					if (mce.Get(mce.layer.A, i, j) != 0) {
@@ -961,6 +1114,37 @@ void CSGame::Loop() {
 			}
 		}
 
+
+		for (int i = 0; i < 50; i++) {
+			if (RU[i].x + RU[i].width < scrolX) {
+				RU[i].flag = false;
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (LU[i].x + LU[i].width < scrolX) {
+				LU[i].flag = false;
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (UU[i].x + UU[i].width < scrolX) {
+				UU[i].flag = false;
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (DU[i].x + DU[i].width < scrolX) {
+				DU[i].flag = false;
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (RUU[i].x + RUU[i].width < scrolX) {
+				RUU[i].flag = false;
+			}
+		}
+		for (int i = 0; i < 50; i++) {
+			if (RDU[i].x + RDU[i].width < scrolX) {
+				RDU[i].flag = false;
+			}
+		}
 
 		for (int i = 0; i < 20; i++) {
 			if (K[i].x + K[i].width < scrolX) {
@@ -1096,7 +1280,90 @@ void CSGame::Loop() {
 		}
 
 
-
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.B, i, j) == 10 && i * 40 - scrolX <= 0 - d && i * 40 - scrolX >= 0 - 2 - d) {
+					for (int I = 0; I < 50; I++) {
+						if (RU[I].flag == false) {
+							RU[I].x = i * 40;
+							RU[I].y = j * 40;
+							RU[I].flag = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.B, i, j) == 11 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+					for (int I = 0; I < 50; I++) {
+						if (LU[I].flag == false) {
+							LU[I].x = i * 40;
+							LU[I].y = j * 40;
+							LU[I].flag = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.B, i, j) == 12 && i * 40 - scrolX >= 800 - d && i * 40 - scrolX <= 800 + 2 - d) {
+					for (int I = 0; I < 50; I++) {
+						if (UU[I].flag == false) {
+							UU[I].x = i * 40;
+							UU[I].y = j * 40;
+							UU[I].flag = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.B, i, j) == 13 && i * 40 - scrolX >= 800 - d && i * 40 - scrolX <= 800 + 2 - d) {
+					for (int I = 0; I < 50; I++) {
+						if (DU[I].flag == false) {
+							DU[I].x = i * 40;
+							DU[I].y = j * 40;
+							DU[I].flag = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.B, i, j) == 14 && i * 40 - scrolX <= 0 - d && i * 40 - scrolX >= 0 - 2 - d) {
+					for (int I = 0; I < 50; I++) {
+						if (RUU[I].flag == false) {
+							RUU[I].x = i * 40;
+							RUU[I].y = j * 40;
+							RUU[I].flag = true;
+							break;
+						}
+					}
+				}
+			}
+		}
+		for (int i = 0; i < mce.GetWidth(); i++) {
+			for (int j = 0; j < mce.GetHeight(); j++) {
+				if (mce.Get(mce.layer.B, i, j) == 15 && i * 40 - scrolX <= 0 - d && i * 40 - scrolX >= 0 - 2 - d) {
+					for (int I = 0; I < 50; I++) {
+						if (RDU[I].flag == false) {
+							RDU[I].x = i * 40;
+							RDU[I].y = j * 40;
+							RDU[I].flag = true;
+							break;
+						}
+					}
+				}
+			}
+		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
 				if (mce.Get(mce.layer.B, i, j) == 1 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
@@ -1426,7 +1693,7 @@ void CSGame::Loop() {
 
 void CSGame::Draw() {
 
-	if ((ver == 0) || (ver == 100) || (ver == 101) || (ver == 102)) {
+	if ((ver == 0) || (ver == 100) || (ver == 101) || (ver == 102) || (ver == 103) || (ver == 8)) {
 		background1(0, 0);
 	}
 	else {
@@ -1435,6 +1702,10 @@ void CSGame::Draw() {
 		background3(0 - scrolX * 0.6, 0);
 		background2(0 - scrolX * 0.8, 0);
 		background1(0 - scrolX, 0);
+	}
+
+	if (stage == 23) {
+		boss(0, 0, false, false);
 	}
 
 		for (int i = 0; i < 10; i++) {
@@ -1495,16 +1766,23 @@ void CSGame::Draw() {
 			}
 		}
 	}
-	if ((stage != 100) && (stage != 101) && (stage != 102)) {
+	for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.A, i, j) == 19) {
+				seven_eight_two(i * 40 - scrolX, j * 40 - scrolY);
+			}
+		}
+	}
+	if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103)) {
 		if ((stage == 12) && (x > 6425)) {
 			player3(x - scrolX, y + 20 - scrolY);
 		}
 		else {
-			if (ver != 5) {
-					player(x - scrolX, y - scrolY, false, false);
+			if (jturn == false) {
+				player(x - scrolX, y - scrolY, false, false);
 			}
 			else {
-				player(x - scrolX, y - scrolY, false, false);
+				turnplayer(x - scrolX, y - scrolY, false, false);
 			}
 		}
 	}
@@ -1550,7 +1828,7 @@ void CSGame::Draw() {
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (mce.Get(mce.layer.A, i, j)== 19){
-				seven_eight(i * 40 - scrolX, j * 40 - scrolY);
+				seven_eight_one(i * 40 - scrolX, j * 40 - scrolY);
 			}
 		}
 	}
@@ -1721,6 +1999,36 @@ void CSGame::Draw() {
 			ufo(U[i].x - scrolX, U[i].y - scrolY, false, false);
 		}
 	}
+	for (int i = 0; i < 50; i++) {
+		if (RU[i].flag == true) {
+			rufo(RU[i].x - scrolX, RU[i].y - scrolY);
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (LU[i].flag == true) {
+			lufo(LU[i].x - scrolX, LU[i].y - scrolY);
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (UU[i].flag == true) {
+			uufo(UU[i].x - scrolX, UU[i].y - scrolY);
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (DU[i].flag == true) {
+			dufo(DU[i].x - scrolX, DU[i].y - scrolY);
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (RUU[i].flag == true) {
+			ruufo(RUU[i].x - scrolX, RUU[i].y - scrolY);
+		}
+	}
+	for (int i = 0; i < 50; i++) {
+		if (RDU[i].flag == true) {
+			rdufo(RDU[i].x - scrolX, RDU[i].y - scrolY);
+		}
+	}
 	for (int i = 0; i < 20; i++) {
 		if (S2[i].count > 0) {
 			scorpion0(S2[i].x - scrolX, S2[i].y - scrolY, false, false);
@@ -1804,8 +2112,9 @@ void CSGame::Draw() {
 		light(lx - scrolX, ly - scrolY);
 	}
 
-	DrawBox(6395 - scrolX, 0 - scrolY, 6400 - scrolX, 600, RED, true);
-
+	if (stage != 22) {
+		DrawBox(6395 - scrolX, 0 - scrolY, 6400 - scrolX, 600, RED, true);
+	}
 	if (ver == 4) {
 		if (batterycount == 0) {
 			batterynumber0(580, 30);

@@ -7,6 +7,7 @@
 */
 
 #include "../Manager.h"
+#include <DxLib.h>
 
 namespace suken {
 	/**

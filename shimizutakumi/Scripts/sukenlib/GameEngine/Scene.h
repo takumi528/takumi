@@ -8,7 +8,6 @@
 
 #include "../Utility/Graph.h"
 #include "../Utility/UniquePtr.h"
-#include "../Utility/safe_vector.h"
 #include <string>
 #include <list>
 #include <queue>
@@ -169,113 +168,6 @@ namespace suken {
 		*	@brief	背景画像設定　使うならどうぞ
 		*/
 		void SetBackGround(const char* fileName);
-
-		struct Debug{
-
-			/**
-			*	@brief	デバッグウインドウに文字列出力　使ったフレームだけ
-			*/
-			void Print(const char* name, const char* string);
-
-			/**
-			*	@brief	デバッグウインドウにフラグ出力　使ったフレームだけ
-			*/
-			void PrintFlag(const char* name, bool flag);
-
-			/**
-			*	@brief	デバッグウインドウから実行できる関数　　Startで関数ごとに一度使う
-			*/
-			void RegistFunc(const char* name, std::function<void()> func);
-
-			/**
-			*	@brief	デバッグウインドウから実行できる関数　　Startで関数ごとに一度使う
-			*/
-			//		void RegistFuncInt(const char* name, std::function<void(int)> func);
-
-			/**
-			*	@brief	デバッグウインドウから実行できる関数　　Startで関数ごとに一度使う
-			*/
-			//		void RegistFuncDouble(const char* name, std::function<void(double)> func);
-
-			/**
-			*	@brief	デバッグウインドウに変数出力　Startで変数ごとに一度使う　シーン中に消すならRemove使う
-			*/
-			//		void Regist(const char* name, unsigned char* value);
-
-			/**
-			*	@brief	デバッグウインドウに変数出力　Startで変数ごとに一度使う　シーン中に消すならRemove使う
-			*/
-			void Regist(const char* name, int* value);
-
-			/**
-			*	@brief	デバッグウインドウに変数出力　Startで変数ごとに一度使う　シーン中に消すならRemove使う
-			*/
-			//	void Regist(const char* name, unsigned int* value);
-
-			/**
-			*	@brief	デバッグウインドウに変数出力　Startで変数ごとに一度使う　シーン中に消すならRemove使う
-			*/
-			void Regist(const char* name, float* value);
-
-			/**
-			*	@brief	デバッグウインドウに変数出力　Startで変数ごとに一度使う　シーン中に消すならRemove使う
-			*/
-			void Regist(const char* name, double* value);
-
-			/**
-			*	@brief	デバッグウインドウに変数出力　Startで変数ごとに一度使う　シーン中に消すならRemove使う
-			*/
-			void Regist(const char* name, bool* value);
-
-			/**
-			*	@brief	動的確保した変数、オブジェクトの変数は消去時に使う
-			*/
-			//		void Remove(unsigned char* value);
-
-			/**
-			*	@brief	動的確保した変数、オブジェクトの変数は消去時に使う
-			*/
-			void Remove(int* value);
-
-			/**
-			*	@brief	動的確保した変数、オブジェクトの変数は消去時に使う
-			*/
-			//		void Remove(unsigned int* value);
-
-			/**
-			*	@brief	動的確保した変数、オブジェクトの変数は消去時に使う
-			*/
-			void Remove(float* value);
-
-			/**
-			*	@brief	動的確保した変数、オブジェクトの変数は消去時に使う
-			*/
-			void Remove(double* value);
-
-			/**
-			*	@brief	動的確保した変数、オブジェクトの変数は消去時に使う
-			*/
-			void Remove(bool* value);
-		private:
-
-#ifdef DEBUG 
-
-			std::list<std::pair<std::string, std::string>> debugStr;
-			std::list<std::pair<std::string, bool>> debugFlag;
-			//		std::list<std::pair<std::string, unsigned char*>> debugUchar;
-			std::list<std::pair<std::string, int*>> debugInt;
-			//		std::list<std::pair<std::string, unsigned int*>> debugUint;
-			std::list<std::pair<std::string, float*>> debugFloat;
-			std::list<std::pair<std::string, double*>> debugDouble;
-			std::list<std::pair<std::string, bool*>> debugBool;
-			std::list<std::pair<std::string, std::function<void()>>> debugFuncVoid;
-			//		std::list<std::pair<std::string, std::function<void(int)>>> debugFuncInt;
-			//		std::list<std::pair<std::string, std::function<void(double)>>> debugFuncDouble;
-			friend class CScene;
-			friend class CDebug;
-#endif 
-
-		}debug;
 
 	private:
 		CScene(bool fake);

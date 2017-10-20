@@ -19,8 +19,9 @@ class CSTitle :public CScene {
 	int stage;
 	int ver;
 	int count;
-	Graph back[3];
-	Anim number;
+	int select;
+	Graph back;
+	Anim number,player;
 
 	//初期化　画像のロードなども
 	void Start();
@@ -30,6 +31,7 @@ class CSTitle :public CScene {
 	void Draw();
 	//後片付け	FlipSceneされた時に呼び出される
 	void End();
+
 };
 
 struct Rect {
@@ -206,12 +208,48 @@ struct Fireball {
 	  static const int width = 40, height = 40;
   };
 
+  struct Rightufo {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 30;
+  };
+
+  struct Leftufo {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 30;
+  };
+
+  struct Upufo {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 30;
+  };
+
+  struct Downufo {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 30;
+  };
+
+  struct Rightupufo {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 30;
+  };
+
+  struct Rightdownufo {
+	  int x, y;
+	  bool flag;
+	  static const int width = 40, height = 30;
+  };
+
 class CSGame :public CScene {
 	//～変数宣言～
 	
 
-	Graph killer, chip1_1, chip1_2, chip2_1, chip2_2, chip3, chip4, chip5, chip6, chip7, chip8, background1, background2, background3, background4, background5, stone, gameover, fat, urchin, one_two, one_two_two, two_three, three_four, three_four_two, four_five, four_five_two, four_five_three, five_six, seven_eight, bone0, deadbone, player3, cactus, cactusleft, cactusright, fireball, ufo0, ufo02, volcano0, bossbonehand, light, battery, batterynumber0, batterynumber1,batterynumber2,batterynumber3,killbone,limitgauge;
-	Anim bird,trap,bat,player,ufo,fish,bubble,bone1,bone2,eel,scorpion1,scorpion0,version,storm,groundfire,ash,volcano1,volcano2,fire,littlefire,fireballback,bossbone,bossbonehanddamage,bossbonedamage,oasis;
+	Graph killer, chip1_1, chip1_2, chip2_1, chip2_2, chip3, chip4, chip5, chip6, chip7, chip8, background1, background2, background3, background4, background5, stone, gameover, fat, urchin, one_two, one_two_two, two_three, three_four, three_four_two, four_five, four_five_two, four_five_three, five_six, seven_eight_one,seven_eight_two, bone0, deadbone, player3, cactus, cactusleft, cactusright, fireball, ufo0, ufo02, volcano0, bossbonehand, light, battery, batterynumber0, batterynumber1,batterynumber2,batterynumber3,killbone,limitgauge,rufo,lufo,uufo,dufo,ruufo,rdufo;
+	Anim bird,trap,bat,player,ufo,fish,bubble,bone1,bone2,eel,scorpion1,scorpion0,version,storm,groundfire,ash,volcano1,volcano2,fire,littlefire,fireballback,bossbone,bossbonehanddamage,bossbonedamage,oasis,turnplayer,boss;
 	int x, y, vy, vx, g, d, wcount,fy,lx,ly;
 	int scrolX,scrolY;
 	int jumpf;
@@ -227,6 +265,7 @@ class CSGame :public CScene {
 	bool bflag;
 	bool Yflag;
 	bool Lflag;
+	bool jturn;
 	MCE mce;
 	Killer k,K[20];
 	Trap t, T[50];
@@ -254,6 +293,12 @@ class CSGame :public CScene {
 	Battery b3, B3[20];
 	Killbone kb;
 	Oasis o, O[50];
+	Rightufo ru, RU[50];
+	Leftufo lu, LU[50];
+	Upufo uu, UU[50];
+	Downufo du, DU[50];
+	Rightupufo ruu, RUU[50];
+	Rightdownufo rdu, RDU[50];
 	int test[10];
 
 	//初期化　画像のロードなども

@@ -48,10 +48,6 @@ void suken::CGame::FlipScene(CScene* scene, Flip::Type flipType, unsigned char s
 	flip = new Flip(flipType, "", "", speed);
 }
 
-suken::CScene::Debug suken::CGame::Debug() {
-	return debug;
-}
-
 void suken::CGame::DrawNowLoading() {
 	screen.Draw();
 	loadingAnim.Draw(loadingPosX, loadingPosY);

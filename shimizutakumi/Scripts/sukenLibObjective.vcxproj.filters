@@ -82,6 +82,9 @@
     <ClInclude Include="sukenlib\GameEngine\Object\Object.h">
       <Filter>sukenib\GameEngine\Object</Filter>
     </ClInclude>
+    <ClInclude Include="sukenlib\GameEngine\Music.h">
+      <Filter>sukenib\GameEngine</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -140,6 +143,9 @@
     </ClCompile>
     <ClCompile Include="CSComplete.cpp">
       <Filter>メイン ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="sukenlib\GameEngine\Music.cpp">
+      <Filter>sukenib\GameEngine</Filter>
     </ClCompile>
   </ItemGroup>
 </Project>
