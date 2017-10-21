@@ -2,6 +2,11 @@
 
 void CSComplete::Start() {
 	SetBackGround("stpic/complete.png");
+
+	CData save("stpic/save.txt");
+	save.ReadAll();
+	save.Set(stage,true);
+	save.WriteAll();
 }
 
 void CSComplete::Loop() {
