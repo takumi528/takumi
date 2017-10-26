@@ -22,6 +22,10 @@ void CSTitle::Start() {
 			clear = i;
 		}
 	}
+	Music.Load(M_JUMP, "stpic/jump.mp3");
+	Music.Load(M_SELECT, "stpic/select.mp3");
+	Music.Load(M_GET, "stpic/get.mp3");
+	Music.Load(M_OVER, "stpic/over.mp3");
 }
 
 void CSTitle::Loop() {
@@ -31,6 +35,7 @@ void CSTitle::Loop() {
 		if (Input.GetKeyEnter(Input.key.SPACE)) {
 			select = 2;
 			back = "stpic/stageselect.png";
+			Music.Play(M_SELECT);
 		}
 	}
 
@@ -96,67 +101,82 @@ void CSTitle::Loop() {
 			if (Input.GetKeyDown(Input.key.RIGHT) && stage < 23 && count == 0 && (stage < clear * 3 + 3)) {//ステージ数
 				count = 8;
 				stage += 1;
+				Music.Play(M_SELECT);
 			}
 			if (Input.GetKeyDown(Input.key.LEFT) && stage > 0 && count == 0) {
 				count = -8;
 				stage -= 1;
+				Music.Play(M_SELECT);
 			}
 			
 			if (Input.GetKeyEnter(Input.key.NUM0) && count == 0) {
 				count = (0 - stage) * 8;
 				stage = 0;
+				Music.Play(M_SELECT);
 			}
 			if (Input.GetKeyEnter(Input.key.NUM1) && count == 0 && clear >= 0) {
 				count = (1 - stage) * 8;
 				stage = 1;
+				Music.Play(M_SELECT);
 			}
 			else if (Input.GetKeyEnter(Input.key.NUM2) && count == 0 && clear >= 1) {
 				count = (4 - stage) * 8;
 				stage = 4;
+				Music.Play(M_SELECT);
 			}
 			else if (Input.GetKeyEnter(Input.key.NUM3) && count == 0 && clear >= 2) {
 				count = (7 - stage) * 8;
 				stage = 7;
+				Music.Play(M_SELECT);
 			}
 			else if (Input.GetKeyEnter(Input.key.NUM4) && count == 0 && clear >= 3) {
 				count = (10 - stage) * 8;
 				stage = 10;
+				Music.Play(M_SELECT);
 			}
 			else if (Input.GetKeyEnter(Input.key.NUM5) && count == 0 && clear >= 4) {
 				count = (13 - stage) * 8;
 				stage = 13;
+				Music.Play(M_SELECT);
 			}
 			else if (Input.GetKeyEnter(Input.key.NUM6) && count == 0 && clear >= 5) {
 				count = (16 - stage) * 8;
 				stage = 16;
+				Music.Play(M_SELECT);
 			}
 			else if (Input.GetKeyEnter(Input.key.NUM7) && count == 0 && clear >= 6) {
 				count = (19 - stage) * 8;
 				stage = 19;
+				Music.Play(M_SELECT);
 			}
 
 		if (stage == 19) {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(100), Flip::FADE_OUT_IN);
+				Music.Play(M_SELECT);
 			}
 		}
 		else if (stage == 10) {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(101), Flip::FADE_OUT_IN);
+				Music.Play(M_SELECT);
 			}
 		}
 		else if (stage == 13) {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(102), Flip::FADE_OUT_IN);
+				Music.Play(M_SELECT);
 			}
 		}
 		else if (stage == 22) {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(103), Flip::FADE_OUT_IN);
+				Music.Play(M_SELECT);
 			}
 		}
 		else if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 			Game.FlipScene(new CSGame(stage), Flip::FADE_OUT_IN);
+			Music.Play(M_SELECT);
 		}
 	}
 }
