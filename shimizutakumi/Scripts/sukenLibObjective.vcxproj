@@ -53,6 +53,9 @@
     <ClCompile Include="sukenlib\Utility\Utility.cpp" />
     <ClCompile Include="sukenlib\WinMain.cpp" />
   </ItemGroup>
+  <ItemGroup>
+    <ResourceCompile Include="Resourse.rc" />
+  </ItemGroup>
   <PropertyGroup Label="Globals">
     <ProjectGuid>{441781E7-5FBE-45C8-8663-53BF60439229}</ProjectGuid>
     <RootNamespace>sukenLibObjective</RootNamespace>

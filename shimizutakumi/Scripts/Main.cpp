@@ -14,7 +14,7 @@ SystemSetting suken::Config() {
 
 	setting.WindowSyle = 0;						//　0:普通のウインドウ、1:タイトルバーなし、縁あり、2:タイトルバー、縁なし。
 	setting.isWindow = true;					//	フルスクリーンにするかどうかのフラグ　trueなら解像度は640*480に変更される
-	setting.WindowText = "SukenlibObjective";	//　左上のウインドウテキスト
+	setting.WindowText = "前方注意";	//　左上のウインドウテキスト
 	setting.iconID = 101;						//	基本弄らなくていいよ
 	setting.SetWindowSize(800, 600);			//	画面サイズ設定
 	setting.targetFps = 60.0f;					//	目標fps設定

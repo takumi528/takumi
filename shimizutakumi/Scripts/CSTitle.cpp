@@ -26,9 +26,24 @@ void CSTitle::Start() {
 	Music.Load(M_SELECT, "stpic/select.mp3");
 	Music.Load(M_GET, "stpic/get.mp3");
 	Music.Load(M_OVER, "stpic/over.mp3");
+/*	Music.Load(M_VER1, "stpic/ver1.mp3");
+	Music.Load(M_VER2, "stpic/ver2.mp3");
+	Music.Load(M_VER3, "stpic/ver3.mp3");
+	Music.Load(M_VER4, "stpic/ver4.mp3");
+	Music.Load(M_VER5, "stpic/ver5.mp3");
+	Music.Load(M_VER6, "stpic/ver6.mp3");
+	Music.Load(M_VER7, "stpic/ver7.mp3");
+	Music.Load(M_STAGE22, "stpic/stage22.mp3");
+	Music.Load(M_STAGE23, "stpic/stage23.mp3");*/
+	Music.Load(M_TITLE, "stpic/title.mp3");
+	Music.Load(M_COMPLETE, "stpic/complete.mp3");
+	Music.Load(M_MISSILE, "stpic/missile.mp3");
+	Music.Load(M_BATTERY, "stpic/battery.mp3");
+	Music.Load(M_DAMAGE, "stpic/damage.mp3");
 }
 
 void CSTitle::Loop() {
+	Music.PlayLoop(M_TITLE);
 	player.PlusCount();
 
 	if (select == 1) {
@@ -154,29 +169,34 @@ void CSTitle::Loop() {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(100), Flip::FADE_OUT_IN);
 				Music.Play(M_SELECT);
+				Music.Delete(M_TITLE);
 			}
 		}
 		else if (stage == 10) {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(101), Flip::FADE_OUT_IN);
 				Music.Play(M_SELECT);
+				Music.Delete(M_TITLE);
 			}
 		}
 		else if (stage == 13) {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(102), Flip::FADE_OUT_IN);
 				Music.Play(M_SELECT);
+				Music.Delete(M_TITLE);
 			}
 		}
 		else if (stage == 22) {
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				Game.FlipScene(new CSGame(103), Flip::FADE_OUT_IN);
 				Music.Play(M_SELECT);
+				Music.Delete(M_TITLE);
 			}
 		}
 		else if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 			Game.FlipScene(new CSGame(stage), Flip::FADE_OUT_IN);
 			Music.Play(M_SELECT);
+			Music.Delete(M_TITLE);
 		}
 	}
 }
@@ -192,6 +212,7 @@ void CSTitle::Draw() {
 		switch (ver)
 		{
 		case 0:
+			break;
 		case 1:
 		default:
 			player(118, 350, false, false);

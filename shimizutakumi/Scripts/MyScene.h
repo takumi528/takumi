@@ -16,6 +16,21 @@ enum {
 	M_GET,
 	M_OVER,
 	M_SELECT,
+	M_TITLE,
+	/*M_VER1,
+	M_VER2,
+	M_VER3,
+	M_VER4,
+	M_VER5,
+	M_VER6,
+	M_VER7,
+	M_STAGE22,
+	M_STAGE23,*/
+	M_VER,
+	M_COMPLETE,
+	M_MISSILE,
+	M_BATTERY,
+	M_DAMAGE,
 };
 
 
@@ -72,7 +87,7 @@ struct Trap {
 struct Stone {
 	int x, y;
 	bool flag;
-	static const int width = 35, height = 35;
+	static const int width = 30, height = 30;
 };
 
 struct Fat {
@@ -98,7 +113,7 @@ struct Ufo {
 struct Fish {
 	int x, y;
 	bool flag;
-	static const int width = 40, height = 12;
+	static const int width = 40, height = 16;
 };
 
 struct Urchin {
@@ -118,7 +133,7 @@ struct Deadbone {
 	int x, y;
 	int count;
 	bool flag;
-	static const int width = 27, height = 27;
+	static const int width = 30, height = 30;
 };
 
 
@@ -262,14 +277,14 @@ struct Fireball {
   struct BosshandU {
 	  int x, y;
 	  bool flag;
-	  bool damage;
+	  int damagecount;
 	  static const int width = 45, height = 780;
   };
 
   struct BosshandD {
 	  int x, y;
 	  bool flag;
-	  bool damage;
+	  int damagecount;
 	  static const int width = 45, height = 780;
   };
 
@@ -331,7 +346,7 @@ class CSGame :public CScene {
 	//Å`ïœêîêÈåæÅ`
 	
 
-	Graph killer, chip1_1, chip1_2, chip2_1, chip2_2, chip3, chip4, chip5, chip6, chip7, chip8, background1, background2, background3, background4, background5, stone, gameover, fat, urchin, one_two, one_two_two, two_three, three_four, three_four_two, four_five, four_five_two, four_five_three, five_six, seven_eight_one,seven_eight_two, bone0, deadbone, player3, cactus, cactusleft, cactusright, fireball, ufo0, ufo02, volcano0, bossbonehand, light, battery, batterynumber0, batterynumber1,batterynumber2,batterynumber3,killbone,limitgauge,rufo,lufo,uufo,dufo,ruufo,rdufo,ufo2,bosshandU,bosshandD,bosshandR,bosshandL,bosshandUR,bosshandUL,bosshandDR,bosshandDL,bosshandR2,bosshandL2,bosshandUR2,bosshandUL2,bosshandDR2,bosshandDL2,bosshandshadow1,bosshandshadow2,bosshandshadow3,bosshandshadow4,bosshandshadow5,missile,missileshot,bosslifebar;
+	Graph killer, chip1_1, chip1_2, chip2_1, chip2_2, chip3, chip4, chip5, chip6, chip7, chip8, background1, background2, background3, background4, background5, stone, gameover, fat, urchin, one_two, one_two_two, two_three, three_four, three_four_two, four_five, four_five_two, four_five_three, five_six, seven_eight_one,seven_eight_two, bone0, deadbone, player3, cactus, cactusleft, cactusright, fireball, ufo0, ufo02, volcano0, bossbonehand, light, battery, batterynumber0, batterynumber1,batterynumber2,batterynumber3,killbone,limitgauge,rufo,lufo,uufo,dufo,ruufo,rdufo,ufo2,bosshandU,bosshandUdamage,bosshandDdamage,bosshandD,bosshandR,bosshandL,bosshandUR,bosshandUL,bosshandDR,bosshandDL,bosshandR2,bosshandL2,bosshandUR2,bosshandUL2,bosshandDR2,bosshandDL2,bosshandshadow1,bosshandshadow2,bosshandshadow3,bosshandshadow4,bosshandshadow5,missile,missileshot,bosslifebar,missilemeter,missilemeter2;
 	Anim bird,trap,bat,player,ufo,fish,bubble,bone1,bone2,eel,scorpion1,scorpion0,version,storm,groundfire,ash,volcano1,volcano2,fire,littlefire,fireballback,bossbone,bossbonehanddamage,bossbonedamage,oasis,turnplayer,boss,back8_1,back8_2;
 	int x, y, vy, vx, g, d, wcount,fy,lx,ly;
 	int scrolX,scrolY;

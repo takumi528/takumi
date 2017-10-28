@@ -7,120 +7,124 @@ void CSGame::Start() {
 	switch (stage) {//ステージ数
 	case 0:
 	default:
-		mce = "MCE/stage0.mce";
+		mce = "stpic/stage0.mce";
 		ver = 0;
 		break;
 	case 1:
-		mce = "MCE/stage1.mce";
+		mce = "stpic/stage1.mce";
 		ver = 1;
 		break;
 	case 2:
-		mce = "MCE/stage2.mce";
+		mce = "stpic/stage2.mce";
 		ver = 1;
 		break;
 	case 3:
-		mce = "MCE/stage3.mce";
+		mce = "stpic/stage3.mce";
 		ver = 1;
 		break;
 	case 4:
-		mce = "MCE/stage4.mce";
+		mce = "stpic/stage4.mce";
 		ver = 2;
 		break;
 	case 5:
-		mce = "MCE/stage5.mce";
+		mce = "stpic/stage5.mce";
 		ver = 2;
 		break;
 	case 6:
-		mce = "MCE/stage6.mce";
+		mce = "stpic/stage6.mce";
 		ver = 2;
 		break;
 	case 7:
-		mce = "MCE/stage7.mce";
+		mce = "stpic/stage7.mce";
 		ver = 3;
 		break;
 	case 8:
-		mce = "MCE/stage8.mce";
+		mce = "stpic/stage8.mce";
 		ver = 3;
 		break;
 	case 9:
-		mce = "MCE/stage9.mce";
+		mce = "stpic/stage9.mce";
 		ver = 3;
 		break;
 	case 10:
-		mce = "MCE/stage10.mce";
+		mce = "stpic/stage10.mce";
 		ver = 4;
 		break;
 	case 11:
-		mce = "MCE/stage11.mce";
+		mce = "stpic/stage11.mce";
 		ver = 4;
 		break;
 	case 12:
-		mce = "MCE/stage12.mce";
+		mce = "stpic/stage12.mce";
 		ver = 4;
 		break;
 	case 13:
-		mce = "MCE/stage13.mce";
+		mce = "stpic/stage13.mce";
 		ver = 5;
 		break;
 	case 14:
-		mce = "MCE/stage14.mce";
+		mce = "stpic/stage14.mce";
 		ver = 5;
 		break;
 	case 15:
-		mce = "MCE/stage15.mce";
+		mce = "stpic/stage15.mce";
 		ver = 5;
 		break;
 	case 16:
-		mce = "MCE/stage16.mce";
+		mce = "stpic/stage16.mce";
 		ver = 6;
 		break;
 	case 17:
-		mce = "MCE/stage17.mce";
+		mce = "stpic/stage17.mce";
 		ver = 6;
 		break;
 	case 18:
-		mce = "MCE/stage18.mce";
+		mce = "stpic/stage18.mce";
 		ver = 6;
 		break;
 	case 19:
-		mce = "MCE/stage19.mce";
+		mce = "stpic/stage19.mce";
 		ver = 7;
 		break;
 	case 20:
-		mce = "MCE/stage20.mce";
+		mce = "stpic/stage20.mce";
 		ver = 7;
 		break;
 	case 21:
-		mce = "MCE/stage21.mce";
+		mce = "stpic/stage21.mce";
 		ver = 7;
 		break;
 	case 22:
-		mce = "MCE/stage22.mce";
+		mce = "stpic/stage22.mce";
 		ver = 8;
 		break;
 	case 23:
-		mce = "MCE/stage23.mce";
+		mce = "stpic/stage23.mce";
 		ver = 8;
 		break;
 	case 24:
-		mce = "MCE/stage24.mce";
-		ver = 8;
+		mce = "stpic/stage24.mce";
+		ver = 9;
 		break;
 	case 100:
-		mce = "MCE/a.mce";
+		mce = "stpic/a.mce";
 		ver = 100;
 		break;
 	case 101:
-		mce = "MCE/a.mce";
+		mce = "stpic/a.mce";
 		ver = 101;
 		break;
 	case 102:
-		mce = "MCE/a.mce";
+		mce = "stpic/a.mce";
 		ver = 102;
 		break;
 	case 103:
-		mce = "MCE/a.mce";
+		mce = "stpic/a.mce";
 		ver = 103;
+		break;
+	case 104:
+		mce = "stpic/a.mce";
+		ver = 104;
 	}
 
 	//上下移動
@@ -156,6 +160,7 @@ void CSGame::Start() {
 	default:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
 		background1 = "stpic/background0.png";
+		Music.Load(M_VER, "stpic/ver0.mp3");
 		break;
 	case 1:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
@@ -163,6 +168,7 @@ void CSGame::Start() {
 		background2 = "stpic/background1_2.png";
 		background3 = "stpic/background1_3.png";
 		background4 = "stpic/background1_4.png";
+		Music.Load(M_VER, "stpic/ver1.mp3");
 		break;
 	case 2:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 20);
@@ -171,12 +177,14 @@ void CSGame::Start() {
 		background3 = "stpic/background2_3.png";
 		background4 = "stpic/background2_4.png";
 		background5 = "stpic/background2_5.png";
+		Music.Load(M_VER, "stpic/ver2.mp3");
 		break;
 	case 3:
 		player.Set(LoadDivGraph("stpic/player2.png", 5, 5, 1, 58, 30), 5);
 		background1 = "stpic/background3_1.png";
 		background2 = "stpic/background3_2.png";
 		background3 = "stpic/background3_3.png";
+		Music.Load(M_VER, "stpic/ver3.mp3");
 		break;
 	case 4:
 		player.Set(LoadDivGraph("stpic/player2.png", 5, 5, 1, 58, 30), 5);
@@ -184,18 +192,21 @@ void CSGame::Start() {
 		background2 = "stpic/background4_2.png";
 		background3 = "stpic/background4_3.png";
 		background4 = "stpic/background4_4.png";
+		Music.Load(M_VER, "stpic/ver4.mp3");
 		break;
 	case 5:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 10);
 		background1 = "stpic/background5_1.png";
 		background2 = "stpic/background5_2.png";
 		background3 = "stpic/background5_3.png";
+		Music.Load(M_VER, "stpic/ver5.mp3");
 		break;
 	case 6:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 10);
 		background1 = "stpic/background6_1.png";
 		background2 = "stpic/background6_2.png";
 		background3 = "stpic/background6_3.png";
+		Music.Load(M_VER, "stpic/ver6.mp3");
 
 		break;
 	case 7:
@@ -204,10 +215,22 @@ void CSGame::Start() {
 		background2 = "stpic/background7_2.png";
 		background3 = "stpic/background7_3.png";
 		background4 = "stpic/background7_4.png";
+		Music.Load(M_VER, "stpic/ver7.mp3");
 		break;
 	case 8:
 		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 10);
 		background1 = "stpic/ufoback.png";
+		if (stage == 22) {
+			Music.Load(M_VER, "stpic/stage22.mp3");
+		}
+		else if (stage == 23); {
+			Music.Load(M_VER, "stpic/stage23.mp3");
+		}
+		break;
+	case 9:
+		player.Set(LoadDivGraph("stpic/player.png", 2, 2, 1, 50, 30), 10);
+		background1 = "stpic/backgroundend.png";
+		Music.Load(M_VER, "stpic/ver1.mp3");
 		break;
 	case 100:
 		background1 = "stpic/18.5.png";
@@ -220,6 +243,9 @@ void CSGame::Start() {
 		break;
 	case 103:
 		background1 = "stpic/21.5.png";
+		break;
+	case 104:
+		background1 = "stpic/22.5.png";
 	}
 
 
@@ -288,7 +314,9 @@ void CSGame::Start() {
 	ruufo = "stpic/activeufo.png";
 	rdufo = "stpic/activeufo.png";
 	bosshandU = "stpic/bosshandU.png";
+	bosshandUdamage = "stpic/bosshandUdamage.png";
 	bosshandD = "stpic/bosshandD.png";
+	bosshandDdamage = "stpic/bosshandDdamage.png";
 	bosshandR = "stpic/bosshand.png";
 	bosshandL = "stpic/bosshand.png";
 	bosshandUR = "stpic/bosshand.png";
@@ -309,6 +337,8 @@ void CSGame::Start() {
 	missile = "stpic/missile.png";
 	missileshot = "stpic/missileshot.png";
 	bosslifebar = "stpic/bosslifebar.png";
+	missilemeter = "stpic/missilemeter.png";
+	missilemeter2 = "stpic/missilemeter2.png";
 	bone1.Set(LoadDivGraph("stpic/bone1.png", 7, 7, 1, 30, 50), 8);
 	bone2.Set(LoadDivGraph("stpic/bone2.png", 4, 4, 1, 30, 50), 10);
 	bird.Set(LoadDivGraph("stpic/bird.png", 4, 4, 1, 50, 30),8);
@@ -505,13 +535,13 @@ void CSGame::Start() {
 		BHU[i].x = 800;
 		BHU[i].y = 800;
 		BHU[i].flag = false;
-		BHU[i].damage = false;
+		BHU[i].damagecount = 0;
 	}
 	for (int i = 0; i < 20; i++) {
 		BHD[i].x = 800;
 		BHD[i].y = 800;
 		BHD[i].flag = false;
-		BHD[i].damage = false;
+		BHD[i].damagecount = 0;
 	}
 	for (int i = 0; i < 20; i++) {
 		BHR[i].x = 800;
@@ -591,24 +621,38 @@ void CSGame::Start() {
 }
 
 void CSGame::Loop() {
+	if (life == true) {
+		Music.PlayLoop(M_VER);
+	}
+	
 	if (stage == 100) {
 		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 			Game.FlipScene(new CSGame(19));
+			Music.Play(M_SELECT);
 		}
 	}
 	if (stage == 101) {
 		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 			Game.FlipScene(new CSGame(10));
+			Music.Play(M_SELECT);
 		}
 	}
 	if (stage == 102) {
 		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 			Game.FlipScene(new CSGame(13));
+			Music.Play(M_SELECT);
 		}
 	}
 	if (stage == 103) {
 		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 			Game.FlipScene(new CSGame(22));
+			Music.Play(M_SELECT);
+		}
+	}
+	if (stage == 104) {
+		if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
+			Game.FlipScene(new CSGame(23));
+			Music.Play(M_SELECT);
 		}
 	}
 	if (wcount > 0) {
@@ -682,6 +726,7 @@ void CSGame::Loop() {
 			if (Input.GetKeyEnter(Input.key.SPACE)) {
 				Lcount = 20;
 				batterycount -= 2;
+				Music.Play(M_BATTERY);
 			}
 		}
 	}
@@ -692,8 +737,10 @@ void CSGame::Loop() {
 					MS[i].flag = true;
 					MS[i].x = x;
 					MS[i].y = y;
+					break;
 				}
 			}
+			Music.Play(M_MISSILE);
 			missilecount -= 2;
 		}
 	}
@@ -880,24 +927,25 @@ void CSGame::Loop() {
 
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
-			if ((BHU[i].y > 300) && (BHU[i].damage == false)) {
+			if (BHU[i].y > 300) {
 				BHU[i].y -= 10;
 			}
-			if (BHU[i].damage == true) {
-				BHU[i].y += 10;
-			}
+		}
+		if (BHU[i].damagecount > 0) {
+			BHU[i].damagecount--;
 		}
 	}
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
-			if ((BHD[i].y + BHD[i].height < 300) && (BHD[i].damage ==false)) {
+			if (BHD[i].y + BHD[i].height < 300) {
 				BHD[i].y += 10;
 			}
-			if (BHD[i].damage == true) {
-				BHD[i].y -= 10;
-			}
+		}
+		if (BHD[i].damagecount > 0) {
+			BHD[i].damagecount--;
 		}
 	}
+	
 	for (int i = 0; i < 20; i++) {
 		if (life == true) {
 			BHR[i].x += BHR[i].v * 0.8;
@@ -984,7 +1032,9 @@ void CSGame::Loop() {
 	for (int i = 0; i < 20; i++) {
 		if (M[i].flag == true && (((x > M[i].x && x < M[i].x + m.width) || (x + jWidth > M[i].x && x + jWidth < M[i].x + m.width)) && ((y > M[i].y && y < M[i].y + m.height) || (y + jHeight > M[i].y && y + jHeight < M[i].y + m.height)))) {
 			M[i].x = 0 - scrolX;
-			missilecount += 2;
+			if (missilecount < 16) {
+				missilecount += 2;
+			}
 			Music.Play(M_GET);
 		}
 	}
@@ -998,18 +1048,20 @@ void CSGame::Loop() {
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 20; j++) {
 			if ((MS[i].flag == true) && (BHU[j].flag == true) && (((MS[i].x > BHU[j].x && MS[i].x < BHU[j].x + bhu.width) || (MS[i].x + ms.width > BHU[j].x && MS[i].x + ms.width < BHU[j].x + bhu.width)) && ((MS[i].y > BHU[j].y && MS[i].y < BHU[j].y + bhu.height) || (MS[i].y + ms.height > BHU[j].y && MS[i].y + ms.height < BHU[j].y + bhu.height)))) {
-				bosslife -= 50;
+				bosslife -= 300;
 				MS[i].flag = false;
-				BHU[i].damage = true;
+				BHU[j].damagecount = 20;
+				Music.Play(M_DAMAGE);
 			}
 		}
 	}
 	for (int i = 0; i < 20; i++) {
 		for (int j = 0; j < 20; j++) {
 			if ((MS[i].flag == true) && (BHD[j].flag == true) && (((MS[i].x > BHD[j].x && MS[i].x < BHD[j].x + bhd.width) || (MS[i].x + ms.width > BHD[j].x && MS[i].x + ms.width < BHD[j].x + bhd.width)) && ((MS[i].y > BHD[j].y && MS[i].y < BHD[j].y + bhd.height) || (MS[i].y + ms.height > BHD[j].y && MS[i].y + ms.height < BHD[j].y + bhd.height)))) {
-				bosslife -= 50;
+				bosslife -= 300;
 				MS[i].flag = false;
-				BHD[i].damage = true;
+				BHD[j].damagecount = 20;
+				Music.Play(M_DAMAGE);
 			}
 		}
 	}
@@ -1019,24 +1071,28 @@ void CSGame::Loop() {
 		if (ver == 5) {
 			if (limit == 0) {
 				life = false;
+				Music.Delete(M_VER);
 			}
 		}
 		if (kb.flag == true) {
 			if ((x > kb.x) && (x < kb.x + kb.width)) {
 				life = false;
+				Music.Delete(M_VER);
 			}
 		}
 
-		if ((ver != 100) && (ver != 101) && (ver != 102) && (ver != 103)) {
-			if (x + jWidth < 6400) {
+		if ((ver != 100) && (ver != 101) && (ver != 102) && (ver != 103) && (ver != 104)) {
+			if ((ver != 8 && x + jWidth < 6400) || (ver == 8)) {
 				if (x + jWidth < scrolX) {
 					life = false;
+					Music.Delete(M_VER);
 				}
 				if ((ver != 7) && (ver != 8)) {
 					if (Yflag == false) {
 						if (y >= 600 - jHeight) {
 							if (x < 6400) {
 								life = false;
+								Music.Delete(M_VER);
 							}
 						}
 					}
@@ -1046,6 +1102,7 @@ void CSGame::Loop() {
 				if (ver == 6) {
 					if (y + jHeight > fy + 15) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
@@ -1056,6 +1113,7 @@ void CSGame::Loop() {
 					if (BBH[i].damage == false) {
 						if (BBH[i].flag == true && (((x > BBH[i].x + 5 && x < BBH[i].x + bbh.width) || (x + jWidth > BBH[i].x + 5 && x + jWidth < BBH[i].x + bbh.width)) && ((y > BBH[i].y + 15 && y < BBH[i].y + bbh.height) || (y + jHeight > BBH[i].y + 15 && y + jHeight < BBH[i].y + bbh.height)))) {
 							life = false;
+							Music.Delete(M_VER);
 						}
 					}
 				}
@@ -1063,65 +1121,77 @@ void CSGame::Loop() {
 				for (int i = 0; i < 50; i++) {
 					if (RU[i].flag == true && (((x > RU[i].x + 5 && x < RU[i].x + ru.width) || (x + jWidth > RU[i].x + 5 && x + jWidth < RU[i].x + ru.width)) && ((y > RU[i].y + 3 && y < RU[i].y + ru.height) || (y + jHeight > RU[i].y + 3 && y + jHeight < RU[i].y + ru.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (LU[i].flag == true && (((x > LU[i].x + 5 && x < LU[i].x + lu.width) || (x + jWidth > LU[i].x + 5 && x + jWidth < LU[i].x + lu.width)) && ((y > LU[i].y + 3 && y < LU[i].y + lu.height) || (y + jHeight > LU[i].y + 3 && y + jHeight < LU[i].y + lu.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (UU[i].flag == true && (((x > UU[i].x + 5 && x < UU[i].x + uu.width) || (x + jWidth > UU[i].x + 5 && x + jWidth < UU[i].x + uu.width)) && ((y > UU[i].y + 3 && y < UU[i].y + uu.height) || (y + jHeight > UU[i].y + 3 && y + jHeight < UU[i].y + uu.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (DU[i].flag == true && (((x > DU[i].x + 5 && x < DU[i].x + du.width) || (x + jWidth > DU[i].x + 5 && x + jWidth < DU[i].x + du.width)) && ((y > DU[i].y + 3 && y < DU[i].y + du.height) || (y + jHeight > DU[i].y + 3 && y + jHeight < DU[i].y + du.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (RUU[i].flag == true && (((x > RUU[i].x + 5 && x < RUU[i].x + ruu.width) || (x + jWidth > RUU[i].x + 5 && x + jWidth < RUU[i].x + ruu.width)) && ((y > RUU[i].y + 3 && y < RUU[i].y + ruu.height) || (y + jHeight > RUU[i].y + 3 && y + jHeight < RUU[i].y + ruu.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (RDU[i].flag == true && (((x > RDU[i].x + 5 && x < RDU[i].x + rdu.width) || (x + jWidth > RDU[i].x + 5 && x + jWidth < RDU[i].x + rdu.width)) && ((y > RDU[i].y + 3 && y < RDU[i].y + rdu.height) || (y + jHeight > RDU[i].y + 3 && y + jHeight < RDU[i].y + rdu.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 20; i++) {
 					if (K[i].flag == true && (((x > K[i].x && x < K[i].x + k.width) || (x + jWidth > K[i].x && x + jWidth < K[i].x + k.width)) && ((y > K[i].y && y < K[i].y + k.height) || (y + jHeight > K[i].y && y + jHeight < K[i].y + k.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (S2[i].flag == true && (((x > S2[i].x + 5 && x < S2[i].x + s2.width) || (x + jWidth > S2[i].x + 5 && x + jWidth < S2[i].x + s2.width)) && ((y > S2[i].y + 20 && y < S2[i].y + s2.height) || (y + jHeight > S2[i].y + 20 && y + jHeight < S2[i].y + s2.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (E[i].flag == true && (((x > E[i].x + 15 && x < E[i].x + e.width) || (x + jWidth > E[i].x + 15 && x + jWidth < E[i].x + e.width)) && ((y > E[i].y + 5 && y < E[i].y + e.height) || (y + jHeight > E[i].y + 5 && y + jHeight < E[i].y + e.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 20; i++) {
-					if (F2[i].flag == true && (((x > F2[i].x + 5 && x < F2[i].x + f2.width) || (x + jWidth > F2[i].x + 5 && x + jWidth < F2[i].x + f2.width)) && ((y > F2[i].y + 3 && y < F2[i].y + f2.height) || (y + jHeight > F2[i].y + 3 && y + jHeight < F2[i].y + f2.height)))) {
+					if (F2[i].flag == true && (((x > F2[i].x + 5 && x < F2[i].x + f2.width) || (x + jWidth > F2[i].x + 5 && x + jWidth < F2[i].x + f2.width)) && ((y > F2[i].y + 4 && y < F2[i].y + f2.height) || (y + jHeight > F2[i].y + 4 && y + jHeight < F2[i].y + f2.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 20; i++) {
 					if (B2[i].flag == true && (((x > B2[i].x + 5 && x < B2[i].x + b2.width) || (x + jWidth > B2[i].x + 5 && x + jWidth < B2[i].x + b2.width)) && ((y > B2[i].y + 5 + 40 && y < B2[i].y + b2.height + 40) || (y + jHeight > B2[i].y + 5 + 40 && y + jHeight < B2[i].y + b2.height + 40)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 20; i++) {
 					if (B[i].flag == true && (((x > B[i].x + 5 && x < B[i].x + b.width) || (x + jWidth > B[i].x + 5 && x + jWidth < B[i].x + b.width)) && ((y > B[i].y + 5 && y < B[i].y + b.height) || (y + jHeight > B[i].y + 5 && y + jHeight < B[i].y + b.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
@@ -1129,19 +1199,21 @@ void CSGame::Loop() {
 				for (int i = 0; i < 20; i++) {
 					if (F[i].flag == true && (((x > F[i].x && x < F[i].x + f.width) || (x + jWidth > F[i].x && x + jWidth < F[i].x + f.width)) && ((y > F[i].y && y < F[i].y + f.height) || (y + jHeight > F[i].y && y + jHeight < F[i].y + f.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 50; i++) {
 					if (T[i].flag == true && (((x > T[i].x && x < T[i].x + t.width) || (x + jWidth > T[i].x && x + jWidth < T[i].x + t.width)) && ((y > T[i].y && y < T[i].y + t.height) || (y + jHeight > T[i].y && y + jHeight < T[i].y + t.height)))) {
 						life = false;
-
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 50; i++) {
 					if (GF[i].flag == true && (((x > GF[i].x + 3 && x < GF[i].x + gf.width) || (x + jWidth > GF[i].x + 3 && x + jWidth < GF[i].x + gf.width)) && ((y > GF[i].y && y < GF[i].y + gf.height) || (y + jHeight > GF[i].y && y + jHeight < GF[i].y + gf.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 
 					}
 				}
@@ -1149,90 +1221,107 @@ void CSGame::Loop() {
 				for (int i = 0; i < 50; i++) {
 					if (F3[i].flag == true && (((x > F3[i].x + 5 && x < F3[i].x + f3.width) || (x + jWidth > F3[i].x + 5 && x + jWidth < F3[i].x + f3.width)) && ((y > F3[i].y + 5 && y < F3[i].y + f3.height) || (y + jHeight > F3[i].y + 5 && y + jHeight < F3[i].y + f3.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 50; i++) {
 					if (U2[i].flag == true && (((x > U2[i].x + 5 && x < U2[i].x + u2.width) || (x + jWidth > U2[i].x + 5 && x + jWidth < U2[i].x + u2.width)) && ((y > U2[i].y + 5 && y < U2[i].y + u2.height) || (y + jHeight > U2[i].y + 5&& y + jHeight < U2[i].y + u2.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 
 					}
 				}
 
 				for (int i = 0; i < 100; i++) {
-					if (S[i].flag == true && (((x > S[i].x + 5 && x < S[i].x + s.width) || (x + jWidth > S[i].x + 5 && x + jWidth < S[i].x + s.width)) && ((y > S[i].y + 5 && y < S[i].y + s.height) || (y + jHeight > S[i].y + 5 && y + jHeight < S[i].y + s.height)))) {
+					if (S[i].flag == true && (((x > S[i].x + 10 && x < S[i].x + s.width) || (x + jWidth > S[i].x + 10 && x + jWidth < S[i].x + s.width)) && ((y >= S[i].y + 10 && y <= S[i].y + s.height) || (y + jHeight >= S[i].y + 10 && y + jHeight <= S[i].y + s.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 
 				for (int i = 0; i < 50; i++) {
 					if (U[i].flag == true && (((x > U[i].x && x < U[i].x + u.width) || (x + jWidth > U[i].x && x + jWidth < U[i].x + u.width)) && ((y > U[i].y && y < U[i].y + u.height) || (y + jHeight > U[i].y && y + jHeight < U[i].y + u.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BO1[i].flag == true && (((x > BO1[i].x + 3 && x < BO1[i].x + bo1.width) || (x + jWidth > BO1[i].x + 3 && x + jWidth < BO1[i].x + bo1.width)) && ((y > BO1[i].y + 5 && y < BO1[i].y + bo1.height) || (y + jHeight > BO1[i].y + 5 && y + jHeight < BO1[i].y + bo1.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
-					if (DB[i].flag == true && (((x > DB[i].x + 3 && x < DB[i].x + db.width) || (x + jWidth > DB[i].x + 3 && x + jWidth < DB[i].x + db.width)) && ((y > DB[i].y + 3 && y < DB[i].y + db.height) || (y + jHeight > DB[i].y + 3 && y + jHeight < DB[i].y + db.height)))) {
+					if (DB[i].flag == true && (((x > DB[i].x && x < DB[i].x + db.width) || (x + jWidth > DB[i].x && x + jWidth < DB[i].x + db.width)) && ((y > DB[i].y && y < DB[i].y + db.height) || (y + jHeight > DB[i].y && y + jHeight < DB[i].y + db.height)))) {
 						life = false;
+						Music.Delete(M_VER); 
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (C[i].flag == true && (((x > C[i].x && x < C[i].x + c.width) || (x + jWidth > C[i].x && x + jWidth < C[i].x + c.width)) && ((y > C[i].y + 10 && y < C[i].y + c.height) || (y + jHeight > C[i].y + 10 && y + jHeight < C[i].y + c.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (CL[i].flag == true && (((x > CL[i].x + 5 && x < CL[i].x + cl.width) || (x + jWidth > CL[i].x + 5 && x + jWidth < CL[i].x + cl.width)) && ((y > CL[i].y + 5 && y < CL[i].y + cl.height) || (y + jHeight > CL[i].y + 5 && y + jHeight < CL[i].y + cl.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 50; i++) {
 					if (CR[i].flag == true && (((x > CR[i].x && x < CR[i].x + cr.width) || (x + jWidth > CR[i].x && x + jWidth < CR[i].x + cr.width)) && ((y > CR[i].y + 5 && y < CR[i].y + cr.height) || (y + jHeight > CR[i].y + 5 && y + jHeight < CR[i].y + cr.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHU[i].flag == true && (((x > BHU[i].x + 5 && x < BHU[i].x + bhu.width) || (x + jWidth > BHU[i].x + 5 && x + jWidth < BHU[i].x + bhu.width)) && ((y > BHU[i].y + 20 && y < BHU[i].y + bhu.height) || (y + jHeight > BHU[i].y + 20 && y + jHeight < BHU[i].y + bhu.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHD[i].flag == true && (((x > BHD[i].x + 5 && x < BHD[i].x + bhd.width) || (x + jWidth > BHD[i].x + 5 && x + jWidth < BHD[i].x + bhd.width)) && ((y > BHD[i].y + 20 && y < BHD[i].y + bhd.height) || (y + jHeight > BHD[i].y + 20 && y + jHeight < BHD[i].y + bhd.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHR[i].flag == true && (((x > BHR[i].x + 10 && x < BHR[i].x + bhr.width) || (x + jWidth > BHR[i].x + 10 && x + jWidth < BHR[i].x + bhr.width)) && ((y > BHR[i].y + 10 && y < BHR[i].y + bhr.height) || (y + jHeight > BHR[i].y + 10 && y + jHeight < BHR[i].y + bhr.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHL[i].flag == true && (((x > BHL[i].x + 10 && x < BHL[i].x + bhl.width) || (x + jWidth > BHL[i].x + 10 && x + jWidth < BHL[i].x + bhl.width)) && ((y > BHL[i].y + 10 && y < BHL[i].y + bhl.height) || (y + jHeight > BHL[i].y + 10 && y + jHeight < BHL[i].y + bhl.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHUR[i].flag == true && (((x > BHUR[i].x + 10 && x < BHUR[i].x + bhur.width) || (x + jWidth > BHUR[i].x + 10 && x + jWidth < BHUR[i].x + bhur.width)) && ((y > BHUR[i].y + 10 && y < BHUR[i].y + bhur.height) || (y + jHeight > BHUR[i].y + 10 && y + jHeight < BHUR[i].y + bhur.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHUL[i].flag == true && (((x > BHUL[i].x + 10 && x < BHUL[i].x + bhul.width) || (x + jWidth > BHUL[i].x + 10 && x + jWidth < BHUL[i].x + bhul.width)) && ((y > BHUL[i].y + 10 && y < BHUL[i].y + bhul.height) || (y + jHeight > BHUL[i].y + 10 && y + jHeight < BHUL[i].y + bhul.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHDR[i].flag == true && (((x > BHDR[i].x + 10 && x < BHDR[i].x + bhdr.width) || (x + jWidth > BHDR[i].x + 10 && x + jWidth < BHDR[i].x + bhdr.width)) && ((y > BHDR[i].y + 10 && y < BHDR[i].y + bhdr.height) || (y + jHeight > BHDR[i].y + 10 && y + jHeight < BHDR[i].y + bhdr.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 				for (int i = 0; i < 20; i++) {
 					if (BHDL[i].flag == true && (((x > BHDL[i].x + 10 && x < BHDL[i].x + bhdl.width) || (x + jWidth > BHDL[i].x + 10 && x + jWidth < BHDL[i].x + bhdl.width)) && ((y > BHDL[i].y + 10 && y < BHDL[i].y + bhdl.height) || (y + jHeight > BHDL[i].y + 10 && y + jHeight < BHDL[i].y + bhdl.height)))) {
 						life = false;
+						Music.Delete(M_VER);
 					}
 				}
 			}
@@ -1240,7 +1329,7 @@ void CSGame::Loop() {
 	}
 
 		if (life == true) {
-			if (x + jWidth < 6400) {
+			if ((stage != 23 && x + jWidth < 6400) || (stage == 23)) {
 				if ((ver == 7) || (ver == 8)) {
 					if (vy > 0) {
 						vy -= 1;
@@ -1289,9 +1378,11 @@ void CSGame::Loop() {
 		{
 			if (Input.GetKeyEnter(Input.key.SPACE)) {
 				Game.FlipScene(new CSTitle(), Flip::CROSS_FADE, 10);
+				Music.Play(M_SELECT);
 			}
 			if (Input.GetKeyEnter(Input.key.NUMPADENTER)) {
 				life = true;
+				Music.Play(M_SELECT);
 				Game.FlipScene(new CSGame(stage), Flip::CROSS_FADE, 30);
 			}
 		}
@@ -1304,8 +1395,20 @@ void CSGame::Loop() {
 					vx = 5;
 				}
 				if (Yflag == false) {
-					if (x + jWidth + d < 6400) {
-						scrolX += 5;
+					if ((stage != 24) && (stage != 23)) {
+						if (x + jWidth + d < 6400) {
+							scrolX += 5;
+						}
+					}
+					else if (stage == 24){
+							if (x + jWidth + d < 4600) {
+								scrolX += 5;
+							}
+					}
+					else if (stage == 23) {
+						if (x + jWidth + d < 7600) {
+							scrolX += 5;
+						}
 					}
 				}
 			}
@@ -1337,7 +1440,7 @@ void CSGame::Loop() {
 			}
 		}
 
-		if ((stage == 22) || (stage == 23)) {
+		/*if ((stage == 22) || (stage == 23)) {
 			if (life == true) {
 				if (Input.GetKeyDown(Input.key.RIGHT)) {
 					vx += 5;
@@ -1352,23 +1455,40 @@ void CSGame::Loop() {
 					}
 				}
 			}
-		}
+		}*/
 
 
 		/*if (x + jWidth > 6400) {
 			vx = 5;
 		}*/
 		if (x + jWidth == 6800) {
-			if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103) && (stage != 22) && (stage != 23))
-			Game.FlipScene(new CSComplete(stage), Flip::CROSS_FADE, 8);
+			if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103) && (stage != 104) && (stage != 22) && (stage != 23)) {
+				Game.FlipScene(new CSComplete(stage), Flip::CROSS_FADE, 8);
+				Music.Delete(M_VER);
+				Music.Play(M_COMPLETE);
+			}
+			else if (stage == 23) {}
 		}
-		else if (stage == 23) {
+		if (stage == 22 && x + jWidth == 6400) {
+			Game.FlipScene(new CSGame(104), Flip::CROSS_FADE, 8);
+			Music.Delete(M_VER);
+		}
+			
+		if (stage == 23) {
 			if (bosslife <= 0) {
 				Game.FlipScene(new CSComplete(stage), Flip::CROSS_FADE, 8);
+				Music.Play(M_COMPLETE);
+				Music.Delete(M_VER);
+			}
+		}
+		if (stage == 24) {
+			if (x + jWidth == 5000) {
+				Game.FlipScene(new CSTitle(), Flip::CROSS_FADE, 8);
+				Music.Delete(M_VER);
 			}
 		}
 
-		if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103)) {
+		if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103) && (stage != 104)) {
 			for (int i = x / 40, endI = (x + 50) / 40, endJ = (y + 30) / 40; i <= endI; ++i) {
 				for (int j = y / 40; j <= endJ; ++j) {
 					if (mce.Get(mce.layer.A, i, j) != 0) {
@@ -1555,31 +1675,41 @@ void CSGame::Loop() {
 		for (int i = 0; i < 20; i++) {
 			if (BHR[i].x + BHR[i].width > 800 + scrolX) {
 				BHR[i].flag = false;
+				BHR[i].v = 0;
 			}
 		}
 		for (int i = 0; i < 20; i++) {
 			if (BHL[i].x + BHL[i].width < scrolX) {
 				BHL[i].flag = false;
+				BHL[i].v = 0;
 			}
 		}
 		for (int i = 0; i < 20; i++) {
 			if (BHUR[i].x + BHUR[i].width > 800 + scrolX) {
 				BHUR[i].flag = false;
+				BHUR[i].v = 0;
+				BHUR[i].vy = 0;
 			}
 		}
 		for (int i = 0; i < 20; i++) {
 			if (BHUL[i].x + BHUL[i].width < scrolX) {
 				BHUL[i].flag = false;
+				BHUL[i].v = 0;
+				BHUL[i].vy = 0;
 			}
 		}
 		for (int i = 0; i < 20; i++) {
 			if (BHDR[i].x + BHDR[i].width > 800 + scrolX) {
 				BHDR[i].flag = false;
+				BHDR[i].v = 0;
+				BHDR[i].vy = 0;
 			}
 		}
 		for (int i = 0; i < 20; i++) {
 			if (BHDL[i].x + BHDL[i].width < scrolX) {
 				BHDL[i].flag = false;
+				BHDL[i].v = 0;
+				BHDL[i].vy = 0;
 			}
 		}
 		for (int i = 0; i < 20; i++) {
@@ -1610,7 +1740,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 11 && i * 40 - scrolX >= 1200 && i * 40 - scrolX <= 1200 + 5) {
+				if (mce.Get(mce.layer.B, i, j) == 11 && i * 40 - scrolX >= 1200 && i * 40 - scrolX <= 1200 + 2) {
 					for (int I = 0; I < 50; I++) {
 						if (LU[I].flag == false) {
 							LU[I].x = i * 40;
@@ -1680,7 +1810,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 1 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 1 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (B[I].flag == false) {
 							B[I].x = i * 40;
@@ -1695,7 +1825,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 8 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 8 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (B3[I].flag == false) {
 							B3[I].x = i * 40;
@@ -1711,7 +1841,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 9 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 9 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 50; I++) {
 						if (O[I].flag == false) {
 							O[I].x = i * 40;
@@ -1726,7 +1856,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 6 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 6 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (E[I].flag == false) {
 							E[I].x = i * 40;
@@ -1741,7 +1871,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 8 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 8 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 50; I++) {
 						if (F3[I].flag == false) {
 							F3[I].x = i * 40;
@@ -1757,7 +1887,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 2 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 2 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (B2[I].flag == false) {
 							B2[I].x = i * 40;
@@ -1772,7 +1902,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 4 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 4 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (F2[I].flag == false) {
 							F2[I].x = i * 40;
@@ -1788,7 +1918,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 3 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 3 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 50; I++) {
 						if (U[I].flag == false) {
 							U[I].x = i * 40;
@@ -1803,7 +1933,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 6 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 6 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 50; I++) {
 						if (GF[I].flag == false) {
 							GF[I].x = i * 40;
@@ -1832,7 +1962,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 2 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 2 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 100; I++) {
 						if (S[I].flag == false) {
 							S[I].x = i * 40;
@@ -1846,7 +1976,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 3 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 3 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 50; I++) {
 						if (U2[I].flag == false) {
 							U2[I].x = i * 40;
@@ -1861,7 +1991,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 4 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 4 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (DB[I].flag == false) {
 							DB[I].x = i * 40;
@@ -1876,7 +2006,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 5 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 5 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 50; I++) {
 						if ((C[I].flag == false) && (CL[I].flag == false) && (CR[I].flag == false)) {
 							C[I].x = i * 40;
@@ -1897,7 +2027,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 7 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 7 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (S2[I].flag == false) {
 							S2[I].x = i * 40;
@@ -1918,7 +2048,7 @@ void CSGame::Loop() {
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 5 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 5 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 20; I++) {
 						if (BO1[I].flag == false) {
 							BO1[I].x = i * 40;
@@ -1950,7 +2080,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.C, i, j) == 7 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.C, i, j) == 7 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 10; I++) {
 						V1[I].x = i * 40;
 						V1[I].y = j * 40;
@@ -1964,7 +2094,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 9 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 5 - d) {
+				if (mce.Get(mce.layer.B, i, j) == 9 && i * 40 - scrolX >= 1200 - d && i * 40 - scrolX <= 1200 + 2 - d) {
 					for (int I = 0; I < 10; I++) {
 						if (BBH[I].flag == false) {
 							BBH[I].x = i * 40;
@@ -1996,14 +2126,15 @@ void CSGame::Loop() {
 		if ((bossbonedamagecount <= 35) && (bossbonedamagecount >= 35)) {
 			bossbonelife -= 1;
 		}
-		if ((x == 6300) && (bossbonelife > 0)) {
+		
+		if ((ver == 4) && (x == 6300) && (bossbonelife > 0)) {
 			kb.flag = true;
 			kb.x =scrolX - kb.width;
 		}
 
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 22 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800 + 5) {
+				if (mce.Get(mce.layer.B, i, j) == 22 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800 + 2) {
 					for (int I = 0; I < 20; I++) {
 						if (BHU[I].flag == false) {
 							BHU[I].x = i * 40;
@@ -2017,7 +2148,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 23 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800 + 5) {
+				if (mce.Get(mce.layer.B, i, j) == 23 && i * 40 - scrolX >= 800 && i * 40 - scrolX <= 800 + 2) {
 					for (int I = 0; I < 20; I++) {
 						if (BHD[I].flag == false) {
 							BHD[I].x = i * 40;
@@ -2031,7 +2162,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 16 && i * 40 - scrolX <= 0 && i * 40 - scrolX >= 0 - 5) {
+				if (mce.Get(mce.layer.B, i, j) == 16 && i * 40 - scrolX <= 0 && i * 40 - scrolX >= 0 - 2) {
 					for (int I = 0; I < 20; I++) {
 						if (BHR[I].flag == false) {
 							BHR[I].x = i * 40;
@@ -2059,7 +2190,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 18 && i * 40 - scrolX <= 0 && i * 40 - scrolX >= 0 - 5) {
+				if (mce.Get(mce.layer.B, i, j) == 18 && i * 40 - scrolX <= 0 && i * 40 - scrolX >= 0 - 2) {
 					for (int I = 0; I < 20; I++) {
 						if (BHUR[I].flag == false) {
 							BHUR[I].x = i * 40;
@@ -2087,7 +2218,7 @@ void CSGame::Loop() {
 		}
 		for (int i = 0; i < mce.GetWidth(); i++) {
 			for (int j = 0; j < mce.GetHeight(); j++) {
-				if (mce.Get(mce.layer.B, i, j) == 20 && i * 40 - scrolX <= 0 && i * 40 - scrolX >= 0 - 5) {
+				if (mce.Get(mce.layer.B, i, j) == 20 && i * 40 - scrolX <= 0 && i * 40 - scrolX >= 0 - 2) {
 					for (int I = 0; I < 20; I++) {
 						if (BHDR[I].flag == false) {
 							BHDR[I].x = i * 40;
@@ -2169,12 +2300,12 @@ void CSGame::Loop() {
 
 	void CSGame::Draw() {
 
-		if ((ver == 0) || (ver == 100) || (ver == 101) || (ver == 102) || (ver == 103)) {
+		if ((ver == 0) || (ver == 100) || (ver == 101) || (ver == 102) || (ver == 103) || (ver == 104)) {
 			background1(0, 0);
 		}
 		else if (ver == 8) {
 			back8_1(0, 0, false, false);
-			//	back8_2(0, 0, false, false);
+			back8_2(0, 0, false, false);
 		}
 		else {
 			background5(0 - scrolX * 0.2, 0);
@@ -2253,7 +2384,7 @@ void CSGame::Loop() {
 				}
 			}
 		}
-		if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103)) {
+		if ((stage != 100) && (stage != 101) && (stage != 102) && (stage != 103) && (stage != 104)) {
 			if ((stage == 12) && (x > 6425)) {
 				player3(x - scrolX, y + 20 - scrolY);
 			}
@@ -2543,11 +2674,17 @@ void CSGame::Loop() {
 		for (int i = 0; i < 20; i++) {
 			if (BHU[i].flag == true) {
 				bosshandU(BHU[i].x - scrolX, BHU[i].y, false);
+				if (BHU[i].damagecount > 0) {
+					bosshandUdamage(BHU[i].x - scrolX, BHU[i].y, false);
+				}
 			}
 		}
 		for (int i = 0; i < 20; i++) {
 			if (BHD[i].flag == true) {
 				bosshandD(BHD[i].x - scrolX, BHD[i].y, false);
+				if (BHD[i].damagecount > 0) {
+					bosshandDdamage(BHD[i].x - scrolX, BHD[i].y, false);
+				}
 			}
 		}
 		for (int i = 0; i < 20; i++) {
@@ -2673,7 +2810,7 @@ void CSGame::Loop() {
 		light(lx - scrolX, ly - scrolY);
 	}
 
-	if ((stage != 22) && (stage != 100) && (stage != 101) && (stage != 102) && (stage != 103)) {
+	if ((stage != 22) && (stage != 23) && (stage != 100) && (stage != 101) && (stage != 102) && (stage != 103) && (stage != 104)) {
 		DrawBox(6395 - scrolX, 0 - scrolY, 6400 - scrolX, 600, RED, true);
 	}
 	if (ver == 4) {
@@ -2692,7 +2829,10 @@ void CSGame::Loop() {
 	}
 	if (stage == 23) {
 		bosslifebar(130, 20, false);
-		DrawBox(150, 40, bosslife * 0.1 + 150, 90, RED, true);
+		DrawBox(150, 40, bosslife * 0.1 + 150, 90, BLUE, true);
+		missilemeter(x - 23 + 16 - scrolX, y + jHeight + 5);
+		DrawBox(x - 23 + 16 - scrolX, y + jHeight + 5, x - 23 + 16 + missilecount * 5 - scrolX, y + jHeight + 27,RED,true);
+		missilemeter2(x - 23 - scrolX, y + jHeight + 5);
 	}
 		if (life == false) {
 			DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
