@@ -5,11 +5,6 @@ extern CPlayer GetPlayer();
 extern CWeaponManager GetWeaponManager();
 extern CSelect GetSelect();
 
-extern int Pown1;
-extern int Pown2;
-extern int Pown3;
-extern int Pown4;
-
 extern int parts[30];
 
 CPause::CPause() {
@@ -72,21 +67,16 @@ void CPause::Loop() {
 
 void CPause::Draw() {
 	SetFontSize(20);
-	background(GetMap().GetWidth() * 40, 0);
-	hpbar(GetMap().GetWidth() * 40 + 20, 30);
-	DrawBox(GetMap().GetWidth() * 40 + 60, 30 + 1, GetMap().GetWidth() * 40 + 60 + GetPlayer().GetLife(), 50 - 1, RED, true);
-	weaponicon1(GetMap().GetWidth() * 40 + 25, 60);
-	DrawFormatString(GetMap().GetWidth() * 40 + 25, 60 + 30, BLACK, "%d", Pown1);
-	weaponicon2(GetMap().GetWidth() * 40 + 65, 60);
-	DrawFormatString(GetMap().GetWidth() * 40 + 65, 60 + 30, BLACK, "%d", Pown2);
+	background(600, 0);
+	hpbar(600 + 20, 30);
+	DrawBox(600 + 60, 30 + 1, 600 + 60 + GetPlayer().GetLife(), 50 - 1, RED, true);
 
-	partsicon1(GetMap().GetWidth() * 40 + 25, 130);
-	DrawFormatString(GetMap().GetWidth() * 40 + 25, 130 + 30, BLACK, "%d", parts[1]);
+	partsicon1(600 + 25, 130);
+	DrawFormatString(600 + 25, 130 + 30, BLACK, "%d", parts[1]);
 
-	weaponiconFrame(GetMap().GetWidth() * 40 + 25 + (GetWeaponManager().GetChange() - 1) * 40, 60);
 	if (type == 3) {
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
-		DrawBox(0, 0, GetMap().GetWidth() * 40, 600, BLACK, true);
+		DrawBox(0, 0, 600, 600, BLACK, true);
 		background2(150, 150);
 		redbar(150, 150 + 100 * (sentaku - 1));
 	}

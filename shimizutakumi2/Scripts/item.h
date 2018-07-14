@@ -5,9 +5,11 @@
 #include "enemy.h"
 #include "weapon.h"
 #include "possession.h"
+#include "map.h"
+#include "scrol.h"
 
 
-class CItem {
+class CItem {//•ó” 
 protected:
 	int x,y;
 	int R;

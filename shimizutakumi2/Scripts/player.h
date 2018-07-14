@@ -12,6 +12,9 @@ private:
 	int life;
 	const int R = 10;
 	int invincible;
+	int stopcount;
+	int kaihiL, kaihiR, kaihiU, kaihiD;//‰ñ”ğ‚Éx,y‚É‘«‚µˆø‚«‚·‚é’lA™X‚ÉŒ¸‚Á‚Ä‚¢‚­
+	bool right, left, up, down;
 public:
 	CPlayer();
 	void Move();
@@ -23,5 +26,7 @@ public:
 	int GetV();
 	int GetLife();
 	int Hit();
+	int GetKaihiU();
+	int GetKaihiD();
 	bool GetItem(int x,int y,int R);
 };

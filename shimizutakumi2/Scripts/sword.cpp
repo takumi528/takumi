@@ -6,9 +6,13 @@ CMap GetMap();
 CSword::CSword() {
 	x = 800;
 	y = 800;
-	count = 0;
 	damage = 0;
 	flag = false;
+	count = 0;
+}
+
+void CSword::Load() {
+	sword.Set(LoadDivGraph("stpic/swordanim.png", 5, 5, 1, 140, 90), 4);
 }
 
 void CSword::Set(int x, int y) {
@@ -18,13 +22,13 @@ void CSword::Set(int x, int y) {
 
 void CSword::Appear(int x,int y) {
 	Set(x, y);
-	count = 1;
+	count = 10;
 	flag = true;
 }
 
 void CSword::PAttack() {
 	if (count <= 0) {
-		if (Input.GetKeyEnter(Input.key.SPACE)) {
+		if (Input.GetKeyEnter(Input.key.X)) {
 			Appear(GetPlayer().GetX(), GetPlayer().GetY());
 		}
 	}
@@ -42,11 +46,15 @@ void CSword::Loop() {
 	else {
 		flag = false;
 	}
+	if (count > 0) {
+		sword.PlusCount();
+	}
 }
 
 void CSword::Draw() {
 	if (flag == true) {
-		DrawCircle(x, y + mapY, R, PURPLE, true);
+		//DrawCircle(x, y + mapY, R, PURPLE, true);
+		sword(x - R - scrX, y - R - scrY, false, true);
 	}
 }
 

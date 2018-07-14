@@ -2,19 +2,21 @@
 
 extern CPossession GetPossession();
 
+//flagは作成できるかどうか
 extern int parts[30];
-extern int gun[30];
-extern bool gunflag[30];
+extern int weapon[30];
+extern bool weaponflag[30];
+extern char weaponname[30][20];
 extern int gunpower[30];
-extern int sword[30];
-extern bool swordflag[30];
 extern int swordpower[30];
 extern int armar[30];
-extern bool armarflag[30];
 extern int armarguard[30];
-extern int weargun, wearsword, weararmar;
-extern char gunname[30][20];
-extern char swordname[30][20];
+extern bool armarflag[30];
+
+extern int wearweapon, weararmar;//どれを装備しているか
+
+
+//銃と剣を統一
 
 CSelect::CSelect() {
 	stage = 0;
@@ -38,7 +40,7 @@ void CSelect::Load() {
 	background41_1 = "stpic/home41_1.png";
 	background41_2 = "stpic/home41_2.png";
 	redbar = "stpic/redbar2.png";
-	redbar2 = "stpic/redbar3.png";
+	redbar2 = "stpic/redbar5.png";
 	redbar3 = "stpic/redbar4.png";
 	blackbox = "stpic/blackbox.png";
 	blackbox2 = "stpic/blackbox2.png";
@@ -63,12 +65,12 @@ void CSelect::Loop() {
 				sentaku4 = 1;
 				sentaku5 = 1;
 			}
-			else if (scene == 31 || scene == 32 || scene == 33 || scene == 34) {
+			else if (scene == 31 || scene == 32 || scene == 33) {
 				scene = 3;
 				count2 = 5;
 				sentaku31 = 1;
 			}
-			else if (scene == 41 || scene == 42 || scene == 43 || scene == 44) {
+			else if (scene == 41 || scene == 42 || scene == 43) {
 				scene = 4;
 				count2 = 5;
 				sentaku41 = 1;
@@ -129,7 +131,7 @@ void CSelect::Loop() {
 
 	if (scene == 3) {//カスタマイズ画面での処理
 		if (Input.GetKeyEnter(Input.key.DOWN)) {
-			if (sentaku3 < 4) {
+			if (sentaku3 < 3) {
 				sentaku3++;
 			}
 		}
@@ -153,15 +155,11 @@ void CSelect::Loop() {
 				case 3:
 					scene = 33;
 					count2 = 5;
-					break;
-				case 4:
-					scene = 34;
-					count2 = 5;
 				}
 			}
 		}
 	}
-	if (scene == 31 || scene == 32 || scene == 33 || scene == 34) {
+	if (scene == 31 || scene == 32 || scene == 33) {
 		if (count2 <= 0) {
 			if (Input.GetKeyEnter(Input.key.RIGHT)) {
 				count2 = 2;
@@ -205,16 +203,11 @@ void CSelect::Loop() {
 					}
 					break;
 				case 32:
-					if (gun[sentaku31] > 0 && weargun != sentaku31) {
-						weargun = sentaku31;
+					if (weapon[sentaku31] > 0 && wearweapon != sentaku31) {
+						wearweapon = sentaku31;
 						count2 = 5;
 					}
 					break;
-				case 33:
-					if (sword[sentaku31] > 0 && wearsword != sentaku31) {
-						wearsword = sentaku31;
-						count2 = 5;
-					}
 				}
 			}
 		}
@@ -222,7 +215,7 @@ void CSelect::Loop() {
 
 	if (scene == 4) {//アイテム生成画面での処理
 		if (Input.GetKeyEnter(Input.key.DOWN)) {
-			if (sentaku4 < 4) {
+			if (sentaku4 < 3) {
 				sentaku4++;
 			}
 		}
@@ -246,15 +239,11 @@ void CSelect::Loop() {
 				case 3:
 					scene = 43;
 					count2 = 5;
-					break;
-				case 4:
-					scene = 44;
-					count2 = 5;
 				}
 			}
 		}
 	}
-	if (scene == 41 || scene == 42 || scene == 43 || scene == 44) {
+	if (scene == 41 || scene == 42 || scene == 43) {
 		if (count2 <= 0) {
 			if (Input.GetKeyEnter(Input.key.RIGHT)) {
 				count2 = 2;
@@ -297,12 +286,9 @@ void CSelect::Loop() {
 						GetPossession().Createarmar(sentaku41);
 						break;
 					case 42:
-						GetPossession().Creategun(sentaku41);
+						GetPossession().Createweapon(sentaku41);
 						break;
 					case 43:
-						GetPossession().Createsword(sentaku41);
-						break;
-					case 44:
 						GetPossession().Createitem(sentaku41);
 					}
 				}
@@ -350,7 +336,7 @@ void CSelect::Draw() {
 
 	if (scene == 3) {
 		background3(0, 0);
-		redbar2(50, 100 + (sentaku3 - 1) * 100);
+		redbar2(0, sentaku3 * 120);
 	}
 	if (scene == 31) {
 		if (armar[sentaku31] > 0 && weararmar != sentaku31) {
@@ -366,38 +352,28 @@ void CSelect::Draw() {
 		}
 	}
 	if (scene == 32) {
-		if (gun[sentaku31] > 0 && weargun != sentaku31) {
+		if (weapon[sentaku31] > 0 && wearweapon != sentaku31) {
 			background31_2(0, 0);
 		}
 		else {
 			background31_1(0, 0);
 		}
 		for (int i = 1; i <= 25; i++) {
-			if (gun[i] <= 0) {
+			if (weapon[i] <= 0) {
 				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
 			}
 		}
 	}
 	if (scene == 33) {
-		if (sword[sentaku31] > 0 && wearsword != sentaku31) {
-			background31_2(0, 0);
-		}
-		else {
-			background31_1(0, 0);
-		}
-		for (int i = 1; i <= 25; i++) {
-			if (sword[i] <= 0) {
-				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
-			}
-		}
+		//アイテムのカスタマイズ画面での表示
 	}
-	if (scene == 31 || scene == 32 || scene == 33 || scene == 34) {
+	if (scene == 31 || scene == 32 || scene == 33) {
 		redbar3(250 + ((sentaku31 - 1) % 5) * 100, 50 + ((sentaku31 - 1) / 5) * 100);
 	}
 
 	if (scene == 4) {
 		background4(0, 0);
-		redbar2(50, 100 + (sentaku4 - 1) * 100);
+		redbar2(0, sentaku4 * 120);
 	}
 
 	if (scene == 41) {
@@ -427,7 +403,7 @@ void CSelect::Draw() {
 		}
 	}
 	if (scene == 42) {
-		if (gunflag[sentaku41] == false) {
+		if (weaponflag[sentaku41] == false) {
 			background41_1(0, 0);
 		}
 		else {
@@ -445,39 +421,17 @@ void CSelect::Draw() {
 		DrawFormatString(50, 320, BLACK, "攻撃力");
 		DrawFormatString(110, 320, BLACK, "%d", gunpower[sentaku41]);
 		for (int i = 1; i <= 25; i++) {
-			if (gunflag[i] == false) {
+			if (weaponflag[i] == false) {
 				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
 			}
 		}
 	}
 	if (scene == 43) {
-		if (swordflag[sentaku41] == false) {
-			background41_1(0, 0);
-		}
-		else {
-			background41_2(0, 0);
-		}
-		swordicons(250, 50);
-		sozai(40, 150);
-		seinou(40, 280);
-		SetFontSize(35);
-		DrawFormatString(50, 60, BROWN, swordname[sentaku41]);
-		SetFontSize(20);
-		switch (sentaku41) {//素材の説明
-		case 1:
-		default:
-			DrawFormatString(50, 190, BLACK, "ネジ　…　20コ");
-		}
-		DrawFormatString(50, 320, BLACK, "攻撃力");
-		DrawFormatString(120, 320, BLACK, "%d", swordpower[sentaku41]);
-		for (int i = 1; i <= 25; i++) {
-			if (swordflag[i] == false) {
-				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
-			}
-		}
+		//アイテム作成画面での表示
 	}
 
-	if (scene == 41 || scene == 42 || scene == 43 || scene == 44) {
+
+	if (scene == 41 || scene == 42 || scene == 43) {
 		redbar3(250 + ((sentaku41 - 1) % 5) * 100, 50 + ((sentaku41 - 1) / 5) * 100);
 		if (mybagflag == true) {
 			blackbox2(0, 0);

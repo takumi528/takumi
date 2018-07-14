@@ -17,7 +17,8 @@ extern int DROP;
 
 
 void CSGame::Start() {
-	scr = 0;
+	scrY = map.GetHeight() * 40 - 600;
+	scrX = player.GetX() - 300;
 	if (stage == 100) {
 		type = 0;
 	}
@@ -37,6 +38,7 @@ void CSGame::Start() {
 	pause.Load();
 	sel.Load();
 	clear.Load();
+	sword.Load();
 }
 
 void CSGame::Loop() {
@@ -65,32 +67,39 @@ void CSGame::Loop() {
 		}
 	}
 	if (retry == true) {
+		map.FixReset();
 		Game.FlipScene(new CSGame(stage), Flip::FADE_OUT_IN);
 		retry = false;
 	}
 	if (back == true) {
+		map.FixReset();
 		Game.FlipScene(new CSGame(100), Flip::FADE_OUT_IN);
 		back = false;
 	}
 	if (nextstage == true) {
+		map.FixReset();
 		Game.FlipScene(new CSGame(stage + 1), Flip::FADE_OUT_IN);
 		nextstage = false;
 	}
 	if (type == 1){
 		scrol.Loop();
-		player.Move();
-		player.Loop();
-		weapon.PAttack();
-		weapon.Loop();
-		weapon.Move();
-		sword.Loop();
-		sword.PAttack();
+
 		enemy.Appear();
-		enemy.Move();
-		enemy.Loop();
-		item.Set();
-		item.Loop();
-		pub.Loop();
+		if (scrol.GetFixset() == false) {//ÉXÉNÉçÅ[ÉãÇ™å≈íËÇ≥ÇÍÇÈÇ‹Ç≈ÇÃä‘ÇÕìÆÇ©Ç»Ç¢
+			item.Set();
+			item.Loop();
+			player.Move();
+			player.Loop();
+			weapon.PAttack();
+			weapon.Loop();
+			weapon.Move();
+			sword.Loop();
+			sword.PAttack();
+			enemy.Move();
+			enemy.Loop();
+			pub.Loop();
+			map.Loop();
+		}
 	}
 	clear.Loop();
 	over.Loop();

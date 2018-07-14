@@ -8,12 +8,14 @@
 
 class CSword {
 private:
+	Anim sword;
 	int x, y;
 	int R = 70;
 	const int power = 1;
 	const int knock = 10;
 public:
 	CSword();
+	void Load();
 	void Appear(int x,int y);
 	void PAttack();
 	void Set(int x, int y);

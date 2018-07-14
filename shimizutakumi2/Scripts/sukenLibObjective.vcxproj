@@ -17,6 +17,7 @@
     <ClInclude Include="enemy.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="map.h" />
+    <ClInclude Include="memo.h" />
     <ClInclude Include="MyScene.h" />
     <ClInclude Include="over.h" />
     <ClInclude Include="pause.h" />

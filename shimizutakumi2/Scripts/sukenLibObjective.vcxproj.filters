@@ -130,6 +130,9 @@
     <ClInclude Include="possession.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="memo.h">
+      <Filter>メイン ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">

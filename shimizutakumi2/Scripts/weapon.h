@@ -30,18 +30,9 @@ public:
 	int GetPower();
 };
 
-
-class CWeapon2 :public CWeapon {
-private:
-public:
-	CWeapon2(int x, int y, int v, int power, int direction);
-	void Draw();
-};
-
 class CWeaponManager {
 private:
 	std::list<CWeapon*> weapon;
-	int change;
 public:
 	CWeaponManager();
 	void Appear(int x,int y);
@@ -53,9 +44,4 @@ public:
 	void PAttack();
 	int GetPower();
 
-	int GetChange();
-	int GetPown1();
-	int GetPown2();
-	int GetPown3();
-	int GetPown4();
 };

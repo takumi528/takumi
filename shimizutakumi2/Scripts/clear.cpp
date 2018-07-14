@@ -40,7 +40,7 @@ void CClear::Loop() {
 }
 
 void CClear::Draw() {
-	DrawBox(0, 300 + mapY, GetMap().GetWidth() * 40, 300 + mapY + 5, RED, true);
+	DrawBox(0, 300 - scrY, GetMap().GetWidth() * 40, 300 - scrY + 5, RED, true);
 	if (type == 4) {
 		background(0, 0);
 		background2(200, 200);

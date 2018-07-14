@@ -9,9 +9,10 @@ extern int type;
 extern bool retry;
 extern bool back;
 extern bool nextstage;
-extern int mapY;
 extern int kakunin;
 extern int kakunincount;
+extern int scrY;
+extern int scrX;
 
 class CPub {
 private:

@@ -8,11 +8,11 @@ int type; //0->ƒ^ƒCƒgƒ‹,1->‘€ì‰æ–Ê,2->ƒQ[ƒ€ƒI[ƒo[,3->ƒ|[ƒY‰æ–Ê,4->ƒQ[ƒ€ƒNƒ
 bool retry;
 bool back;
 bool nextstage;
-int mapY;
+int scrY;
+int scrX;
 int kakunin;//ƒfƒoƒbƒO—pA’l‚ğ‘ã“ü‚·‚é‚Æ¶‰º‚ÉOK‚Æo—Í
 
 void CPub::Loop() {
-	mapY = scr - (GetMap().GetHeight() * 40 - 600);
 	if (kakunin > 0) {
 		kakunin--;
 	}

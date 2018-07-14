@@ -3,9 +3,13 @@
 extern CPlayer GetPlayer();
 extern CEnemyManager GetEnemyManager();
 extern CWeaponManager GetWeaponManager();
+extern CMap GetMap();
+extern CScrol GetScrol();
 
 int eneX, eneY, eneDrop;
-extern 	int Pown1, Pown2, Pown3, Pown4;//それぞれの弾の所有数
+int koeneX, koeneY, koeneDrop;
+extern int fixcount;
+extern int fixdelete;
 
 //[]内は種類数
 extern int parts[30];//部品
@@ -46,21 +50,24 @@ CItem3::CItem3(int x, int y, int R, int drop) {
 }
 
 void CItem::Draw() {
-	DrawCircle(x, y + mapY, R, WHITE, true);
+	DrawCircle(x - scrX, y - scrY, R, WHITE, true);
 }
 
 void CItem2::Draw() {
-	DrawCircle(x, y + mapY, R, BLACK, true);
+	DrawCircle(x - scrX, y - scrY, R, BLACK, true);
 }
 
 void CItem3::Draw() {
-	DrawCircle(x, y + mapY, R, RED, true);
+	DrawCircle(x - scrX, y - scrY, R, RED, true);
 }
 
 void CItem::Loop() {
 	if (Get() == true) {
-		Pown1 += drop;
-		deleteFlag = true;
+		if (Input.GetKeyEnter(Input.key.LSHIFT)) {
+			parts[1] += drop;
+			fixdelete++;
+			deleteFlag = true;
+		}
 	}
 }
 
@@ -101,6 +108,7 @@ void CItemManager::Draw() {
 		(*i)->Draw();
 	}
 	DrawFormatString(400, 100, BLACK, "%d", parts[1]);
+
 }
 
 void CItemManager::Loop() {
@@ -118,17 +126,31 @@ void CItemManager::Loop() {
 }
 
 void CItemManager::Set() {
-	if (eneX >= 0) {
-		if (eneDrop == 0) {
-			item.push_back(new CItem(eneX, eneY, 5, rand() % 4 + 3));
+	if (GetMap().GetFix() == true && GetScrol().GetFixset() == false && fixcount == 0) {//固定時のドロップアイテムの出現
+		switch (koeneDrop) {
+		case 0:
+		default:
+			item.push_back(new CItem(scrX + 300, scrY + 300, 10, rand() % 4 + 3));
+			break;
 		}
-		else {
+	}
+	if (eneX >= 0) {//自由行動時のドロップアイテムの出現
+		switch (eneDrop) {
+		case 0:
+		default:
 			item.push_back(new CItem2(eneX, eneY, 5, rand() % 4 + 3));
+			break;
+		case 1:
+			item.push_back(new CItem3(eneX, eneY, 5, rand() % 4 + 3));
+			break;
 		}
 	}
 	eneX = -10;
 	eneY = -10;
 	eneDrop = -10;
+	koeneX = -10;
+	koeneY = -10;
+	koeneDrop = -10;
 }
 
 void CItemManager::DIsappear() {

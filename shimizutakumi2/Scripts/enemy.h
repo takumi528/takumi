@@ -57,6 +57,10 @@ public:
 
 class CEnemy3 :public CEnemy {
 private:
+	int vx, vy;
+	bool leftGo;//trueならしばらく左に直進、falseなら右 
+	bool upGo;//trueならしばらく上に直進、falseなら下
+	int Gocount;//↑のカウント
 public:
 	CEnemy3(int x, int y, int v, int R, int power, int knock, int life);
 	void Move();
