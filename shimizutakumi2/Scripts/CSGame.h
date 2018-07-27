@@ -14,6 +14,7 @@
 #include "clear.h"
 #include "item.h"
 #include "possession.h"
+#include "obstacle.h"
 
 class CSGame :public CScene {
 	//`•Ï”éŒ¾`

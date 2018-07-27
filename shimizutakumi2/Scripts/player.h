@@ -5,10 +5,11 @@
 #include "enemy.h"
 #include "weapon.h"
 #include "possession.h"
+#include "obstacle.h"
 
 class CPlayer {
 private:
-	int x, y, v;
+	int x, y, v, vx, vy;
 	int life;
 	const int R = 10;
 	int invincible;

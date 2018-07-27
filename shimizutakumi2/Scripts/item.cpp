@@ -7,7 +7,7 @@ extern CMap GetMap();
 extern CScrol GetScrol();
 
 int eneX, eneY, eneDrop;
-int koeneX, koeneY, koeneDrop;
+int koeneflag, koeneDrop;
 extern int fixcount;
 extern int fixdelete;
 
@@ -101,6 +101,8 @@ CItemManager::CItemManager() {
 	eneX = -10;
 	eneY = -10;
 	eneDrop = -10;
+	koeneflag = false;
+	eneDrop = -10;
 }
 
 void CItemManager::Draw() {
@@ -126,7 +128,7 @@ void CItemManager::Loop() {
 }
 
 void CItemManager::Set() {
-	if (GetMap().GetFix() == true && GetScrol().GetFixset() == false && fixcount == 0) {//固定時のドロップアイテムの出現
+	if (koeneflag == true) {//固定時のドロップアイテムの出現
 		switch (koeneDrop) {
 		case 0:
 		default:
@@ -148,8 +150,7 @@ void CItemManager::Set() {
 	eneX = -10;
 	eneY = -10;
 	eneDrop = -10;
-	koeneX = -10;
-	koeneY = -10;
+	koeneflag = false;
 	koeneDrop = -10;
 }
 

@@ -10,7 +10,7 @@ class CSword {
 private:
 	Anim sword;
 	int x, y;
-	int R = 70;
+	int R;
 	const int power = 1;
 	const int knock = 10;
 public:

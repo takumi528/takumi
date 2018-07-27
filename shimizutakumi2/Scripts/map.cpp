@@ -53,6 +53,7 @@ void CMap::Loop() {
 		}
 	}
 
+
 	if (GetPlayer().GetLife() > 0) {
 		if (GetPlayer().GetX() > fixX && GetPlayer().GetX() < fixX + 600 && GetPlayer().GetY() > fixY && GetPlayer().GetY() < fixY + 600) {
 			fix = true;
@@ -64,6 +65,7 @@ void CMap::Loop() {
 	else {
 		fix = false;
 	}
+
 }
 
 void CMap::FixReset() {//リトライ、別ステージへの移動の時にfixをfalseにする、CSGameで使用
@@ -111,7 +113,15 @@ void CMap::Draw() {
 		DrawFormatString(200, 0, WHITE, "aaaaa");
 	}
 
-	DrawFormatString(300, 300, RED, "%d", fixcount);
+	DrawFormatString(300, 300, RED, "%d", fixdelete);
+
+	/*for (int i = 0; i < mce.GetWidth(); i++) {
+		for (int j = 0; j < mce.GetHeight(); j++) {
+			if (mce.Get(mce.layer.C, i, j) == 1) {
+				DrawCircle(i * 40 - scrX, j * 40 - scrY, 300, GREEN, true);
+			}
+		}
+	}*/
 }
 
 int CMap::GetWidth() {

@@ -22,7 +22,7 @@ CPossession::CPossession() {
 		armarflag[i] = false;
 	}
 	wearweapon = 1;
-	weararmar = 0;
+	weararmar = 1;
 
 	parts[1] = 100;
 

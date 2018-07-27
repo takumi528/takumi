@@ -47,7 +47,8 @@ public:
 
 class CEnemy2 :public CEnemy {
 private:
-	bool turn;
+	int turn;//1‚Ì‰E‚ÉˆÚ“®@-1‚Ì¶‚ÉˆÚ“®
+	int turncount;
 public:
 	CEnemy2(int x, int y, int v, int R, int power, int knock, int life);
 	void Move();

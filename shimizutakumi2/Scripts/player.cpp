@@ -4,6 +4,7 @@
 extern CMap GetMap();
 extern CEnemyManager GetEnemyManager();
 extern CWeaponManager GetWeaponManager();
+extern CObstacleManager GetObstacleManager();
 
 CPlayer::CPlayer() {
 }
@@ -12,6 +13,8 @@ void CPlayer::Appear() {
 	x = 800;
 	y = 350 + GetMap().GetHeight() * 40 - 600;
 	v = 5;
+	vx = 0;
+	vy = 0;
 	life = 100;
 	invincible = 0;
 	stopcount = 0;
@@ -26,19 +29,28 @@ void CPlayer::Appear() {
 }
 
 void CPlayer::Move() {
+	x += vx;
+	y += vy;
+	if (GetObstacleManager().Hit(x, y, R) == true) {
+		x -= vx;
+		y -= vy;
+	}
+
+	vx = 0;
+	vy = 0;
 	if (y > 300) {
 		if (stopcount <= 0) {
 			if (up == true) {
-				y -= v;
+				vy = v * -1;
 			}
 			if (down == true) {
-				y += v;
+				vy = v;
 			}
 			if (left == true) {
-				x -= v;
+				vx = v * -1;
 			}
 			if (right == true) {
-				x += v;
+				vx = v;
 			}
 
 			if (Input.GetKeyEnter(Input.key.LSHIFT)) {
@@ -87,6 +99,24 @@ void CPlayer::Move() {
 	}
 	else {
 		y -= 3;
+	}
+
+
+	if (kaihiL > 0) {
+		vx = kaihiL * -1;
+		kaihiL -= 2;
+	}
+	if (kaihiR > 0) {
+		vx = kaihiR;
+		kaihiR -= 2;
+	}
+	if (kaihiU > 0) {
+		vy = kaihiU * -1;
+		kaihiU -= 2;
+	}
+	if (kaihiD > 0) {
+		vy = kaihiD;
+		kaihiD -= 2;
 	}
 
 }
@@ -138,22 +168,6 @@ void CPlayer::Loop() {
 		stopcount--;
 	}
 
-	x -= kaihiL;
-	x += kaihiR;
-	y -= kaihiU;
-	y += kaihiD;
-	if (kaihiL > 0) {
-		kaihiL -= 2;
-	}
-	if (kaihiR > 0) {
-		kaihiR -= 2;
-	}
-	if (kaihiU > 0) {
-		kaihiU -= 2;
-	}
-	if (kaihiD > 0) {
-		kaihiD -= 2;
-	}
 	//‰¼
 	if (life <= 0) {
 		life = 0;
@@ -192,7 +206,7 @@ void CPlayer::Draw() {
 		DrawCircle(x - scrX, y - scrY, R, RED, true);
 	}
 
-	DrawFormatString(100, 0, BLUE, "%d", scrY);
+	DrawFormatString(100, 0, BLUE, "%d", vx);
 }
 
 int CPlayer::GetX() {

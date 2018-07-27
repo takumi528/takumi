@@ -133,6 +133,9 @@
     <ClInclude Include="memo.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="obstacle.h">
+      <Filter>メイン ファイル</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -226,6 +229,9 @@
       <Filter>メイン ファイル</Filter>
     </ClCompile>
     <ClCompile Include="possession.cpp">
+      <Filter>メイン ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="obstacle.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
   </ItemGroup>

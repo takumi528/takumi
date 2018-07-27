@@ -13,6 +13,7 @@ CClear clear;
 CPub pub;
 CItemManager item;
 CPossession possession;
+CObstacleManager obstacle;
 extern int DROP;
 
 
@@ -99,6 +100,8 @@ void CSGame::Loop() {
 			enemy.Loop();
 			pub.Loop();
 			map.Loop();
+			obstacle.Appear();
+			obstacle.Loop();
 		}
 	}
 	clear.Loop();
@@ -112,6 +115,7 @@ void CSGame::Draw() {
 	}
 	else {
 		map.Draw();
+		obstacle.Draw();
 		sword.Draw();
 		player.Draw();
 		weapon.Draw();
@@ -174,4 +178,8 @@ CSelect GetSelect() {
 
 CPossession GetPossession() {
 	return possession;
+}
+
+CObstacleManager GetObstacleManager() {
+	return obstacle;
 }

@@ -9,6 +9,7 @@ CSword::CSword() {
 	damage = 0;
 	flag = false;
 	count = 0;
+	R = 60;
 }
 
 void CSword::Load() {
@@ -53,8 +54,8 @@ void CSword::Loop() {
 
 void CSword::Draw() {
 	if (flag == true) {
-		//DrawCircle(x, y + mapY, R, PURPLE, true);
-		sword(x - R - scrX, y - R - scrY, false, true);
+		DrawCircle(x - scrX, y - scrY, R, PURPLE, true);
+		//sword(x - R - scrX, y - R - scrY, false, true);
 	}
 }
 

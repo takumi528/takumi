@@ -9,7 +9,7 @@ extern CMap GetMap();
 extern CItemManager GetItemManager();
 
 extern int eneX,eneY,eneDrop;//死んだときの敵の座標とドロップアイテム情報の受け渡し,item.cppで使用
-extern int koeneX, koeneY, koeneDrop;//↑の固定時の敵バージョン
+extern int koeneflag, koeneDrop;//↑の固定時の敵バージョン
 extern int gunpower[30];
 extern int swordpower[30];
 extern int armarguard[30];
@@ -57,12 +57,13 @@ CEnemy2::CEnemy2(int x, int y, int v, int R, int power, int knock, int life) {//
 	this->maxlife = life;
 	deleteFlag = false;
 	drop = DROP;
-	if (x < 300) {
-		turn = false;
+	if (x < scrX + 300) {
+		turn = 1;
 	}
 	else {
-		turn = true;
+		turn = -1;
 	}
+	turncount = 0;
 }
 
 CEnemy3::CEnemy3(int x, int y, int v, int R, int power, int knock, int life) {//追跡(固)
@@ -91,18 +92,28 @@ void CEnemy::Move() {
 void CEnemy0::Move() {}
 
 void CEnemy2::Move() {
-	if (turn == false) {
+	if (turn == 1) {
 		x += v;
     }
 	else {
 		x -= v;
 	}
 
-	if (x > 600 - R) {
-		turn = true;
+	if (turncount < 150) {
+		turncount++;
 	}
+	else {
+		turn *= -1;
+		turncount = 0;
+	}
+
 	if (x < 0 + R) {
-		turn = false;
+		x = 0 + R + 5;
+		turncount = 150;
+	}
+	if (x > mce.GetWidth() * 40 - R) {
+		x = mce.GetWidth() * 40 - R - 5;
+		turncount = 150;
 	}
 }
 
@@ -220,6 +231,7 @@ void CEnemy3::Loop() {
 	if (life <= 0) {
 		if (fixcount == 1) {
 			GetMap().FixReset2();
+			koeneflag = true;
 		}
 		fixcount--;
 		eneX = x;
