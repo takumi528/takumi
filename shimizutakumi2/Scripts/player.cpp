@@ -221,6 +221,10 @@ int CPlayer::GetV() {
 	return v;
 }
 
+int CPlayer::GetR() {
+	return R;
+}
+
 int CPlayer::GetLife() {
 	return life;
 }
@@ -242,4 +246,11 @@ int CPlayer::GetKaihiU() {
 
 int CPlayer::GetKaihiD() {
 	return kaihiD;
+}
+
+bool CPlayer::EweaponDisappear(int x, int y, int R) {
+	if ((x - this->x)*(x - this->x) + (y - this->y)*(y - this->y) <= (R + this->R)*(R + this->R)) {
+		return true;
+	}
+	return false;
 }

@@ -30,9 +30,6 @@ void CMap::Set(int stage) {
 		break;
 	case 2:
 		mce = "MCE/stage2.mce";
-		break;
-	case 3:
-		mce = "MCE/stage3.mce";
 	}
 }
 

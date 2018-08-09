@@ -348,7 +348,7 @@ void CEnemyManager::Appear() {
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (mce.Get(mce.layer.B, i, j) == 1 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
-				enemy.push_back(new CEnemy0(i * 40, j * 40, 2, 20, 10, 50, 4));
+				enemy.push_back(new CEnemy0(i * 40, j * 40, 2, 20, 10, 50, 200));
 				fixcount++;
 				mce.Get(mce.layer.B, i, j) = 0;
 			}

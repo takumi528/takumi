@@ -358,6 +358,7 @@ void CSelect::Draw() {
 		else {
 			background31_1(0, 0);
 		}
+		gunicons(250, 50);
 		for (int i = 1; i <= 25; i++) {
 			if (weapon[i] <= 0) {
 				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);

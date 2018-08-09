@@ -5,8 +5,8 @@ int parts[30];
 int weapon[30];
 bool weaponflag[30];
 char weaponname[30][20] = {"a","aa"};
-int gunpower[30] = { 1,20,30,20 };
-int swordpower[30] = { 1,50 };
+int gunpower[30] = { 1,20,20,10,5,5,10 };
+int swordpower[30] = { 1,50,50,50,50,50,50 };
 int armar[30];
 int armarguard[30];
 bool armarflag[30];
@@ -16,9 +16,9 @@ int wearweapon,weararmar;//‚Ç‚ê‚ð‘•”õ‚µ‚Ä‚¢‚é‚©
 CPossession::CPossession() {
 	for (int i = 1; i <= 25; i++) {
 		parts[i] = 0;
-		weapon[i] = 0;
+		weapon[i] = 1;
 		weaponflag[i] = false;
-		armar[i] = 0;
+		armar[i] = 1;
 		armarflag[i] = false;
 	}
 	wearweapon = 1;

@@ -25,9 +25,11 @@ public:
 	int GetX();
 	int GetY();
 	int GetV();
+	int GetR();
 	int GetLife();
 	int Hit();
 	int GetKaihiU();
 	int GetKaihiD();
 	bool GetItem(int x,int y,int R);
+	bool EweaponDisappear(int x, int y, int R);
 };

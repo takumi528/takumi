@@ -11,6 +11,7 @@
 
 class CItem {//•ó” 
 protected:
+	Graph explain;
 	int x,y;
 	int R;
 	bool deleteFlag;

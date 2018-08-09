@@ -31,6 +31,7 @@ CItem::CItem(int x, int y, int R, int drop) {
 	this->R = R;
 	deleteFlag = false;
 	this->drop = drop;
+	explain = "stpic/explain.png";
 }
 
 CItem2::CItem2(int x, int y, int R, int drop) {
@@ -50,7 +51,8 @@ CItem3::CItem3(int x, int y, int R, int drop) {
 }
 
 void CItem::Draw() {
-	DrawCircle(x - scrX, y - scrY, R, WHITE, true);
+	DrawCircle(x - scrX, y - scrY, R, BLACK, true);
+	//explain(x - scrX - 50, y - scrY - 30);
 }
 
 void CItem2::Draw() {
@@ -63,11 +65,11 @@ void CItem3::Draw() {
 
 void CItem::Loop() {
 	if (Get() == true) {
-		if (Input.GetKeyEnter(Input.key.LSHIFT)) {
+	//	if (Input.GetKeyEnter(Input.key.LSHIFT)) {
 			parts[1] += drop;
 			fixdelete++;
 			deleteFlag = true;
-		}
+	//	}
 	}
 }
 
