@@ -13,6 +13,7 @@
   <ItemGroup>
     <ClInclude Include="clear.h" />
     <ClInclude Include="CSGame.h" />
+    <ClInclude Include="CSMenu.h" />
     <ClInclude Include="CSTitle.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="item.h" />
@@ -51,6 +52,7 @@
   <ItemGroup>
     <ClCompile Include="clear.cpp" />
     <ClCompile Include="CSGame.cpp" />
+    <ClCompile Include="CSMenu.cpp" />
     <ClCompile Include="CSTitle.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="item.cpp" />

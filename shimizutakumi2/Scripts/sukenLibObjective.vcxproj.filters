@@ -26,6 +26,9 @@
     <Filter Include="sukenib\GameEngine\Object">
       <UniqueIdentifier>{524b3a20-2e7b-44d7-bcd0-04e6abdf1bcc}</UniqueIdentifier>
     </Filter>
+    <Filter Include="メイン ファイル\Scene">
+      <UniqueIdentifier>{0c1a312a-dad3-471d-ad7a-027e2523db0d}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Suken.h">
@@ -51,9 +54,6 @@
     </ClInclude>
     <ClInclude Include="sukenlib\GameEngine\Game.h">
       <Filter>sukenib\GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="MyScene.h">
-      <Filter>メイン ファイル</Filter>
     </ClInclude>
     <ClInclude Include="sukenlib\GameEngine\Input.h">
       <Filter>sukenib\GameEngine</Filter>
@@ -84,12 +84,6 @@
     </ClInclude>
     <ClInclude Include="sukenlib\GameEngine\Music.h">
       <Filter>sukenib\GameEngine</Filter>
-    </ClInclude>
-    <ClInclude Include="CSGame.h">
-      <Filter>メイン ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="CSTitle.h">
-      <Filter>メイン ファイル</Filter>
     </ClInclude>
     <ClInclude Include="player.h">
       <Filter>メイン ファイル</Filter>
@@ -136,6 +130,18 @@
     <ClInclude Include="obstacle.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
+    <ClInclude Include="CSGame.h">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSTitle.h">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSMenu.h">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="MyScene.h">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -159,9 +165,6 @@
     <ClCompile Include="sukenlib\GameEngine\Game.cpp">
       <Filter>sukenib\GameEngine</Filter>
     </ClCompile>
-    <ClCompile Include="CSTitle.cpp">
-      <Filter>メイン ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="sukenlib\GameEngine\Input.cpp">
       <Filter>sukenib\GameEngine</Filter>
     </ClCompile>
@@ -170,9 +173,6 @@
     </ClCompile>
     <ClCompile Include="sukenlib\Utility\MCE.cpp">
       <Filter>sukenib\Utility</Filter>
-    </ClCompile>
-    <ClCompile Include="CSGame.cpp">
-      <Filter>メイン ファイル</Filter>
     </ClCompile>
     <ClCompile Include="sukenlib\Utility\Memory.cpp">
       <Filter>sukenib\Utility</Filter>
@@ -233,6 +233,15 @@
     </ClCompile>
     <ClCompile Include="obstacle.cpp">
       <Filter>メイン ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="CSGame.cpp">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSTitle.cpp">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSMenu.cpp">
+      <Filter>メイン ファイル\Scene</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

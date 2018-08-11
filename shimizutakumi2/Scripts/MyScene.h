@@ -9,3 +9,4 @@
 #include "Suken.h"
 #include "CSGame.h"
 #include "CSTitle.h"
+#include "CSMenu.h"

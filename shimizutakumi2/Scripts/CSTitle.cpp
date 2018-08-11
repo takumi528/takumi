@@ -4,11 +4,9 @@ void CSTitle::Start() {
 }
 
 void CSTitle::Loop() {
-	if (Input.GetKeyEnter()) {
-		Game.FlipScene(new CSGame(100), Flip::FADE_OUT_IN);
-	}
+	if (Input.GetKeyEnter(Input.key.RETURN))
+		Game.FlipScene(new CSHome());
 }
-	
 
 void CSTitle::Draw() {
 }

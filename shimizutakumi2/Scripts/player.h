@@ -117,10 +117,3 @@ public:
 	bool GetItem(int x,int y,int R);
 	bool EweaponDisappear(int x, int y, int R);
 };
-
-class PlayerA :public CPlayer{
-public:
-	auto Main() {
-		return &PlayerA::Move;
-	}
-};
