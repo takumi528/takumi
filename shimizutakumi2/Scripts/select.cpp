@@ -1,6 +1,6 @@
 #include"select.h"
 
-extern CPossession GetPossession();
+extern CPossession& GetPossession();
 
 //flag‚Íì¬‚Å‚«‚é‚©‚Ç‚¤‚©
 extern int parts[30];

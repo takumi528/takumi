@@ -1,9 +1,9 @@
 #include "pause.h"
 
-extern CMap GetMap();
-extern CPlayer GetPlayer();
-extern CWeaponManager GetWeaponManager();
-extern CSelect GetSelect();
+extern CMap& GetMap();
+extern CPlayer& GetPlayer();
+extern CWeaponManager& GetWeaponManager();
+extern CSelect& GetSelect();
 
 extern int parts[30];
 

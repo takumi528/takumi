@@ -1,154 +1,71 @@
 #include "player.h"
 #include "over.h"
 
-extern CMap GetMap();
-extern CEnemyManager GetEnemyManager();
-extern CWeaponManager GetWeaponManager();
-extern CObstacleManager GetObstacleManager();
+extern CMap& GetMap();
+extern CEnemyManager& GetEnemyManager();
+extern CWeaponManager& GetWeaponManager();
+extern CObstacleManager& GetObstacleManager();
 
-CPlayer::CPlayer() {
+CPlayer::CPlayer() :state(this, &CPlayer::Normal), param({5, 1.5, 3, 5, 1}) {
+
 }
 
 void CPlayer::Appear() {
 	x = 800;
 	y = 350 + GetMap().GetHeight() * 40 - 600;
-	v = 5;
-	vx = 0;
-	vy = 0;
+	cnt = -1;
+	v = 0;
 	life = 100;
 	invincible = 0;
-	stopcount = 0;
-	kaihiL = 0;
-	kaihiR = 0;
-	kaihiU = 0;
-	kaihiD = 0;
-	right = false;
-	left = false;
-	up = false;
-	down = false;
 }
 
 void CPlayer::Move() {
+	float vx = v*cosf(GetRad());
+	float vy = v*sinf(GetRad());
 	x += vx;
 	y += vy;
-	if (GetObstacleManager().Hit(x, y, R) == true) {
+	if (GetObstacleManager().Hit(x, y, R) == true) {//障害物はマス目管理のほうが軽いので切り替えたほうがいい
 		x -= vx;
 		y -= vy;
 	}
 
-	vx = 0;
-	vy = 0;
-	if (y > 300) {
-		if (stopcount <= 0) {
-			if (up == true) {
-				vy = v * -1;
-			}
-			if (down == true) {
-				vy = v;
-			}
-			if (left == true) {
-				vx = v * -1;
-			}
-			if (right == true) {
-				vx = v;
-			}
-
-			if (Input.GetKeyEnter(Input.key.LSHIFT)) {
-				if (up == true) {
-					if (right == true && left == false) {
-						kaihiU = 20;
-						kaihiR = 20;
-						stopcount = 10;
-					}
-					else if (left == true && right == false) {
-						kaihiU = 20;
-						kaihiL = 20;
-						stopcount = 10;
-					}
-					else {
-						kaihiU = 20;
-					}
-				}
-				else if (down == true) {
-					if (right == true && left == false) {
-						kaihiD = 20;
-						kaihiR = 20;
-						stopcount = 10;
-					}
-					else if (left == true && right == false) {
-						kaihiD = 20;
-						kaihiL = 20;
-						stopcount = 10;
-					}
-					else {
-						kaihiD = 20;
-					}
-				}
-				else {
-					if (right == true && left == false) {
-						kaihiR = 20;
-						stopcount = 10;
-					}
-					else if (left == true && right == false) {
-						kaihiL = 20;
-						stopcount = 10;
-					}
-				}
-			}
-		}
+	if (x < 0 + R) {//壁との衝突判定は移動完了後に
+		x = 0 + R;
 	}
-	else {
-		y -= 3;
+	if (x > GetMap().GetWidth() * 40 - R) {
+		x = GetMap().GetWidth() * 40 - R;
 	}
-
-
-	if (kaihiL > 0) {
-		vx = kaihiL * -1;
-		kaihiL -= 2;
+	if (y > GetMap().GetHeight() * 40 - R) {
+		y = GetMap().GetHeight() * 40 - R;
 	}
-	if (kaihiR > 0) {
-		vx = kaihiR;
-		kaihiR -= 2;
-	}
-	if (kaihiU > 0) {
-		vy = kaihiU * -1;
-		kaihiU -= 2;
-	}
-	if (kaihiD > 0) {
-		vy = kaihiD;
-		kaihiD -= 2;
-	}
-
 }
 
 void CPlayer::Loop() {
-	if (Input.GetKeyDown(Input.key.RIGHT)) {
-		right = true;
+
+	//ちなみに
+	//right = Input.GetKeyDown(Input.key.RIGHT);
+	//と
+	//if (Input.GetKeyDown(Input.key.RIGHT)) {
+	//	right = true;
+	//}
+	//else {
+	//	right = false;
+	//}
+	//は同じ。
+	//GetKeyDown()はbool型を返す関数だから。
+	++cnt;
+	if (state.Main()) {
+		cnt = -1;
+		lastDirec = direc;
 	}
-	else {
-		right = false;
-	}
-	if (Input.GetKeyDown(Input.key.LEFT)) {
-		left = true;
-	}
-	else {
-		left = false;
-	}
-	if (Input.GetKeyDown(Input.key.UP)) {
-		up = true;
-	}
-	else {
-		up = false;
-	}
-	if (Input.GetKeyDown(Input.key.DOWN)) {
-		down = true;
-	}
-	else {
-		down = false;
+
+
+	if (y <= 300) {
+		state.SetNextState(this, &CPlayer::Clear);
 	}
 
 	if (invincible <= 0) {
-		if (Hit() != 0) {
+		if (Hit() != 0) {//当たり判定は外部に出すべき
 			life -= GetEnemyManager().GerPower();
 			invincible = 60;
 		}
@@ -164,16 +81,12 @@ void CPlayer::Loop() {
 		invincible--;
 	}
 
-	if (stopcount > 0) {
-		stopcount--;
-	}
-
 	//仮
 	if (life <= 0) {
 		life = 0;
 	}
 
-	if (GetMap().GetFix() == true) {
+	if (GetMap().GetFix() == true) {//スクロール位置は移動完了してからのほうがいいし、これも外に。
 		if (x > GetMap().GetFixX() + 600 - R) {
 			x = GetMap().GetFixX() + 600 - R;
 		}
@@ -187,26 +100,100 @@ void CPlayer::Loop() {
 			y = GetMap().GetFixY() + R;
 		}
 	}
-
-	if (x < 0 + R) {
-		x = 0 + R;
-	}
-	if (x > GetMap().GetWidth() * 40 - R) {
-		x = GetMap().GetWidth() * 40 - R;
-	}
-	if (y > GetMap().GetHeight() * 40 - R) {
-		y = GetMap().GetHeight() * 40 - R;
-	}
 }
-
 
 void CPlayer::Draw() {
 	DrawFormatString(0, 0, RED, "%d", y);//仮
 	if (invincible % 5 == 0) {
 		DrawCircle(x - scrX, y - scrY, R, RED, true);
+		DrawCircle(x + 3*cosf(GetRad()) - scrX, y + 3 * sinf(GetRad()) - scrY, 3, WHITE, true);
 	}
 
-	DrawFormatString(100, 0, BLUE, "%d", vx);
+	//	DrawFormatString(100, 0, BLUE, "%d", vx);
+}
+
+bool CPlayer::Normal() {
+	int buf = GetInputDirec();
+
+	if (buf >= 0) {
+		direc = buf;
+		v = param.speed;
+	}
+	else {
+		v = 0;
+	}
+
+	if (!Input.GetKeyDown(Input.key.LSHIFT)) {
+		if (Input.GetKeyEnter(Input.key.Z)) {
+			state.SetNextState(this, &CPlayer::AttackZN);
+			return true;
+		}
+		else if (Input.GetKeyEnter(Input.key.X)) {
+			state.SetNextState(this, &CPlayer::AttackXN);
+			return true;
+		}
+		
+	}
+	else {
+		v *= param.dushRate;
+		if (Input.GetKeyEnter(Input.key.Z)) {
+			state.SetNextState(this, &CPlayer::AttackZD);
+			return true;
+		}
+		else if (Input.GetKeyEnter(Input.key.X)) {
+			state.SetNextState(this, &CPlayer::AttackXD);
+			return true;
+		}
+		else if (Input.GetKeyEnter(Input.key.LSHIFT)) {//仮
+			state.SetNextState(this, &CPlayer::Step);
+			return true;
+		}
+	}
+	return false;
+}
+
+bool CPlayer::Step() {
+	if (cnt == 0) {
+		direc = lastDirec;
+		v = param.speed * param.stepRate;
+	}
+	else if (cnt - param.stepTime < param.stopTime) {
+		if (cnt - param.stepTime == 0) {
+			v = 0;
+		}
+		if (Input.GetKeyEnter(Input.key.LSHIFT)) {
+			state.SetNextState(this, &CPlayer::Step);
+		}
+	}
+	else {
+		state.SetNextState(this, &CPlayer::Normal);
+		return true;
+	}
+	return false;
+}
+
+bool CPlayer::Clear() {
+	direc = 0;
+	v = 3;
+	return false;
+}
+
+bool CPlayer::AttackZN() {
+	state.SetNextState(this, &CPlayer::Normal);
+	return true;
+}
+
+bool CPlayer::AttackXN() {
+	state.SetNextState(this, &CPlayer::Normal);
+	return true;
+}
+
+bool CPlayer::AttackZD() {//ダッシュ攻撃未実装の場合
+	return AttackZN();
+}
+
+bool CPlayer::AttackXD() {//ダッシュ攻撃未実装の場合
+	return AttackXN();
 }
 
 int CPlayer::GetX() {
@@ -240,17 +227,56 @@ bool CPlayer::GetItem(int x,int y,int R) {
 	return false;
 }
 
-int CPlayer::GetKaihiU() {
-	return kaihiU;
-}
-
-int CPlayer::GetKaihiD() {
-	return kaihiD;
-}
-
 bool CPlayer::EweaponDisappear(int x, int y, int R) {
 	if ((x - this->x)*(x - this->x) + (y - this->y)*(y - this->y) <= (R + this->R)*(R + this->R)) {
 		return true;
 	}
 	return false;
+}
+
+int CPlayer::GetInputDirec() {
+	if (Input.GetKeyDown(Input.key.UP)) {
+		if (Input.GetKeyDown(Input.key.RIGHT)) {
+			return 1;
+		}
+		else if (Input.GetKeyDown(Input.key.LEFT)) {
+			return 7;
+		}
+		else {
+			return 0;
+		}
+	}
+	else if(Input.GetKeyDown(Input.key.DOWN)) {
+		if (Input.GetKeyDown(Input.key.RIGHT)) {
+			return 3;
+		}
+		else if (Input.GetKeyDown(Input.key.LEFT)) {
+			return 5;
+		}
+		else {
+			return 4;
+		}
+	}
+	else {
+		if (Input.GetKeyDown(Input.key.RIGHT)) {
+			return 2;
+		}
+		else if (Input.GetKeyDown(Input.key.LEFT)) {
+			return 6;
+		}
+		else {
+			return -1;
+		}
+	}
+}
+
+int CPlayer::GetRelativeDirec() {
+	int buf = GetInputDirec();
+	if (buf < 0)
+		return 0;
+	return buf - direc;
+}
+
+float CPlayer::GetRad() {
+	return ((float)(direc - 2)) * DX_PI / 4.f;
 }

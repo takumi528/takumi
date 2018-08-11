@@ -135,51 +135,51 @@ void CSGame::End() {
 
 }
 
-CWeaponManager GetWeaponManager() {
+CWeaponManager& GetWeaponManager() {
 	return weapon;
 }
 
-CPlayer GetPlayer() {
+CPlayer& GetPlayer() {//これやめて超越的に処理が重い。このように参照で受け渡す
 	return player;
 }
 
-CSword GetSword() {
+CSword& GetSword() {
 	return sword;
 }
 
-CEnemyManager GetEnemyManager() {
+CEnemyManager& GetEnemyManager() {
 	return enemy;
 }
 
 
-CScrol GetScrol() {
+CScrol& GetScrol() {
 	return scrol;
 }
 
-CMap GetMap() {
+CMap& GetMap() {
 	return map;
 }
 
-CPause GetPause() {
+CPause& GetPause() {
 	return pause;
 }
 
-CClear GetClear() {
+CClear& GetClear() {
 	return clear;
 }
 
-CItemManager GetItemManager() {
+CItemManager& GetItemManager() {
 	return item;
 }
 
-CSelect GetSelect() {
+CSelect& GetSelect() {
 	return sel;
 }
 
-CPossession GetPossession() {
+CPossession& GetPossession() {
 	return possession;
 }
 
-CObstacleManager GetObstacleManager() {
+CObstacleManager& GetObstacleManager() {
 	return obstacle;
 }

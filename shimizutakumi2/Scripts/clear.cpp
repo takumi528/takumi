@@ -1,7 +1,7 @@
 #include "clear.h"
 
-extern CPlayer GetPlayer();
-extern CMap GetMap();
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
 
 void CClear::Load() {
 	sentaku = 1;

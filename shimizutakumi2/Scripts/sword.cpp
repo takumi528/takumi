@@ -1,6 +1,6 @@
 #include "sword.h"
 
-CPlayer GetPlayer();
+CPlayer& GetPlayer();
 CMap GetMap();
 
 CSword::CSword() {

@@ -1,10 +1,10 @@
 #include "item.h"
 
-extern CPlayer GetPlayer();
-extern CEnemyManager GetEnemyManager();
-extern CWeaponManager GetWeaponManager();
-extern CMap GetMap();
-extern CScrol GetScrol();
+extern CPlayer& GetPlayer();
+extern CEnemyManager& GetEnemyManager();
+extern CWeaponManager& GetWeaponManager();
+extern CMap& GetMap();
+extern CScrol& GetScrol();
 
 int eneX, eneY, eneDrop;
 int koeneflag, koeneDrop;

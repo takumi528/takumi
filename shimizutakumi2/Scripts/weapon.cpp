@@ -1,8 +1,8 @@
 
 #include "weapon.h"
-extern CPlayer GetPlayer();
-extern CMap GetMap();
-extern CEnemyManager GetEnemyManager();
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
+extern CEnemyManager& GetEnemyManager();
 
 extern int Wsignal;
 extern int wearweapon;

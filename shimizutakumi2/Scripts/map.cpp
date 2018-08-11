@@ -1,7 +1,7 @@
 #include "map.h"
 
-extern CPlayer GetPlayer();
-extern CEnemyManager GetEnemyManager();
+extern CPlayer& GetPlayer();
+extern CEnemyManager& GetEnemyManager();
 
 int fixcount;//固定エリアの敵の数、0になるとfixを解く(enemyの出現時++)
 int fixdelete;//fixdelete > 0　のとき　fixを解除

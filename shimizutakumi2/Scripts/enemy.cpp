@@ -1,12 +1,12 @@
 
 #include "enemy.h"
 
-extern CWeaponManager GetWeaponManager();
-extern CSword GetSword();
+extern CWeaponManager& GetWeaponManager();
+extern CSword& GetSword();
 extern MCE mce;
-extern CPlayer GetPlayer();
-extern CMap GetMap();
-extern CItemManager GetItemManager();
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
+extern CItemManager& GetItemManager();
 
 extern int eneX,eneY,eneDrop;//死んだときの敵の座標とドロップアイテム情報の受け渡し,item.cppで使用
 extern int koeneflag, koeneDrop;//↑の固定時の敵バージョン

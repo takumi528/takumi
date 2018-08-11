@@ -1,7 +1,7 @@
 #include "scrol.h"
 
-extern CPlayer GetPlayer();
-extern CMap GetMap();
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
 
 extern int scrY;//画面の上端の座標
 extern int scrX;//画面の右端の座標
