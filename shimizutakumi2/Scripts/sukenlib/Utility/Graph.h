@@ -138,13 +138,39 @@ namespace suken {
 		*/
 		std::pair<int, int> GetSize()const;
 
+		/**
+		*	@brief　描画時の座標をずらします(最初から作ればよかった)
+		*/
+		static void SetShift(int x, int y);
+
+		/**
+		*	@brief　描画時にずらす座標を渡します
+		*/
+		static void GetShift(int *x, int *y);
+
 	private:
 		int handle;
 		unsigned char* cnt;
+		static int sx, sy;
 
 		void AddRef();
 		void Release();
+		friend void DrawLine(int x1, int y1, int x2, int y2, unsigned int color, int tickness);
+		friend void DrawBox(int x1, int y1, int x2, int y2, unsigned int color, bool fillFlag);
+		friend void DrawCircle(int x, int y, int r, unsigned int color, bool fillFlag, int lineThickness);
 	};
+
+	inline void DrawLine(int x1, int y1, int x2, int y2, unsigned int color, int thickness = 1) {
+		DxLib::DrawLine(x1 + Graph::sx, y1 + Graph::sy, x2 + Graph::sx, y2 + Graph::sy, color, thickness);
+	}
+
+	inline void DrawBox(int x1, int y1, int x2, int y2, unsigned int color, bool fillFlag = true) {
+		DxLib::DrawBox(x1 + Graph::sx, y1 + Graph::sy, x2 + Graph::sx, y2 + Graph::sy, color, fillFlag);
+	}
+
+	inline void DrawCircle(int x, int y, int r, unsigned int color, bool fillFlag = true, int lineThickness = 1) {
+		DxLib::DrawCircle(x + Graph::sx, y + Graph::sy, r, color, fillFlag, lineThickness);
+	}
 
 	/**
 	*	@brief　もう数研部員はアニメーションカウンタを作る必要はないのです　LoadDivGraph()を代入して、変数名に（）をつけるだけで勝手にアニメーションするのです

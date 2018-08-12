@@ -13,26 +13,27 @@ void Map::Set(const char* file, int &px, int &py) {
 	height = mce.GetHeight();
 	chipData = new int[width*height];
 	int buf;
-	for (int x = 0; x < width; ++x) {
-		for (int y = 0; y < height; ++y) {
-			buf = mce(mce.layer.A, x, y);
+	Key k;
+	for (k.x = 0; k.x < width; ++k.x) {
+		for (k.y = 0; k.y < height; ++k.y) {
+			buf = mce(mce.layer.A, k.x, k.y);
 			if (buf != 0)
-				enemy[Code(x, y)] = buf - 1;
+				enemy[k.index] = buf - 1;
 
-			buf = mce(mce.layer.B, x, y);
+			buf = mce(mce.layer.B, k.x, k.y);
 			if (buf != 0) {
 				if (buf == 1) {//Ž©‹@‚Ì‰ŠúˆÊ’u
-					px = x * chipSize + chipSize / 2;
-					py = y * chipSize + chipSize / 2;
+					px = k.x * chipSize + chipSize / 2;
+					py = k.y * chipSize + chipSize / 2;
 				}
 				else {
-					trap[Code(x, y)] = buf - 1;
+					trap[k.index] = buf - 1;
 				}
 			}
 
-			buf = mce(mce.layer.C, x, y);
+			buf = mce(mce.layer.C, k.x, k.y);
 			if (buf != 0)
-				chipData[Code(x, y)] = buf - 1;
+				chipData[Code(k.x, k.y)] = buf - 1;
 		}
 	}
 }
@@ -40,9 +41,17 @@ void Map::Set(const char* file, int &px, int &py) {
 void Map::Draw(int scrX, int scrY) {//˜a·ÏŽZ‚Æ”ä‚×‚é‚ÆœŽZ‚Í’´d‚¢‚Ì‚Å‚±‚Ì‚Ù‚¤‚ª‚¢‚¢
 	for (int x = max(0, -scrX / chipSize), endX = min(width, x + System.GetWindowX() / chipSize + 1); x < endX; ++x) {
 		for (int y = max(0, -scrY / chipSize), endY = min(height, y + System.GetWindowY() / chipSize + 1); y < endY; ++y) {
-			chipGraph[chipData[Code(x, y)]](x * chipSize + scrX, y * chipSize + scrY);
+			chipGraph[chipData[Code(x, y)]](x * chipSize, y * chipSize);
 		}
 	}
+}
+
+int Map::GetWidth()const {
+	return width;
+}
+
+int Map::GetHeight()const {
+	return height;
 }
 
 int Map::GetStageWidth()const {
@@ -53,11 +62,11 @@ int Map::GetStageHeight()const {
 	return height * chipSize;
 }
 
-Map::intMap& Map::GetTrapData() {
+Map::IntMap& Map::GetTrapData() {
 	return trap;
 }
 
-Map::intMap& Map::GetEnemyData() {
+Map::IntMap& Map::GetEnemyData() {
 	return enemy;
 }
 

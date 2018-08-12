@@ -17,8 +17,11 @@
     <ClInclude Include="CS_Game.h" />
     <ClInclude Include="CSMenu.h" />
     <ClInclude Include="CSTitle.h" />
+    <ClInclude Include="Decorator.h" />
     <ClInclude Include="Easing.h" />
-    <ClInclude Include="enemy.h" />
+    <ClInclude Include="Enemy.h" />
+    <ClInclude Include="EnemyFactory.h" />
+    <ClInclude Include="Graphics.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="LoadMapTask.h" />
     <ClInclude Include="Map.h" />
@@ -26,6 +29,7 @@
     <ClInclude Include="MyObject.h" />
     <ClInclude Include="MyScene.h" />
     <ClInclude Include="MyTask.h" />
+    <ClInclude Include="ObjectManager.h" />
     <ClInclude Include="obstacle.h" />
     <ClInclude Include="over.h" />
     <ClInclude Include="pause.h" />
@@ -63,7 +67,7 @@
     <ClCompile Include="CS_Game.cpp" />
     <ClCompile Include="CSMenu.cpp" />
     <ClCompile Include="CSTitle.cpp" />
-    <ClCompile Include="enemy.cpp" />
+    <ClCompile Include="Enemy.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="Main.cpp" />
     <ClCompile Include="Map.cpp" />

@@ -97,9 +97,6 @@
     <ClInclude Include="weapon.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="enemy.h">
-      <Filter>メイン ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="sword.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
@@ -175,6 +172,21 @@
     <ClInclude Include="LoadMapTask.h">
       <Filter>メイン ファイル\Task</Filter>
     </ClInclude>
+    <ClInclude Include="ObjectManager.h">
+      <Filter>メイン ファイル\Advance</Filter>
+    </ClInclude>
+    <ClInclude Include="Decorator.h">
+      <Filter>メイン ファイル\Advance</Filter>
+    </ClInclude>
+    <ClInclude Include="Graphics.h">
+      <Filter>メイン ファイル\Advance</Filter>
+    </ClInclude>
+    <ClInclude Include="Enemy.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="EnemyFactory.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="Main.cpp">
@@ -228,9 +240,6 @@
     <ClCompile Include="weapon.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="enemy.cpp">
-      <Filter>メイン ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="sword.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
@@ -277,6 +286,9 @@
       <Filter>メイン ファイル</Filter>
     </ClCompile>
     <ClCompile Include="Map.cpp">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Enemy.cpp">
       <Filter>メイン ファイル\Object</Filter>
     </ClCompile>
   </ItemGroup>

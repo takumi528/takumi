@@ -1,6 +1,8 @@
 #include "Graph.h"
 #include "Primitive.h"
 
+int suken::Graph::sx = 0, suken::Graph::sy = 0;
+
 suken::Graph::Graph() {
 	handle = NULL;
 	cnt = nullptr;
@@ -117,75 +119,75 @@ void suken::Graph::operator ()()const {
 
 void suken::Graph::operator ()(int x, int y, bool turnFlag)const {
 	if (!turnFlag) {
-		DrawGraph(x, y, handle, true);
+		DrawGraph(x + sx, y + sy, handle, true);
 	}
 	else {
-		DrawTurnGraph(x, y, handle, true);
+		DrawTurnGraph(x + sx, y + sy, handle, true);
 	}
 }
 void suken::Graph::operator ()(Vector2D v, bool turnFlag)const {
 	if (!turnFlag) {
-		DrawGraph((int)v.x, (int)v.y, handle, true);
+		DrawGraph((int)v.x + sx, (int)v.y + sy, handle, true);
 	}
 	else {
-		DrawTurnGraph((int)v.x, (int)v.y, handle, true);
+		DrawTurnGraph((int)v.x + sx, (int)v.y + sy, handle, true);
 	}
 }
 
 void suken::Graph::Draw()const {
-	DrawGraph(0, 0, handle, true);
+	DrawGraph(sx, sy, handle, true);
 }
 
 void suken::Graph::Draw(int x, int y, bool turnFlag)const {
 	if (!turnFlag) {
-		DrawGraph(x, y, handle, true);
+		DrawGraph(x + sx, y + sy, handle, true);
 	}
 	else {
-		DrawTurnGraph(x, y, handle, true);
+		DrawTurnGraph(x + sx, y + sy, handle, true);
 	}
 }
 void suken::Graph::Draw(Vector2D v, bool turnFlag)const {
 	if (!turnFlag) {
-		DrawGraph((int)v.x, (int)v.y, handle, true);
+		DrawGraph((int)v.x + sx, (int)v.y + sy, handle, true);
 	}
 	else {
-		DrawTurnGraph((int)v.x, (int)v.y, handle, true);
+		DrawTurnGraph((int)v.x + sx, (int)v.y + sy, handle, true);
 	}
 }
 
 void suken::Graph::DrawRota(int x, int y, double ExtRate, double angle, bool turnFlag)const {
-	DrawRotaGraph(x, y, ExtRate, angle, handle, true, turnFlag);
+	DrawRotaGraph(x + sx, y + sy, ExtRate, angle, handle, true, turnFlag);
 }
 void suken::Graph::DrawRota(Vector2D v, double ExtRate, double angle, bool turnFlag)const {
-	DrawRotaGraph((int)v.x, (int)v.y, ExtRate, angle, handle, true, turnFlag);
+	DrawRotaGraph((int)v.x + sx, (int)v.y + sy, ExtRate, angle, handle, true, turnFlag);
 }
 
 void suken::Graph::DrawRota2(int x, int y, int cx, int cy, double ExtRate, double angle, bool turnFlag)const {
-	DrawRotaGraph2(x, y,cx,cy, ExtRate, angle, handle, true, turnFlag);
+	DrawRotaGraph2(x + sx, y + sy,cx,cy, ExtRate, angle, handle, true, turnFlag);
 }
 void suken::Graph::DrawRota2(Vector2D v,Vector2D center, double angle, double ExtRate, bool turnFlag)const {
-	DrawRotaGraph2((int)v.x, (int)v.y, (int)center.x, (int)center.y, ExtRate, angle, handle, true, turnFlag);
+	DrawRotaGraph2((int)v.x + sx, (int)v.y + sy, (int)center.x, (int)center.y, ExtRate, angle, handle, true, turnFlag);
 }
 
 void suken::Graph::DrawRota3(int x, int y, int cx, int cy, double ExtRateX, double ExtRateY, double angle, bool turnFlag)const {
-	DrawRotaGraph3(x, y, cx, cy, ExtRateX,ExtRateY, angle, handle, true, turnFlag);
+	DrawRotaGraph3(x + sx, y + sy, cx, cy, ExtRateX,ExtRateY, angle, handle, true, turnFlag);
 }
 void suken::Graph::DrawRota3(Vector2D v, Vector2D center, double angle, Vector2D ExtRate, bool turnFlag)const {
-	DrawRotaGraph3((int)v.x, (int)v.y, (int)center.x, (int)center.y, (double)ExtRate.x, (double)ExtRate.y, angle, handle, true, turnFlag);
+	DrawRotaGraph3((int)v.x + sx, (int)v.y + sy, (int)center.x, (int)center.y, (double)ExtRate.x, (double)ExtRate.y, angle, handle, true, turnFlag);
 }
 
 void suken::Graph::DrawExtend(int x1, int y1, int x2, int y2)const {
-	DrawExtendGraph(x1, y1, x2, y2, handle, true);
+	DrawExtendGraph(x1 + sx, y1 + sy, x2 + sx, y2 + sy, handle, true);
 }
 void suken::Graph::DrawExtend(Vector2D v1, Vector2D v2)const {
-	DrawExtendGraph((int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, handle, true);
+	DrawExtendGraph((int)v1.x + sx, (int)v1.y + sy, (int)v2.x + sx, (int)v2.y + sy, handle, true);
 }
 
 void suken::Graph::DrawModi(int x1, int y1, int x2, int y2, int x3, int y3, int x4, int y4)const {
-	DrawModiGraph(x1, y1, x2, y2, x3, y3, x4, y4, handle, true);
+	DrawModiGraph(x1 + sx, y1 + sy, x2 + sx, y2 + sy, x3 + sx, y3 + sy, x4 + sx, y4 + sy, handle, true);
 }
 void suken::Graph::DrawModi(Vector2D v1, Vector2D v2, Vector2D v3, Vector2D v4)const {
-	DrawModiGraph((int)v1.x, (int)v1.y, (int)v2.x, (int)v2.y, (int)v3.x, (int)v3.y, (int)v4.x, (int)v4.y, handle, true);
+	DrawModiGraph((int)v1.x + sx, (int)v1.y + sy, (int)v2.x + sx, (int)v2.y + sy, (int)v3.x + sx, (int)v3.y + sy, (int)v4.x + sx, (int)v4.y + sy, handle, true);
 }
 
 std::pair<int, int> suken::Graph::GetSize()const {
@@ -208,6 +210,16 @@ void suken::Graph::Release() {
 			handle = 0;
 		}
 	}
+}
+
+void suken::Graph::SetShift(int x, int y) {
+	sx = x;
+	sy = y;
+}
+
+void suken::Graph::GetShift(int *x, int *y) {
+	*x = sx;
+	*y = sy;
 }
 
 suken::Anim::Anim() {

@@ -1,5 +1,8 @@
+#include "Enemy.h"
 
-#include "enemy.h"
+#include "Suken.h"
+
+#include "Graphics.h"
 
 extern CWeaponManager& GetWeaponManager();
 extern CSword& GetSword();
@@ -17,6 +20,67 @@ extern int weararmar, wearweapon;
 int DROP;//CSGameでステージごとに設定
 
 extern int fixcount;//mapで宣言
+
+Enemy::Enemy() :Enemy(100, 100) {}
+
+Enemy::Enemy(int x, int y)
+	:state(this, &Enemy::Normal), draw(this, &Enemy::NormalD) {
+	this->x = x;
+	this->y = y;
+
+	r = 20;
+	life = 20;
+	maxLife = 20;
+
+	cnt = -1;
+	v = 0;
+	vx = 0;
+	vy = 0;
+	direc = 4;
+}
+
+void Enemy::Loop() {
+	++cnt;
+	if (state.Main()) {
+		cnt = -1;
+	}
+}
+
+void Enemy::Move() {
+	vx += v*cosf(GetRad());
+	vy += v*sinf(GetRad());
+
+	x += vx;
+	y += vy;
+
+	vx = 0;
+	vy = 0;
+}
+
+void Enemy::Draw() {
+	Deco();
+}
+
+void Enemy::DrawBase() {
+	draw.Draw();
+}
+
+void Enemy::Deco() {
+
+	DrawBase();
+
+	DrawBox(x - r * 1.5, y - r - 15, x - r * 1.5 + life * r * 3 / maxLife, y - r - 5, WHITE, true);
+}
+
+void Enemy::NormalD() {
+	DrawCircle(x, y, r, BLUE, true);
+}
+
+float Enemy::GetRad() {
+	return ((float)(direc - 2)) * DX_PI / 4.f;
+}
+
+
 
 CEnemy::CEnemy() {}
 

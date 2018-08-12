@@ -9,16 +9,28 @@
 
 class Map {
 public:
-	typedef std::map<int, int> intMap;
+	union Key {
+		int index;
+		struct {
+			short x;
+			short y;
+		};
+		Key() :index(0) {}
+		Key(short x, short y) :x(x), y(y) {}
+	};
+	typedef std::map<int, int> IntMap;
+	
 	Map();
 	~Map() = default;
 	void Set(const char* file, int &px, int &py);
-	void Draw(int scrX = 0, int scrY = 0);
+	void Draw(int scrX, int scrY);
 
+	int GetWidth()const;
+	int GetHeight()const;
 	int GetStageWidth()const;
 	int GetStageHeight()const;
-	intMap& GetTrapData();
-	intMap& GetEnemyData();
+	IntMap& GetTrapData();
+	IntMap& GetEnemyData();
 	int Code(int x, int y)const;
 
 	static const int chipSize = 40;
@@ -27,7 +39,7 @@ private:
 	int width, height;
 	int *chipData;
 	Graph chipGraph[chipNum];
-	std::map<int, int> trap, enemy;
+	IntMap trap, enemy;
 };
 
 class CMap {

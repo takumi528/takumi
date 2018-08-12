@@ -3,12 +3,11 @@
 Player::Player(int x, int y) :state(this, &Player::Normal), param({5, 1.5, 2, 8, 1}) {
 	this->x = x;
 	this->y = y;
-	x = 400;
-	y = 300;
 	vx = 0;
 	vy = 0;
 	v = 0;
 	cnt = -1;
+	direc = 0;
 	life = 100;
 	invincible = 0;
 }
@@ -52,7 +51,6 @@ void Player::Loop() {
 	++cnt;
 	if (state.Main()) {
 		cnt = -1;
-		lastDirec = direc;
 	}
 
 
@@ -98,11 +96,11 @@ void Player::Loop() {
 	//}
 }
 
-void Player::Draw(int scrX, int scrY) {
+void Player::Draw() {
 	DrawFormatString(0, 0, RED, "%d", y);//‰¼
 	if (invincible % 5 == 0) {
-		DrawCircle(x + scrX, y + scrY, R, RED, true);
-		DrawCircle(x + 3*cosf(GetRad()) + scrX, y + 3 * sinf(GetRad()) + scrY, 3, WHITE, true);
+		DrawCircle(x, y, R, RED, true);
+		DrawCircle(x + cosf(GetRad())*3, y + sinf(GetRad())*3, 3, WHITE, true);
 	}
 
 	//	DrawFormatString(100, 0, BLUE, "%d", vx);
@@ -141,6 +139,7 @@ bool Player::Normal() {
 			return true;
 		}
 		else if (Input.GetKeyEnter(Input.key.LSHIFT)) {//‰¼
+			lastDirec = direc;
 			state.SetNextState(this, &Player::Step);
 			return true;
 		}
@@ -158,6 +157,7 @@ bool Player::Step() {
 			v = 0;
 		}
 		if (Input.GetKeyEnter(Input.key.LSHIFT)) {
+			lastDirec = direc;
 			state.SetNextState(this, &Player::Step);
 		}
 	}

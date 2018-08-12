@@ -4,6 +4,7 @@
 #include <memory>
 
 #include "Task.h"
+#include "ObjectManager.h"
 
 #include "MyObject.h"
 
@@ -12,6 +13,7 @@ class CSGame :public CScene {
 	int stage;
 	TaskManager task;
 	std::unique_ptr<Player> player;//ユニーク＿ポインタを使っています
+	ObjectManager<Enemy> enemy;
 	Map map;
 	Scrol scrol;
 

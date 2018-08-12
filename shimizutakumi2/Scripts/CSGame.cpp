@@ -19,6 +19,22 @@ private:
 	Scrol *scrol;
 };
 
+class TestEnemyTask :public Task {
+public:
+	TestEnemyTask(Player* p, ObjectManager<Enemy>* e) :p(p), e(e) {
+
+	}
+	void Main() {
+		if (Input.GetKeyEnter(Input.key.E)) {
+			e->Create(std::make_shared<Enemy>(p->GetX(), p->GetY() - 100));
+		}
+	}
+
+private:
+	Player* p;
+	ObjectManager<Enemy>* e;
+};
+
 CSGame::CSGame(int stage) :stage(stage) {
 	
 }
@@ -29,12 +45,18 @@ void CSGame::Start() {
 	int px = 0, py = 0;
 	map.Set(ss.str().c_str(), px, py);
 	player.reset(new Player(px, py));
-	
+
+	enemy.SetFactory(new EnemyFactory());
+
 	task.RegisterTask(new ScrolTask(&scrol, player.get(), &map));
-//	task.RegisterTask(new TestScrolTask(&scrol));
+	task.RegisterTask(new LoadMapTask(&map, &scrol, &enemy));
+	task.RegisterTask(new TestScrolTask(&scrol));
+	task.RegisterTask(new TestEnemyTask(player.get(), &enemy));
 }
 
 void CSGame::Loop() {
+	enemy.Update();
+	
 	player->Loop();
 	player->Move();
 	task.Main();
@@ -45,8 +67,11 @@ void CSGame::Loop() {
 void CSGame::Draw() {
 	int x = scrol.GetScrX();
 	int y = scrol.GetScrY();
+	Graph::SetShift(x, y);//Graph‚ðŽg‚Á‚½•`‰æ‚ÌÀ•W‚ð‚·‚×‚Ä‚¸‚ç‚¹‚Ü‚·B
 	map.Draw(x, y);
-	player->Draw(x, y);
+	enemy.Do(&Enemy::Draw);
+	player->Draw();
+	Graph::SetShift(0, 0);
 }
 
 void CSGame::End() {

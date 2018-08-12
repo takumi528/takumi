@@ -26,7 +26,7 @@ public:
 		if (scrol->scrY + my <= wy)
 			scrol->scrY = wy - my;
 		scrol->fixX = scrol->scrX;
-		scrol->fixX = scrol->scrY;
+		scrol->fixY = scrol->scrY;
 	}
 
 	~ScrolTask() = default;
@@ -66,7 +66,7 @@ public:
 			fy = scrol->fixY;
 		}
 
-		if (scrol->cnt <= Scrol::fixTime) {
+		if (scrol->cnt < Scrol::fixTime) {
 			float buf = easing::InCubic(scrol->cnt, Scrol::fixTime);
 			scrol->scrX = lastX + (fx - lastX) * buf;
 			scrol->scrY = lastY + (fy - lastY) * buf;

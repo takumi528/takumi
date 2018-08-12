@@ -1,7 +1,9 @@
 #pragma once
 #include "Suken.h"
-#include <list>
-#include <memory>
+
+#include "ClassState.h"
+#include "Decorator.h"
+
 #include "weapon.h"
 #include "sword.h"
 #include "scrol.h"
@@ -11,67 +13,52 @@
 #include "item.h"
 #include "possession.h"
 
-template<class T>
-class AbstractFactory {
+/*
+こんなところに書くけど、
+敵は大きく分けて二種類作ればいいと思う。
+
+一つ目は人型の敵。
+武器を持っていて、プレイヤーと同じ武器クラスを流用する。
+タスクシステムで人数を把握して、同時に命令を与えることで、
+統率の取れた動きをする。
+
+二つ目は非人型の敵
+単純なAIで動く敵。非固定スクロールの場所に出す敵として便利
+
+Enemyを継承して、それぞれに基本クラスを作ればいいと思う
+*/
+
+class Enemy {
 public:
-	AbstractFactory() = default;
-	~AbstractFactory() = default;
-	T* Create(std::vector<int>& index) = 0;
-};
+	Enemy();
+	Enemy(int x, int y);
+	~Enemy() = default;
+	void Loop();
+	void Move();
+	virtual void Draw();//さらに書き加えたかったら継承する
 
-//汎用オブジェクト管理クラス
-template<class T>
-class ObjectManager {
-public:
-	typedef std::shared_ptr<T> TPtr;
-	typedef std::list<TPtr> TList;
-	ObjectManager() :factory(nullptr) {}
-	~ObjectManager() {
-		if (this->factory != nullptr)
-			delete this->factory;
-	}
+	virtual void DrawBase();//こいつを継承して、武器なんかを上に書き加える
+	
+	//状態関数
+	virtual bool Normal() {
+		return false;
+	};
 
-	void SetFactory(AbstractFactory* factory) {
-		if (this->factory != nullptr)
-			delete this->factory;
-		this->factory = factory;
-	}
 
-	void Create(std::vector<int>& request) {
-		buffer.push_back(factory->Create(request));
-	}
-
-	void Create(T* ptr) {
-		buffer.push_back(ptr);
-	}
-
-	TList& GetList() {
-		return list;
-	}
-
-	TList& GetRecent() {
-		return recent;
-	}
-
-	void Update() {
-		for (auto it = list.begin(), end = list.end(); it != end;) {
-			if (it->use_count() == 1) {
-				it = list.erase(it);
-			}
-			else {
-				++it;
-			}
-		}
-		recent = buffer;
-		if (!buffer.empty()) {
-			list.splice(list.end(), buffer);
-			buffer.clear();
-		}
-	}
+	//描画用関数
+	void Deco();//エフェクトはここで掛ける
+	virtual void NormalD();//Normalの描画
 
 private:
-	TList list, buffer, recent;
-	AbstractFactory* factory;
+	int x, y, cnt, r;
+	float v, vx, vy;
+	int direc;
+	Drawing<Enemy> draw;//Setで描画関数を切り替える
+	int life;
+	int maxLife;
+	State state;
+
+	float GetRad();
 };
 
 class CEnemy {

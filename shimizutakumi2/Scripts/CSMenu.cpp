@@ -91,7 +91,7 @@ void CSStageSelect::Loop() {
 		--select;
 	}
 	if (Yes())
-		Game.FlipScene(new CSGame(select));
+		Game.FlipScene(new CSGame(select), Flip::FADE_OUT_IN, 12);
 	if (No())
 		Game.FlipScene(new CSHome());
 }

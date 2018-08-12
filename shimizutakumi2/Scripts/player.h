@@ -24,6 +24,13 @@ private:
 	int GetInputDirec();//負で未入力
 	int GetRelativeDirec();//入力と現在の相対角度
 	float GetRad();
+
+	template<class T>
+	bool SetNextState(T *const ptr, bool (T::* func)()) {
+		if (state.SetNextState(ptr, func)) {
+			lastDirec = direc;
+		}
+	}
 	//以下自機の状態関数　描画や攻撃判定もこの中で設定できるようにする
 	bool Normal();//trueを返すと次の状態に移行。以下も同じ
 	bool Step();
@@ -37,7 +44,7 @@ public:
 	Player(int x, int y);
 	void Move();
 	void Loop();
-	void Draw(int scrX=0, int scrY=0);
+	void Draw();
 
 	int GetX()const;
 	int GetY()const;
