@@ -1,7 +1,7 @@
 #include "pause.h"
 
 extern CMap& GetMap();
-extern CPlayer& GetPlayer();
+extern Player& GetPlayer();
 extern CWeaponManager& GetWeaponManager();
 extern CSelect& GetSelect();
 

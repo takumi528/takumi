@@ -29,6 +29,15 @@
     <Filter Include="メイン ファイル\Scene">
       <UniqueIdentifier>{0c1a312a-dad3-471d-ad7a-027e2523db0d}</UniqueIdentifier>
     </Filter>
+    <Filter Include="メイン ファイル\Advance">
+      <UniqueIdentifier>{f7b9dc77-dbd8-4932-b5f9-95c0dcef8c96}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="メイン ファイル\Task">
+      <UniqueIdentifier>{19c5e01b-f220-4fbb-8f03-eab9417c14f5}</UniqueIdentifier>
+    </Filter>
+    <Filter Include="メイン ファイル\Object">
+      <UniqueIdentifier>{ab7e6bbe-c84a-45fe-9fde-f6e79004dd8c}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Suken.h">
@@ -85,9 +94,6 @@
     <ClInclude Include="sukenlib\GameEngine\Music.h">
       <Filter>sukenib\GameEngine</Filter>
     </ClInclude>
-    <ClInclude Include="player.h">
-      <Filter>メイン ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="weapon.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
@@ -98,12 +104,6 @@
       <Filter>メイン ファイル</Filter>
     </ClInclude>
     <ClInclude Include="select.h">
-      <Filter>メイン ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="map.h">
-      <Filter>メイン ファイル</Filter>
-    </ClInclude>
-    <ClInclude Include="scrol.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
     <ClInclude Include="pause.h">
@@ -130,9 +130,6 @@
     <ClInclude Include="obstacle.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="CSGame.h">
-      <Filter>メイン ファイル\Scene</Filter>
-    </ClInclude>
     <ClInclude Include="CSTitle.h">
       <Filter>メイン ファイル\Scene</Filter>
     </ClInclude>
@@ -141,6 +138,42 @@
     </ClInclude>
     <ClInclude Include="MyScene.h">
       <Filter>メイン ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CS_Game.h">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="CSGame.h">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>メイン ファイル</Filter>
+    </ClInclude>
+    <ClInclude Include="ClassState.h">
+      <Filter>メイン ファイル\Advance</Filter>
+    </ClInclude>
+    <ClInclude Include="Task.h">
+      <Filter>メイン ファイル\Advance</Filter>
+    </ClInclude>
+    <ClInclude Include="ScrolTask.h">
+      <Filter>メイン ファイル\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Scrol.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Easing.h">
+      <Filter>メイン ファイル\Advance</Filter>
+    </ClInclude>
+    <ClInclude Include="Map.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyObject.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="MyTask.h">
+      <Filter>メイン ファイル\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="LoadMapTask.h">
+      <Filter>メイン ファイル\Task</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -192,9 +225,6 @@
     <ClCompile Include="sukenlib\GameEngine\Music.cpp">
       <Filter>sukenib\GameEngine</Filter>
     </ClCompile>
-    <ClCompile Include="player.cpp">
-      <Filter>メイン ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="weapon.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
@@ -205,9 +235,6 @@
       <Filter>メイン ファイル</Filter>
     </ClCompile>
     <ClCompile Include="select.cpp">
-      <Filter>メイン ファイル</Filter>
-    </ClCompile>
-    <ClCompile Include="map.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
     <ClCompile Include="scrol.cpp">
@@ -234,14 +261,23 @@
     <ClCompile Include="obstacle.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="CSGame.cpp">
-      <Filter>メイン ファイル\Scene</Filter>
-    </ClCompile>
     <ClCompile Include="CSTitle.cpp">
       <Filter>メイン ファイル\Scene</Filter>
     </ClCompile>
     <ClCompile Include="CSMenu.cpp">
       <Filter>メイン ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CS_Game.cpp">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="CSGame.cpp">
+      <Filter>メイン ファイル\Scene</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>メイン ファイル</Filter>
+    </ClCompile>
+    <ClCompile Include="Map.cpp">
+      <Filter>メイン ファイル\Object</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

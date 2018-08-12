@@ -4,7 +4,7 @@
 extern CWeaponManager& GetWeaponManager();
 extern CSword& GetSword();
 extern MCE mce;
-extern CPlayer& GetPlayer();
+extern Player& GetPlayer();
 extern CMap& GetMap();
 extern CItemManager& GetItemManager();
 
@@ -347,36 +347,36 @@ void CEnemyManager::Appear() {
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.B, i, j) == 1 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
+			if (mce.Get(mce.layer.A, i, j) == 1 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
 				enemy.push_back(new CEnemy0(i * 40, j * 40, 2, 20, 10, 50, 200));
 				fixcount++;
-				mce.Get(mce.layer.B, i, j) = 0;
+				mce.Get(mce.layer.A, i, j) = 0;
 			}
 		}
 	}
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.B, i, j) == 2 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
+			if (mce.Get(mce.layer.A, i, j) == 2 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
 				enemy.push_back(new CEnemy(i * 40, j * 40, 2, 20, 10, 50, 200));
-				mce.Get(mce.layer.B, i, j) = 0;
+				mce.Get(mce.layer.A, i, j) = 0;
 			}
 		}
 	}
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.B, i, j) == 3 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
+			if (mce.Get(mce.layer.A, i, j) == 3 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
 				enemy.push_back(new CEnemy2(i * 40, j * 40, 4, 20, 10, 50, 200));
-				mce.Get(mce.layer.B, i, j) = 0;
+				mce.Get(mce.layer.A, i, j) = 0;
 			}
 		}
 	}
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (GetMap().GetFix() == true) {
-				if (mce.Get(mce.layer.B, i, j) == 4 && i * 40 > scrX && i * 40 < scrX + 600 && j * 40 > scrY && j * 40 < scrY + 600) {
+				if (mce.Get(mce.layer.A, i, j) == 4 && i * 40 > scrX && i * 40 < scrX + 600 && j * 40 > scrY && j * 40 < scrY + 600) {
 					enemy.push_back(new CEnemy3(i * 40, j * 40, 2, 20, 10, 50, 200));
 					fixcount++;
-					mce.Get(mce.layer.B, i, j) = 0;
+					mce.Get(mce.layer.A, i, j) = 0;
 				}
 			}
 		}

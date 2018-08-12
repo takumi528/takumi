@@ -1,7 +1,71 @@
-#include "map.h"
+#include "Map.h"
 
-extern CPlayer& GetPlayer();
+extern Player& GetPlayer();
 extern CEnemyManager& GetEnemyManager();
+
+
+Map::Map() {}
+
+void Map::Set(const char* file, int &px, int &py) {
+	LoadDivGraph("stpic/chip.png", 3, 3, 1, 40, 40, chipGraph);
+	MCE mce(file);
+	width = mce.GetWidth();
+	height = mce.GetHeight();
+	chipData = new int[width*height];
+	int buf;
+	for (int x = 0; x < width; ++x) {
+		for (int y = 0; y < height; ++y) {
+			buf = mce(mce.layer.A, x, y);
+			if (buf != 0)
+				enemy[Code(x, y)] = buf - 1;
+
+			buf = mce(mce.layer.B, x, y);
+			if (buf != 0) {
+				if (buf == 1) {//自機の初期位置
+					px = x * chipSize + chipSize / 2;
+					py = y * chipSize + chipSize / 2;
+				}
+				else {
+					trap[Code(x, y)] = buf - 1;
+				}
+			}
+
+			buf = mce(mce.layer.C, x, y);
+			if (buf != 0)
+				chipData[Code(x, y)] = buf - 1;
+		}
+	}
+}
+
+void Map::Draw(int scrX, int scrY) {//和差積算と比べると除算は超重いのでこのほうがいい
+	for (int x = max(0, -scrX / chipSize), endX = min(width, x + System.GetWindowX() / chipSize + 1); x < endX; ++x) {
+		for (int y = max(0, -scrY / chipSize), endY = min(height, y + System.GetWindowY() / chipSize + 1); y < endY; ++y) {
+			chipGraph[chipData[Code(x, y)]](x * chipSize + scrX, y * chipSize + scrY);
+		}
+	}
+}
+
+int Map::GetStageWidth()const {
+	return width * chipSize;
+}
+
+int Map::GetStageHeight()const {
+	return height * chipSize;
+}
+
+Map::intMap& Map::GetTrapData() {
+	return trap;
+}
+
+Map::intMap& Map::GetEnemyData() {
+	return enemy;
+}
+
+int Map::Code(int x, int y)const{
+	return x + y*width;
+}
+
+
 
 int fixcount;//固定エリアの敵の数、0になるとfixを解く(enemyの出現時++)
 int fixdelete;//fixdelete > 0　のとき　fixを解除
@@ -14,9 +78,7 @@ CMap::CMap() {
 }
 
 void CMap::Load() {
-	chip1 = "stpic/chip1.png";
-	chip2 = "stpic/chip2.png";
-	chip3 = "stpic/chip3.png";
+	LoadDivGraph("stpic/chip.png", 3, 3, 1, 40, 40, chip);
 }
 
 void CMap::Set(int stage) {
@@ -41,7 +103,7 @@ void CMap::Loop() {
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.C, i, j) == 1) {
+			if (mce.Get(mce.layer.B, i, j) == 1) {
 				if (GetPlayer().GetX() > i * 40 + 20 - 300 && GetPlayer().GetX() < i * 40 + 20 + 300 && GetPlayer().GetY() > j * 40 + 20 - 300 && GetPlayer().GetY() < j * 40 + 20 + 300) {
 					fixX = i * 40 + 20 - 300;
 					fixY = j * 40 + 20 - 300;
@@ -74,8 +136,8 @@ void CMap::FixReset() {//リトライ、別ステージへの移動の時にfixをfalseにする、CSG
 void CMap::FixReset2() {//固定エリアの敵をすべて倒した時にfixをfalseにする
 	for (int i = (GetPlayer().GetX() / 40) - 8; i <= (GetPlayer().GetX() / 40) + 8; i++) {
 		for (int j = (GetPlayer().GetY() / 40) - 8; j <= (GetPlayer().GetY() / 40) + 8; j++) {
-			if (mce.Get(mce.layer.C, i, j) == 1) {
-				mce.Get(mce.layer.C, i, j) = 0;
+			if (mce.Get(mce.layer.B, i, j) == 1) {
+				mce.Get(mce.layer.B, i, j) = 0;
 			}
 		}
 	}
@@ -87,23 +149,7 @@ void CMap::Draw() {
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.A, i, j) == 1) {
-				chip1(i * 40 - scrX, j * 40 - scrY);
-			}
-		}
-	}
-	for (int i = 0; i < mce.GetWidth(); i++) {
-		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.A, i, j) == 2) {
-				chip2(i * 40 - scrX, j * 40 - scrY);
-			}
-		}
-	}
-	for (int i = 0; i < mce.GetWidth(); i++) {
-		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.A, i, j) == 3) {
-				chip3(i * 40 - scrX, j * 40 - scrY);
-			}
+			chip[mce.Get(mce.layer.C, i, j)-1](i * 40 - scrX, j * 40 - scrY);
 		}
 	}
 	if (fix == true) {

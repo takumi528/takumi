@@ -84,14 +84,14 @@ void CSStageSelect::Start() {
 }
 
 void CSStageSelect::Loop() {
-	if (Right() && select < 10) {
+	if (Right() && select < 3) {
 		++select;
 	}
 	if (Left() && select > 0) {
 		--select;
 	}
 	if (Yes())
-		Game.FlipScene(new CSGame(100));
+		Game.FlipScene(new CSGame(select));
 	if (No())
 		Game.FlipScene(new CSHome());
 }

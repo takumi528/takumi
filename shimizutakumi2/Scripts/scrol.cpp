@@ -1,6 +1,9 @@
-#include "scrol.h"
+#include "Scrol.h"
 
-extern CPlayer& GetPlayer();
+#include "player.h"
+#include "map.h"
+
+extern Player& GetPlayer();
 extern CMap& GetMap();
 
 extern int scrY;//‰æ–Ê‚Ìã’[‚ÌÀ•W

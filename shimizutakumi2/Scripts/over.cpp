@@ -1,6 +1,6 @@
 #include "over.h"
 
-extern CPlayer& GetPlayer();
+extern Player& GetPlayer();
 
 COver::COver() {
 	sentaku = 1;

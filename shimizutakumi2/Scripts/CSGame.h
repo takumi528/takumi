@@ -1,24 +1,19 @@
 #pragma once
 
 #include "Suken.h"
-#include "player.h"
-#include "weapon.h"
-#include "enemy.h"
-#include "sword.h"
-#include "map.h"
-#include "scrol.h"
-#include "pause.h"
-#include "over.h"
-#include "select.h"
-#include "pub.h"
-#include "clear.h"
-#include "item.h"
-#include "possession.h"
-#include "obstacle.h"
+#include <memory>
+
+#include "Task.h"
+
+#include "MyObject.h"
 
 class CSGame :public CScene {
 	//～変数宣言～
 	int stage;
+	TaskManager task;
+	std::unique_ptr<Player> player;//ユニーク＿ポインタを使っています
+	Map map;
+	Scrol scrol;
 
 	//初期化　画像のロードなども
 	void Start();
@@ -30,5 +25,5 @@ class CSGame :public CScene {
 	void End();
 
 public:
-	CSGame(int stage):stage(stage) {}
+	CSGame(int stage);
 };

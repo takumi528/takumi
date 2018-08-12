@@ -1,72 +1,6 @@
 #pragma once
 #include "Suken.h"
-#include "scrol.h"
-#include "map.h"
-#include "enemy.h"
-#include "weapon.h"
-#include "possession.h"
-#include "obstacle.h"
-
-//気にしなくていいよ。
-class AbstractFuncHolder {
-public:
-	AbstractFuncHolder() = default;
-	~AbstractFuncHolder() = default;
-	virtual bool Main() = 0;
-};
-
-template<class T>
-class FuncHolder:public AbstractFuncHolder {
-public:
-	typedef bool (T::* funcPtr)();
-	FuncHolder(T* ptr, funcPtr func):ptr(ptr), func(func) {}
-	~FuncHolder() = default;
-	bool Main() {
-		return (ptr->*func)();
-	}
-private:
-	T*const ptr;
-	funcPtr func;
-};
-
-class State {
-public:
-	template<class T>
-	State(T *const ptr, bool (T::* func)()) :func(new FuncHolder<T>(ptr, func)), next(nullptr) {}
-
-	~State() {
-		if (func != nullptr)
-			delete func;
-		if (next != nullptr)
-			delete next;
-	}
-
-	bool Main() {
-		if (func->Main()) {
-			if (func != nullptr && next != nullptr) {
-				delete func;
-				func = next;
-				next = nullptr;
-				return true;
-			}
-			else {
-				throw "次の状態が設定されないまま状態関数でfalseが返されました";
-			}
-		}
-		return false;
-	}
-
-	template<class T>
-	bool SetNextState(T *const ptr, bool (T::* func)()) {//SetNextState(this, &Player::Normal)のように使う
-		if (next == nullptr) {
-			next = new FuncHolder<T>(ptr, func);
-			return true;
-		}
-		return false;
-	}
-private:
-	AbstractFuncHolder *func, *next;
-};
+#include "ClassState.h"
 
 struct PlayerParameter {//外部入力で設定したい
 	float speed;
@@ -76,10 +10,10 @@ struct PlayerParameter {//外部入力で設定したい
 	int stopTime;
 };
 
-class CPlayer {
+class Player {
 private:
 	int x, y, cnt;
-	float v;//処理段階では小数でいいと思う
+	float v, vx, vy;//処理段階では小数でいいと思う
 	int direc, lastDirec;//direc * 45゜
 	int life;
 	const int R = 10;
@@ -100,18 +34,16 @@ private:
 	virtual bool AttackXD();//Xキー攻撃ダッシュ
 
 public:
-	CPlayer();
+	Player(int x, int y);
 	void Move();
 	void Loop();
-	void Draw();
-	void Appear();
-	//ステージごとにコンストラクタを呼び仕様のほうがいいので、Player()に機能を移行
+	void Draw(int scrX=0, int scrY=0);
 
-	int GetX();
-	int GetY();
-	int GetV();
-	int GetR();
-	int GetLife();
+	int GetX()const;
+	int GetY()const;
+	int GetV()const;
+	int GetR()const;
+	int GetLife()const;
 	int Hit();
 
 	bool GetItem(int x,int y,int R);

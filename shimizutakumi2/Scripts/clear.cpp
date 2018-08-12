@@ -1,6 +1,6 @@
 #include "clear.h"
 
-extern CPlayer& GetPlayer();
+extern Player& GetPlayer();
 extern CMap& GetMap();
 
 void CClear::Load() {

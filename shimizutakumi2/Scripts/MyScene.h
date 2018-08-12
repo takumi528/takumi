@@ -5,6 +5,7 @@
 *	@brief	シーンクラスの宣言は、ここでしましょう
 *	@author	-
 */
+#include "CS_Game.h"
 
 #include "Suken.h"
 #include "CSGame.h"

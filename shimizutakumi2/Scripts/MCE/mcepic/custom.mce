@@ -4,6 +4,8 @@
 #stage1
 2
 #stage2
+3
+#stage3
 #light
 0
 #width
@@ -13,10 +15,10 @@
 #edge
 40
 #number
-3
+4
 #graphA
-#chip
-#graphB
 #enemy
-#graphC
+#graphB
 #trap
+#graphC
+#chip

@@ -11,22 +11,29 @@
     </ProjectConfiguration>
   </ItemGroup>
   <ItemGroup>
+    <ClInclude Include="ClassState.h" />
     <ClInclude Include="clear.h" />
     <ClInclude Include="CSGame.h" />
+    <ClInclude Include="CS_Game.h" />
     <ClInclude Include="CSMenu.h" />
     <ClInclude Include="CSTitle.h" />
+    <ClInclude Include="Easing.h" />
     <ClInclude Include="enemy.h" />
     <ClInclude Include="item.h" />
-    <ClInclude Include="map.h" />
+    <ClInclude Include="LoadMapTask.h" />
+    <ClInclude Include="Map.h" />
     <ClInclude Include="memo.h" />
+    <ClInclude Include="MyObject.h" />
     <ClInclude Include="MyScene.h" />
+    <ClInclude Include="MyTask.h" />
     <ClInclude Include="obstacle.h" />
     <ClInclude Include="over.h" />
     <ClInclude Include="pause.h" />
-    <ClInclude Include="player.h" />
+    <ClInclude Include="Player.h" />
     <ClInclude Include="possession.h" />
     <ClInclude Include="pub.h" />
-    <ClInclude Include="scrol.h" />
+    <ClInclude Include="Scrol.h" />
+    <ClInclude Include="ScrolTask.h" />
     <ClInclude Include="select.h" />
     <ClInclude Include="Suken.h" />
     <ClInclude Include="sukenlib\DebugWindow\Debug.h" />
@@ -47,21 +54,23 @@
     <ClInclude Include="sukenlib\Utility\UniquePtr.h" />
     <ClInclude Include="sukenlib\Utility\Utility.h" />
     <ClInclude Include="sword.h" />
+    <ClInclude Include="Task.h" />
     <ClInclude Include="weapon.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="clear.cpp" />
     <ClCompile Include="CSGame.cpp" />
+    <ClCompile Include="CS_Game.cpp" />
     <ClCompile Include="CSMenu.cpp" />
     <ClCompile Include="CSTitle.cpp" />
     <ClCompile Include="enemy.cpp" />
     <ClCompile Include="item.cpp" />
     <ClCompile Include="Main.cpp" />
-    <ClCompile Include="map.cpp" />
+    <ClCompile Include="Map.cpp" />
     <ClCompile Include="obstacle.cpp" />
     <ClCompile Include="over.cpp" />
     <ClCompile Include="pause.cpp" />
-    <ClCompile Include="player.cpp" />
+    <ClCompile Include="Player.cpp" />
     <ClCompile Include="possession.cpp" />
     <ClCompile Include="pub.cpp" />
     <ClCompile Include="scrol.cpp" />

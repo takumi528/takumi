@@ -69,9 +69,9 @@ bool CObstacleManager::Hit(int x, int y, int R) {
 void CObstacleManager::Appear() {
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
-			if (mce.Get(mce.layer.C, i, j) == 2) {
+			if (mce.Get(mce.layer.B, i, j) == 2) {
 				obstacle.push_back(new CObstacle(i * 40, j * 40, 30));
-				mce.Get(mce.layer.C, i, j) = 0;
+				mce.Get(mce.layer.B, i, j) = 0;
 			}
 		}
 	}

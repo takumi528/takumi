@@ -1,6 +1,6 @@
 
 #include "weapon.h"
-extern CPlayer& GetPlayer();
+extern Player& GetPlayer();
 extern CMap& GetMap();
 extern CEnemyManager& GetEnemyManager();
 
