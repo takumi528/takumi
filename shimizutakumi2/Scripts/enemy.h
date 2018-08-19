@@ -3,6 +3,7 @@
 
 #include "ClassState.h"
 #include "Decorator.h"
+#include "Collision.h"
 
 #include "weapon.h"
 #include "sword.h"
@@ -38,6 +39,8 @@ public:
 	virtual void Draw();//‚³‚ç‚É‘‚«‰Á‚¦‚½‚©‚Á‚½‚çŒp³‚·‚é
 
 	virtual void DrawBase();//‚±‚¢‚Â‚ğŒp³‚µ‚ÄA•Ší‚È‚ñ‚©‚ğã‚É‘‚«‰Á‚¦‚é
+
+	virtual Circle GetHitBody()const;
 	
 	//ó‘ÔŠÖ”
 	virtual bool Normal() {
@@ -50,8 +53,8 @@ public:
 	virtual void NormalD();//Normal‚Ì•`‰æ
 
 private:
-	int x, y, cnt, r;
-	float v, vx, vy;
+	int x, y, vx, vy, cnt, r;
+	float v;
 	int direc;
 	Drawing<Enemy> draw;//Set‚Å•`‰æŠÖ”‚ğØ‚è‘Ö‚¦‚é
 	int life;

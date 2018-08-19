@@ -1,38 +1,38 @@
 #include "Player.h"
 
-Player::Player(int x, int y) :state(this, &Player::Normal), param({5, 1.5, 2, 8, 1}) {
-	this->x = x;
-	this->y = y;
-	vx = 0;
-	vy = 0;
+Player::Player(int x, int y) :state(this, &Player::Normal), param({5, 1.5, 2, 8, 1}), c(x, y, 0, 0), deco(this, &Player::Deco),swing(60, 20, 20, 5, GetColor(255, 12, 12)) {
 	v = 0;
-	cnt = -1;
+	cnt = 0;
 	direc = 0;
 	life = 100;
 	invincible = 0;
+
+	LoadDivGraph("pho_test/player.png", 48, 8, 6, 40, 40, graph);
+	draw.Reset(graph, &c);
+	draw.Set(-20, -20, 24);
+	drawBase = &draw;
+	drawDeco = &deco;
 }
 
 void Player::Move() {
-	vx += v*cosf(GetRad());
-	vy += v*sinf(GetRad());
-	x += vx;
-	y += vy;
+	c.x += c.vx;
+	c.y += c.vy;
 	//if (GetObstacleManager().Hit(x, y, R) == true) {//障害物はマス目管理のほうが軽いので切り替えたほうがいい
 	//	x -= vx;
 	//	y -= vy;
 	//}
-	vx = 0;
-	vy = 0;
+	c.vx = 0;
+	c.vy = 0;
 
-	if (x < 0 + R) {//壁との衝突判定は移動完了後に
-		x = 0 + R;
-	}/*
-	if (x > GetMap().GetWidth() * 40 - R) {
-		x = GetMap().GetWidth() * 40 - R;
-	}
-	if (y > GetMap().GetHeight() * 40 - R) {
-		y = GetMap().GetHeight() * 40 - R;
-	}*/
+	//if (x < 0 + R) {//壁との衝突判定は移動完了後に
+	//	x = 0 + R;
+	//}/*
+	//if (x > GetMap().GetWidth() * 40 - R) {
+	//	x = GetMap().GetWidth() * 40 - R;
+	//}
+	//if (y > GetMap().GetHeight() * 40 - R) {
+	//	y = GetMap().GetHeight() * 40 - R;
+	//}*/
 }
 
 void Player::Loop() {
@@ -48,14 +48,17 @@ void Player::Loop() {
 	//}
 	//は同じ。
 	//GetKeyDown()はbool型を返す関数だから。
-	++cnt;
+
+	effect.Loop();
 	if (state.Main()) {
-		cnt = -1;
+		cnt = 0;
+		drawBase = &draw;
 	}
+	c.vx += v*cosf(GetRad());
+	c.vy += v*sinf(GetRad());
 
-
-	if (y <= 300) {
-	//	state.SetNextState(this, &Player::Clear);
+	if (c.y <= 300) {
+		state.SetNextState(this, &Player::Clear);
 	}
 
 	//if (invincible <= 0) {
@@ -97,13 +100,23 @@ void Player::Loop() {
 }
 
 void Player::Draw() {
-	DrawFormatString(0, 0, RED, "%d", y);//仮
-	if (invincible % 5 == 0) {
-		DrawCircle(x, y, R, RED, true);
-		DrawCircle(x + cosf(GetRad())*3, y + sinf(GetRad())*3, 3, WHITE, true);
+	{
+		Graph::Disable d;
+		DrawFormatString(0, 0, RED, "%d, %d, %d, %d", c.x, c.y, c.vx, c.vy);//仮
 	}
+	drawDeco->Draw();
+	effect.Draw(c.x, c.y);
+}
 
-	//	DrawFormatString(100, 0, BLUE, "%d", vx);
+void Player::Deco() {
+	if (invincible % 5 == 0) {
+		drawBase->Draw();
+	}
+}
+
+void Player::HitWall() {
+	c.vx = 0;
+	c.vy = 0;
 }
 
 bool Player::Normal() {
@@ -112,12 +125,28 @@ bool Player::Normal() {
 	if (buf >= 0) {
 		direc = buf;
 		v = param.speed;
+		++cnt;//好きなタインミングで増やす
 	}
 	else {
 		v = 0;
 	}
 
+	direc %= 8;
+	
+	if (direc == 3 || direc == 4 || direc == 5)
+		buf = 0;
+	if (direc == 6)
+		buf = 8;
+	if (direc == 2)
+		buf = 16;
+	if (direc == 0 || direc == 1 || direc == 7)
+		buf = 24;
+
+	if (v != 0)
+		buf += (cnt / 8) % 4;
+
 	if (!Input.GetKeyDown(Input.key.LSHIFT)) {
+		draw.Set(- 20, - 20, buf);
 		if (Input.GetKeyEnter(Input.key.Z)) {
 			state.SetNextState(this, &Player::AttackZN);
 			return true;
@@ -126,10 +155,10 @@ bool Player::Normal() {
 			state.SetNextState(this, &Player::AttackXN);
 			return true;
 		}
-		
 	}
 	else {
 		v *= param.dushRate;
+		draw.Set(- 20, - 20, buf + 4);
 		if (Input.GetKeyEnter(Input.key.Z)) {
 			state.SetNextState(this, &Player::AttackZD);
 			return true;
@@ -151,6 +180,21 @@ bool Player::Step() {
 	if (cnt == 0) {
 		direc = lastDirec;
 		v = param.speed * param.stepRate;
+
+		int buf = 0;
+
+		direc %= 8;
+		if (direc == 3 || direc == 5 || direc == 5)
+			buf = 36;
+		if (direc == 6)
+			buf = 37;
+		if (direc == 2)
+			buf = 38;
+		if (direc == 0 || direc == 1 || direc == 7)
+			buf = 39;
+
+		draw.Set(-20, -20, buf);
+
 	}
 	else if (cnt - param.stepTime < param.stopTime) {
 		if (cnt - param.stepTime == 0) {
@@ -165,6 +209,7 @@ bool Player::Step() {
 		state.SetNextState(this, &Player::Normal);
 		return true;
 	}
+	++cnt;
 	return false;
 }
 
@@ -180,8 +225,19 @@ bool Player::AttackZN() {
 }
 
 bool Player::AttackXN() {
-	state.SetNextState(this, &Player::Normal);
-	return true;
+	if (cnt < 30 + 10) {
+		if (cnt == 0) {
+			v = 0;
+			swing.Set(GetRad() - DTR(60), GetRad() + DTR(60));
+			swing.Attach(&effect);//swingをeffectに登録
+		}
+		++cnt;
+	}
+	else {
+		state.SetNextState(this, &Player::Normal);
+		return true;
+	}
+	return false;
 }
 
 bool Player::AttackZD() {//ダッシュ攻撃未実装の場合
@@ -192,43 +248,8 @@ bool Player::AttackXD() {//ダッシュ攻撃未実装の場合
 	return AttackXN();
 }
 
-int Player::GetX()const {
-	return x;
-}
-
-int Player::GetY()const {
-	return y;
-}
-
-int Player::GetV()const {
-	return v;
-}
-
-int Player::GetR()const {
-	return R;
-}
-
-int Player::GetLife()const {
-	return life;
-}
-
-int Player::Hit() {
-//	return GetEnemyManager().PHit(x, y, R);
-	return 0;
-}
-
-bool Player::GetItem(int x,int y,int R) {
-	if ((x - this->x)*(x - this->x) + (y - this->y)*(y - this->y) <= (R + this->R)*(R + this->R)) {
-		return true;
-	}
-	return false;
-}
-
-bool Player::EweaponDisappear(int x, int y, int R) {
-	if ((x - this->x)*(x - this->x) + (y - this->y)*(y - this->y) <= (R + this->R)*(R + this->R)) {
-		return true;
-	}
-	return false;
+Circle Player::GetHitBody()const {
+	return Circle(c.x + c.vx, c.y + c.vy, R);
 }
 
 int Player::GetInputDirec() {
@@ -265,6 +286,26 @@ int Player::GetInputDirec() {
 			return -1;
 		}
 	}
+}
+
+int Player::GetX()const {
+	return c.x;
+}
+
+int Player::GetY()const {
+	return c.y;
+}
+
+int Player::GetR()const {
+	return R;
+}
+
+int& Player::GetVX() {
+	return c.vx;
+}
+
+int& Player::GetVY(){
+	return c.vy;
 }
 
 int Player::GetRelativeDirec() {

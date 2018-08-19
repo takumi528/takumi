@@ -38,6 +38,9 @@
     <Filter Include="メイン ファイル\Object">
       <UniqueIdentifier>{ab7e6bbe-c84a-45fe-9fde-f6e79004dd8c}</UniqueIdentifier>
     </Filter>
+    <Filter Include="メイン ファイル\Weapon">
+      <UniqueIdentifier>{9ea8fd09-6d8a-418d-893f-69cb21e21ef1}</UniqueIdentifier>
+    </Filter>
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="Suken.h">
@@ -97,9 +100,6 @@
     <ClInclude Include="weapon.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
-    <ClInclude Include="sword.h">
-      <Filter>メイン ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="select.h">
       <Filter>メイン ファイル</Filter>
     </ClInclude>
@@ -142,9 +142,6 @@
     <ClInclude Include="CSGame.h">
       <Filter>メイン ファイル\Scene</Filter>
     </ClInclude>
-    <ClInclude Include="Player.h">
-      <Filter>メイン ファイル</Filter>
-    </ClInclude>
     <ClInclude Include="ClassState.h">
       <Filter>メイン ファイル\Advance</Filter>
     </ClInclude>
@@ -186,6 +183,27 @@
     </ClInclude>
     <ClInclude Include="EnemyFactory.h">
       <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="HitTask.h">
+      <Filter>メイン ファイル\Task</Filter>
+    </ClInclude>
+    <ClInclude Include="Collision.h">
+      <Filter>メイン ファイル\Advance</Filter>
+    </ClInclude>
+    <ClInclude Include="Player.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="WeaponSet.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="sword.h">
+      <Filter>メイン ファイル\Weapon</Filter>
+    </ClInclude>
+    <ClInclude Include="Effect.h">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClInclude>
+    <ClInclude Include="Coord.h">
+      <Filter>メイン ファイル\Advance</Filter>
     </ClInclude>
   </ItemGroup>
   <ItemGroup>
@@ -240,9 +258,6 @@
     <ClCompile Include="weapon.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
-    <ClCompile Include="sword.cpp">
-      <Filter>メイン ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="select.cpp">
       <Filter>メイン ファイル</Filter>
     </ClCompile>
@@ -282,14 +297,20 @@
     <ClCompile Include="CSGame.cpp">
       <Filter>メイン ファイル\Scene</Filter>
     </ClCompile>
-    <ClCompile Include="Player.cpp">
-      <Filter>メイン ファイル</Filter>
-    </ClCompile>
     <ClCompile Include="Map.cpp">
       <Filter>メイン ファイル\Object</Filter>
     </ClCompile>
     <ClCompile Include="Enemy.cpp">
       <Filter>メイン ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="Player.cpp">
+      <Filter>メイン ファイル\Object</Filter>
+    </ClCompile>
+    <ClCompile Include="sword.cpp">
+      <Filter>メイン ファイル\Weapon</Filter>
+    </ClCompile>
+    <ClCompile Include="Collision.cpp">
+      <Filter>メイン ファイル\Advance</Filter>
     </ClCompile>
   </ItemGroup>
   <ItemGroup>

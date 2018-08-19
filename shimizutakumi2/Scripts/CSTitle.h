@@ -4,6 +4,7 @@
 
 
 class CSTitle :public CScene {
+	Graph graph;
 
 	//‰Šú‰»@‰æ‘œ‚Ìƒ[ƒh‚È‚Ç‚à
 	void Start();

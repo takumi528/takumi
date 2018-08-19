@@ -52,11 +52,10 @@ void CSHome::Loop() {
 			break;
 		case 1:
 
-			break;/*
+			break;
 		case 2:
-			count2 = 5;
-			scene = 4;
-			break;*/
+
+			break;
 		case 3:
 			Game.FlipScene(new CSHelp());
 			break;

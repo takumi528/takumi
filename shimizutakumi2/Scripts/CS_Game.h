@@ -30,5 +30,5 @@ class CS_Game :public CScene {
 	void End();
 
 public:
-	CS_Game(int stage):stage(stage) {}
+//	CS_Game(int stage):stage(stage) {}
 };

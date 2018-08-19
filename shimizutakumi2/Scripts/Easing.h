@@ -30,10 +30,14 @@ namespace suken {
 		{
 			max -= min;
 			t /= totaltime;
-			if (t / 2 < 1)
+			/*if (t / 2 < 1)
 				return max / 2 * t * t + min;
 			--t;
-			return -max * (t * (t - 2) - 1) + min;
+			return -max * (t * (t - 2) - 1) + min;*/
+			if (t < 0.5)
+				return max * 2 * t * t + min;
+			--t;
+			return -max * (2 * t * t - 1) + min;
 		}
 		static double InCubic(double t, double totaltime, double min = 0.0, double max = 1.0)
 		{

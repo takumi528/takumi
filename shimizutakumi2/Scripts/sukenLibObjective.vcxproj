@@ -13,15 +13,19 @@
   <ItemGroup>
     <ClInclude Include="ClassState.h" />
     <ClInclude Include="clear.h" />
+    <ClInclude Include="Collision.h" />
+    <ClInclude Include="Coord.h" />
     <ClInclude Include="CSGame.h" />
     <ClInclude Include="CS_Game.h" />
     <ClInclude Include="CSMenu.h" />
     <ClInclude Include="CSTitle.h" />
     <ClInclude Include="Decorator.h" />
     <ClInclude Include="Easing.h" />
+    <ClInclude Include="Effect.h" />
     <ClInclude Include="Enemy.h" />
     <ClInclude Include="EnemyFactory.h" />
     <ClInclude Include="Graphics.h" />
+    <ClInclude Include="HitTask.h" />
     <ClInclude Include="item.h" />
     <ClInclude Include="LoadMapTask.h" />
     <ClInclude Include="Map.h" />
@@ -60,9 +64,11 @@
     <ClInclude Include="sword.h" />
     <ClInclude Include="Task.h" />
     <ClInclude Include="weapon.h" />
+    <ClInclude Include="WeaponSet.h" />
   </ItemGroup>
   <ItemGroup>
     <ClCompile Include="clear.cpp" />
+    <ClCompile Include="Collision.cpp" />
     <ClCompile Include="CSGame.cpp" />
     <ClCompile Include="CS_Game.cpp" />
     <ClCompile Include="CSMenu.cpp" />

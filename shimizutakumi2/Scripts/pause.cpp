@@ -69,7 +69,7 @@ void CPause::Draw() {
 	SetFontSize(20);
 	background(600, 0);
 	hpbar(600 + 20, 30);
-	DrawBox(600 + 60, 30 + 1, 600 + 60 + GetPlayer().GetLife(), 50 - 1, RED, true);
+//	DrawBox(600 + 60, 30 + 1, 600 + 60 + GetPlayer().GetLife(), 50 - 1, RED, true);
 
 	partsicon1(600 + 25, 130);
 	DrawFormatString(600 + 25, 130 + 30, BLACK, "%d", parts[1]);

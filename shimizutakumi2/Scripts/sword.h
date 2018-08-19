@@ -1,14 +1,12 @@
 #pragma once
 
-#include "Suken.h"
-#include "player.h"
-#include "scrol.h"
-#include "map.h"
-#include "pub.h"
+class BaseSword {//基礎ソードクラス
+
+};
 
 class CSword {
 private:
-	Anim sword;
+//	Anim sword;
 	int x, y;
 	int R;
 	const int power = 1;

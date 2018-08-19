@@ -1,6 +1,12 @@
 #pragma once
 #include "Suken.h"
+
 #include "ClassState.h"
+#include "Decorator.h"
+#include "Collision.h"
+#include "Coord.h"
+
+#include "Effect.h"
 
 struct PlayerParameter {//外部入力で設定したい
 	float speed;
@@ -12,14 +18,24 @@ struct PlayerParameter {//外部入力で設定したい
 
 class Player {
 private:
-	int x, y, cnt;
-	float v, vx, vy;//処理段階では小数でいいと思う
+	Coord c;
+	int cnt;
+	float v;//処理段階では小数でいいと思う
 	int direc, lastDirec;//direc * 45゜
 	int life;
-	const int R = 10;
+	static const int R = 10;
 	int invincible;
 	const PlayerParameter param;
 	State state;
+	Graph graph[48];
+	GraphHolder draw;
+	Drawing<Player> deco;
+	Collision* weapon;
+
+	Effect effect;
+	SwingEff swing;//仮
+
+	AbstractDrawing *drawBase, *drawDeco;
 
 	int GetInputDirec();//負で未入力
 	int GetRelativeDirec();//入力と現在の相対角度
@@ -46,13 +62,15 @@ public:
 	void Loop();
 	void Draw();
 
+	void Deco();
+
+	void HitWall();
+
 	int GetX()const;
 	int GetY()const;
-	int GetV()const;
 	int GetR()const;
-	int GetLife()const;
-	int Hit();
+	int& GetVX();
+	int& GetVY();
 
-	bool GetItem(int x,int y,int R);
-	bool EweaponDisappear(int x, int y, int R);
+	virtual Circle GetHitBody()const;
 };

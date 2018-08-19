@@ -31,6 +31,9 @@ public:
 	int GetStageHeight()const;
 	IntMap& GetTrapData();
 	IntMap& GetEnemyData();
+
+	bool IsWall(int x, int y)const;
+
 	int Code(int x, int y)const;
 
 	static const int chipSize = 40;

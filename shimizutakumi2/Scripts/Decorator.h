@@ -1,5 +1,9 @@
 #pragma once
 
+#include "sukenlib\Utility\Graph.h"
+
+#include "Coord.h"
+
 class AbstractDrawing {
 public:
 	AbstractDrawing() = default;
@@ -22,6 +26,35 @@ public:
 private:
 	T*const ptr;
 	funcPtr func;
+};
+
+class GraphHolder :public AbstractDrawing {
+public:
+	GraphHolder() :GraphHolder(nullptr, nullptr) {}
+	GraphHolder(Graph* graph, Coord* c) :graph(graph),c(c), dx(0), dy(0), index(0), turnFlag(false) {}
+	virtual ~GraphHolder() = default;
+
+	void Set(int dx, int dy, int index = 0 , bool turnFlag = false) {
+		this->dx = dx;
+		this->dy = dy;
+		this->index = index;
+		this->turnFlag = turnFlag;
+	}
+
+	void Reset(Graph *graph, Coord *c) {
+		this->graph = graph;
+		this->c = c;
+	}
+
+	void Draw() {
+		graph[index](dx + c->x, dy + c->y, turnFlag);
+	}
+
+private:
+	Graph *graph;
+	Coord *c;
+	int dx, dy, index;
+	bool turnFlag;
 };
 
 class AbstractDecorator : AbstractDrawing {

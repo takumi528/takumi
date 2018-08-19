@@ -19,22 +19,6 @@ private:
 	Scrol *scrol;
 };
 
-class TestEnemyTask :public Task {
-public:
-	TestEnemyTask(Player* p, ObjectManager<Enemy>* e) :p(p), e(e) {
-
-	}
-	void Main() {
-		if (Input.GetKeyEnter(Input.key.E)) {
-			e->Create(std::make_shared<Enemy>(p->GetX(), p->GetY() - 100));
-		}
-	}
-
-private:
-	Player* p;
-	ObjectManager<Enemy>* e;
-};
-
 CSGame::CSGame(int stage) :stage(stage) {
 	
 }
@@ -50,16 +34,19 @@ void CSGame::Start() {
 
 	task.RegisterTask(new ScrolTask(&scrol, player.get(), &map));
 	task.RegisterTask(new LoadMapTask(&map, &scrol, &enemy));
+	task.RegisterTask(new HitTask(player.get(), &enemy, &map));
 	task.RegisterTask(new TestScrolTask(&scrol));
-	task.RegisterTask(new TestEnemyTask(player.get(), &enemy));
 }
 
 void CSGame::Loop() {
 	enemy.Update();
 	
 	player->Loop();
-	player->Move();
+
 	task.Main();
+
+	player->Move();
+
 	if (Input.GetKeyEnter(Input.key.BACK))
 		Game.FlipScene(new CSHome());
 }

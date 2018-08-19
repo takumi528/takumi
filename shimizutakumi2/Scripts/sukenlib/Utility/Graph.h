@@ -2,7 +2,7 @@
 
 /**
 *	@file	Graph.h
-*	@brief	なぜこんな便利なものが今まで存在しなかったのか。便利な構造体 Graph と Anim 、LoadDivGraph関数のアレンジ　を追加します
+*	@brief	なぜこんな便利なものが今まで存在しなかったのか。便利な構造体 Graph 、LoadDivGraph関数のアレンジ　を追加します
 *	@author	Photon
 */
 
@@ -148,6 +148,22 @@ namespace suken {
 		*/
 		static void GetShift(int *x, int *y);
 
+		class Disable {
+		public:
+			Disable() {
+				x = sx;
+				y = sy;
+				sx = 0;
+				sy = 0;
+			}
+			~Disable() {
+				sx = x;
+				sy = y;
+			}
+		private:
+			int x, y;
+		};
+
 	private:
 		int handle;
 		unsigned char* cnt;
@@ -157,6 +173,7 @@ namespace suken {
 		void Release();
 		friend void DrawLine(int x1, int y1, int x2, int y2, unsigned int color, int tickness);
 		friend void DrawBox(int x1, int y1, int x2, int y2, unsigned int color, bool fillFlag);
+		friend void DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned int color, bool fillFlag);
 		friend void DrawCircle(int x, int y, int r, unsigned int color, bool fillFlag, int lineThickness);
 	};
 
@@ -168,12 +185,16 @@ namespace suken {
 		DxLib::DrawBox(x1 + Graph::sx, y1 + Graph::sy, x2 + Graph::sx, y2 + Graph::sy, color, fillFlag);
 	}
 
+	inline void DrawTriangle(int x1, int y1, int x2, int y2, int x3, int y3, unsigned int color, bool fillFlag = true) {
+		DxLib::DrawTriangle(x1 + Graph::sx, y1 + Graph::sy, x2 + Graph::sx, y2 + Graph::sy, x3 + Graph::sx, y3 + Graph::sy, color, fillFlag);
+	}
+
 	inline void DrawCircle(int x, int y, int r, unsigned int color, bool fillFlag = true, int lineThickness = 1) {
 		DxLib::DrawCircle(x + Graph::sx, y + Graph::sy, r, color, fillFlag, lineThickness);
 	}
 
 	/**
-	*	@brief　もう数研部員はアニメーションカウンタを作る必要はないのです　LoadDivGraph()を代入して、変数名に（）をつけるだけで勝手にアニメーションするのです
+	*	@brief　アニメーションは気合いで作りましょう。こんなものに頼らないほうがいいです
 	*/
 	struct Anim {
 	public:
