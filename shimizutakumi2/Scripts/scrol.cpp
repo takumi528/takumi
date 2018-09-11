@@ -1,10 +1,7 @@
 #include "scrol.h"
 
-extern CPlayer GetPlayer();
-extern CMap GetMap();
-
-extern int scrY;//画面の上端の座標
-extern int scrX;//画面の右端の座標
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
 
 CScrol::CScrol() {
 	fixset = false;
@@ -72,6 +69,19 @@ void CScrol::Loop(){
 	}*/
 }
 
+void CScrol::ScrSet() {
+	scrX = GetPlayer().GetX() - 300;
+	scrY = GetMap().GetHeight() * 40 - 600;
+}
+
 bool CScrol::GetFixset() {
 	return fixset;
+}
+
+int CScrol::GetScrX() {
+	return scrX;
+}
+
+int CScrol::GetScrY() {
+	return scrY;
 }

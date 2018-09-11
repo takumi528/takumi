@@ -1,22 +1,17 @@
 
 #include "enemy.h"
 
-extern CWeaponManager GetWeaponManager();
-extern CSword GetSword();
+extern CWeaponManager& GetWeaponManager();
+extern CSword& GetSword();
 extern MCE mce;
-extern CPlayer GetPlayer();
-extern CMap GetMap();
-extern CItemManager GetItemManager();
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
+extern CItemManager& GetItemManager();
+extern CScrol& GetScrol();
+extern CSGame& GetGame();
+extern CEnemyManager& GetEnemyManager();
+extern CPossession& GetPossession();
 
-extern int eneX,eneY,eneDrop;//死んだときの敵の座標とドロップアイテム情報の受け渡し,item.cppで使用
-extern int koeneflag, koeneDrop;//↑の固定時の敵バージョン
-extern int gunpower[30];
-extern int swordpower[30];
-extern int armarguard[30];
-extern int weararmar, wearweapon;
-int DROP;//CSGameでステージごとに設定
-
-extern int fixcount;//mapで宣言
 
 CEnemy::CEnemy() {}
 
@@ -30,7 +25,8 @@ CEnemy::CEnemy(int x,int y,int v,int R, int power,int knock,int life) {//直進
 	this->life = life;
 	this->maxlife = life;
 	deleteFlag = false;
-	drop = DROP;
+	drop = GetGame().GetDROP();
+	koflag = false;
 }
 
 CEnemy0::CEnemy0(int x, int y, int v, int R, int power, int knock, int life) {//チュートリアル
@@ -44,6 +40,7 @@ CEnemy0::CEnemy0(int x, int y, int v, int R, int power, int knock, int life) {//
 	this->maxlife = life;
 	deleteFlag = false;
 	drop = 1;
+	koflag = false;
 }
 
 CEnemy2::CEnemy2(int x, int y, int v, int R, int power, int knock, int life) {//横移動
@@ -56,14 +53,15 @@ CEnemy2::CEnemy2(int x, int y, int v, int R, int power, int knock, int life) {//
 	this->life = life;
 	this->maxlife = life;
 	deleteFlag = false;
-	drop = DROP;
-	if (x < scrX + 300) {
+	drop = GetGame().GetDROP();
+	if (x < GetScrol().GetScrX() + 300) {
 		turn = 1;
 	}
 	else {
 		turn = -1;
 	}
 	turncount = 0;
+	koflag = false;
 }
 
 CEnemy3::CEnemy3(int x, int y, int v, int R, int power, int knock, int life) {//追跡(固)
@@ -76,12 +74,13 @@ CEnemy3::CEnemy3(int x, int y, int v, int R, int power, int knock, int life) {//
 	this->life = life;
 	this->maxlife = life;
 	deleteFlag = false;
-	drop = DROP;
+	drop = GetGame().GetDROP();
 	vx = 0;
 	vy = 0;
 	leftGo = false;
 	upGo = false;
 	Gocount = 0;
+	koflag = true;
 }
 
 
@@ -165,16 +164,13 @@ void CEnemy3::Move() {
 
 void CEnemy::Loop() {
 		if (WHit() == true) {
-			life -= GetWeaponManager().GetPower() * gunpower[wearweapon];
+			life -= GetWeaponManager().GetPower() * GetPossession().GetGunpower(GetPossession().GetWearweapon());
 		}
 		if (SHit() == true) {
-			life -= GetSword().GetPower() * swordpower[wearweapon];
+			life -= GetSword().GetPower() * GetPossession().GetSwordpower(GetPossession().GetWearweapon());
 			y -= GetSword().GetKnock();
 		}
 		if (life <= 0) {
-		eneX = x;
-		eneY = y;
-		eneDrop = drop;
 		deleteFlag = true;
 		}
 		if (y > GetMap().GetHeight() * 40) {
@@ -184,16 +180,13 @@ void CEnemy::Loop() {
 
 void CEnemy0::Loop() {
 	if (WHit() == true) {
-		life -= GetWeaponManager().GetPower() * gunpower[wearweapon];
+		life -= GetWeaponManager().GetPower() * GetPossession().GetGunpower(GetPossession().GetWearweapon());
 	}
 	if (SHit() == true) {
-		life -= GetSword().GetPower() * swordpower[wearweapon];
+		life -= GetSword().GetPower() * GetPossession().GetSwordpower(GetPossession().GetWearweapon());
 		y -= GetSword().GetKnock();
 	}
 	if (life <= 0) {
-		eneX = x;
-		eneY = y;
-		eneDrop = drop;
 		deleteFlag = true;
 	}
 	if (y > GetPlayer().GetY() + 1000) {
@@ -203,16 +196,13 @@ void CEnemy0::Loop() {
 
 void CEnemy2::Loop() {
 	if (WHit() == true) {
-		life -= GetWeaponManager().GetPower() * gunpower[wearweapon];
+		life -= GetWeaponManager().GetPower() * GetPossession().GetGunpower(GetPossession().GetWearweapon());
 	}
 	if (SHit() == true) {
-		life -= GetSword().GetPower() * swordpower[wearweapon];
+		life -= GetSword().GetPower() * GetPossession().GetSwordpower(GetPossession().GetWearweapon());
 		y -= GetSword().GetKnock();
 	}
 	if (life <= 0) {
-		eneX = x;
-		eneY = y;
-		eneDrop = drop;
 		deleteFlag = true;
 	}
 	if (y > GetPlayer().GetY() + 1000) {
@@ -222,24 +212,20 @@ void CEnemy2::Loop() {
 
 void CEnemy3::Loop() {
 	if (WHit() == true) {
-		life -= GetWeaponManager().GetPower() * gunpower[wearweapon];
+		life -= GetWeaponManager().GetPower() * GetPossession().GetGunpower(GetPossession().GetWearweapon());
 	}
 	if (SHit() == true) {
-		life -= GetSword().GetPower() * swordpower[wearweapon];
+		life -= GetSword().GetPower() * GetPossession().GetSwordpower(GetPossession().GetWearweapon());
 		y -= GetSword().GetKnock();
 	}
 	if (life <= 0) {
-		if (fixcount == 1) {
-			GetMap().FixReset2();
-			koeneflag = true;
+		GetEnemyManager().ReduceFixcount();
+		if (GetEnemyManager().GetFixcount() <= 0) {
+		//	GetMap().FixReset2();
 		}
-		fixcount--;
-		eneX = x;
-		eneY = y;
-		eneDrop = drop;
 		deleteFlag = true;
 	}
-	if (x < scrX || x > scrX + 600 || y < scrY || y > scrY + 600) {
+	if (x < GetScrol().GetScrX() || x > GetScrol().GetScrX() + 600 || y < GetScrol().GetScrY() || y > GetScrol().GetScrY() + 600) {
 		deleteFlag = true;
 	}
 	if (GetMap().GetFix() == true) {
@@ -268,43 +254,43 @@ bool CEnemy::SHit() {
 
 void CEnemy::Draw() {
 		if (WHit() == false && SHit() == false) {
-			DrawCircle(x - scrX, y - scrY, R, BLUE, true);
+			DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, BLUE, true);
 		}
 		else {
-			DrawCircle(x - scrX, y - scrY, R, GREEN, true);
+			DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, GREEN, true);
 		}
-		DrawBox(x - R * 1.5 - scrX, y - scrY - R - 15, x - R * 1.5 - scrX + life * R * 3 / maxlife, y - scrY - R - 5, WHITE, true);
+		DrawBox(x - R * 1.5 - GetScrol().GetScrX(), y - GetScrol().GetScrY() - R - 15, x - R * 1.5 - GetScrol().GetScrX() + life * R * 3 / maxlife, y - GetScrol().GetScrY() - R - 5, WHITE, true);
 
 }
 
 void CEnemy0::Draw() {
 	if (WHit() == false && SHit() == false) {
-		DrawCircle(x - scrX, y - scrY, R, WHITE, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, WHITE, true);
 	}
 	else {
-		DrawCircle(x - scrX, y - scrY, R, GREEN, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, GREEN, true);
 	}
-	DrawBox(x - R * 1.5 - scrX, y - scrY - R - 15, x - R * 1.5 - scrX + life * R * 3 / maxlife , y - scrY - R - 5, WHITE, true);
+	DrawBox(x - R * 1.5 - GetScrol().GetScrX(), y - GetScrol().GetScrY() - R - 15, x - R * 1.5 - GetScrol().GetScrX() + life * R * 3 / maxlife , y - GetScrol().GetScrY() - R - 5, WHITE, true);
 }
 
 void CEnemy2::Draw() {
 	if (WHit() == false && SHit() == false) {
-		DrawCircle(x - scrX, y - scrY, R, RED, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, RED, true);
 	}
 	else {
-		DrawCircle(x - scrX, y - scrY, R, GREEN, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, GREEN, true);
 	}
-	DrawBox(x - R * 1.5 - scrX, y - scrY - R - 15, x - R * 1.5 - scrX + life * R * 3 / maxlife, y - scrY - R - 5, WHITE, true);
+	DrawBox(x - R * 1.5 - GetScrol().GetScrX(), y - GetScrol().GetScrY() - R - 15, x - R * 1.5 - GetScrol().GetScrX() + life * R * 3 / maxlife, y - GetScrol().GetScrY() - R - 5, WHITE, true);
 }
 
 void CEnemy3::Draw() {
 	if (WHit() == false && SHit() == false) {
-		DrawCircle(x - scrX, y - scrY, R, BLACK, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, BLACK, true);
 	}
 	else {
-		DrawCircle(x - scrX, y - scrY, R, GREEN, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, GREEN, true);
 	}
-	DrawBox(x - R * 1.5 - scrX, y - scrY - R - 15, x - R * 1.5 - scrX + life * R * 3 / maxlife, y - scrY - R - 5, WHITE, true);
+	DrawBox(x - R * 1.5 - GetScrol().GetScrX(), y - GetScrol().GetScrY() - R - 15, x - R * 1.5 - GetScrol().GetScrX() +life * R * 3 / maxlife, y - GetScrol().GetScrY() - R - 5, WHITE, true);
 }
 
 int CEnemy::GetX() {
@@ -339,8 +325,16 @@ int CEnemy::GetDrop() {
 	return drop;
 }
 
-CEnemyManager::CEnemyManager() {
+int CEnemy::GetLife() {
+	return life;
+}
 
+bool CEnemy::GetKoflag() {
+	return koflag;
+}
+
+CEnemyManager::CEnemyManager() {
+	fixcount = 0;
 }
 
 void CEnemyManager::Appear() {
@@ -349,7 +343,6 @@ void CEnemyManager::Appear() {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (mce.Get(mce.layer.B, i, j) == 1 && j * 40 > GetPlayer().GetY() - 630 && i * 40 < GetPlayer().GetX() + 330 && i * 40 > GetPlayer().GetX() - 330) {
 				enemy.push_back(new CEnemy0(i * 40, j * 40, 2, 20, 10, 50, 200));
-				fixcount++;
 				mce.Get(mce.layer.B, i, j) = 0;
 			}
 		}
@@ -373,7 +366,7 @@ void CEnemyManager::Appear() {
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (GetMap().GetFix() == true) {
-				if (mce.Get(mce.layer.B, i, j) == 4 && i * 40 > scrX && i * 40 < scrX + 600 && j * 40 > scrY && j * 40 < scrY + 600) {
+				if (mce.Get(mce.layer.B, i, j) == 4 && i * 40 > GetScrol().GetScrX() && i * 40 < GetScrol().GetScrX() + 600 && j * 40 > GetScrol().GetScrY() && j * 40 < GetScrol().GetScrY() + 600) {
 					enemy.push_back(new CEnemy3(i * 40, j * 40, 2, 20, 10, 50, 200));
 					fixcount++;
 					mce.Get(mce.layer.B, i, j) = 0;
@@ -449,4 +442,47 @@ void CEnemyManager::Disappear() {
 	for (auto i = enemy.begin(); i != enemy.end(); i++) {
 		(*i)->Disappear();
 	}
+}
+
+int CEnemyManager::GetDx() {
+	for (auto i = enemy.begin(); i != enemy.end(); i++) {
+		if ((*i)->GetLife() <= 0) {
+			return (*i)->GetX();
+		}
+	}
+	return -10;
+}
+
+int CEnemyManager::GetDy() {
+	for (auto i = enemy.begin(); i != enemy.end(); i++) {
+		if ((*i)->GetLife() <= 0) {
+			return (*i)->GetY();
+		}
+	}
+	return -10;
+}
+
+int CEnemyManager::GetDdrop() {
+	for (auto i = enemy.begin(); i != enemy.end(); i++) {
+		if ((*i)->GetLife() <= 0) {
+			return (*i)->GetDrop();
+		}
+	}
+}
+
+bool CEnemyManager::GetDkoflag() {
+	for (auto i = enemy.begin(); i != enemy.end(); i++) {
+		if ((*i)->GetLife() <= 0 && (*i)->GetKoflag() == true) {
+			return true;
+		}
+	}
+	return false;
+}
+
+int CEnemyManager::GetFixcount() {
+	return fixcount;
+}
+
+void CEnemyManager::ReduceFixcount() {
+	fixcount--;
 }

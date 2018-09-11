@@ -8,6 +8,7 @@
 #include "pub.h"
 #include "item.h"
 #include "possession.h"
+#include "CSGame.h"
 
 class CEnemy {
 protected:
@@ -18,6 +19,7 @@ protected:
 	int drop;
 	int life;
 	int maxlife;
+	bool koflag;//固定の敵ならtrue,それ以外はfalse
 public:
 	CEnemy();
 	CEnemy(int x,int y,int v,int R,int power,int knock,int life);
@@ -34,6 +36,8 @@ public:
 	int GetPower();
 	int GetKnock();
 	int GetDrop();
+	int GetLife();
+	bool GetKoflag();
 };
 
 class CEnemy0 :public CEnemy {
@@ -72,6 +76,7 @@ public:
 class CEnemyManager {
 private:
 	std::list<CEnemy*> enemy;
+	int fixcount;//固定エリア内の敵の数
 public:
 	CEnemyManager();
 	void Appear();
@@ -83,4 +88,11 @@ public:
 	int PHit(int x, int y, int r);
 	int GerPower();
 	int GetKnock();
+	//以下死んだときの座標とドロップ情報(アイテムドロップ時に使用)
+	int GetDx();
+	int GetDy();
+	int GetDdrop();
+	bool GetDkoflag();//倒した敵が固定かどうか
+	int GetFixcount();
+	void ReduceFixcount();
 };

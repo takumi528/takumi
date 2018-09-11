@@ -69,6 +69,9 @@ public:
 class CWeaponManager {
 private:
 	std::list<CWeapon*> weapon;
+	bool beamflag;//ビーム使いすぎてショートしたらfalse
+	bool beamflag2;//ビームを出している間true
+	int throwpower;//ボムを投げる強さ(ボムの届く距離が変動)
 public:
 	CWeaponManager();
 	void Appear(int x,int y);
@@ -79,7 +82,7 @@ public:
 	bool Hit(int x, int y,int r);
 	void PAttack();
 	int GetPower();
-
+	bool GetBeamflag();
 };
 
 class CEweapon {//敵の弾

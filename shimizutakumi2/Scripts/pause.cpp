@@ -1,11 +1,11 @@
 #include "pause.h"
 
-extern CMap GetMap();
-extern CPlayer GetPlayer();
-extern CWeaponManager GetWeaponManager();
-extern CSelect GetSelect();
-
-extern int parts[30];
+extern CMap& GetMap();
+extern CPlayer& GetPlayer();
+extern CWeaponManager& GetWeaponManager();
+extern CSelect& GetSelect();
+extern CPossession& GetPossession();
+extern CPub& GetPub();
 
 CPause::CPause() {
 	sentaku = 1;
@@ -23,20 +23,20 @@ void CPause::Load() {
 }
 void CPause::Loop() {
 		if (Input.GetKeyEnter(Input.key.P)) {
-			switch (type) {
+			switch (GetPub().GetType()) {
 			case 0:
 				break;
 			case 1:
 			default:
-				type = 3;
+				GetPub().Changetype(3);
 				break;
 			case 2:
 				break;
 			case 3:
-				type = 1;
+				GetPub().Changetype(1);
 			}
 		}
-	if (type == 3) {
+	if (GetPub().GetType() == 3) {
 		if (sentaku < 3) {
 			if (Input.GetKeyEnter(Input.key.DOWN)) {
 				sentaku++;
@@ -48,18 +48,18 @@ void CPause::Loop() {
 			}
 		}
 	}
-	if(type == 3){
+	if(GetPub().GetType() == 3){
 		if (Input.GetKeyEnter(Input.key.RETURN)) {
 			switch (sentaku) {
 			case 1:
 			default:
-				type = 1;
+				GetPub().Changetype(1);
 				break;
 			case 2:
-				retry = true;
+				GetPub().Changeretry(1);
 				break;
 			case 3:
-				back = true;
+				GetPub().Changeback(1);
 			}
 		}
 	}
@@ -72,9 +72,9 @@ void CPause::Draw() {
 	DrawBox(600 + 60, 30 + 1, 600 + 60 + GetPlayer().GetLife(), 50 - 1, RED, true);
 
 	partsicon1(600 + 25, 130);
-	DrawFormatString(600 + 25, 130 + 30, BLACK, "%d", parts[1]);
+	DrawFormatString(600 + 25, 130 + 30, BLACK, "%d", GetPossession().GetParts(1));
 
-	if (type == 3) {
+	if (GetPub().GetType() == 3) {
 		DxLib::SetDrawBlendMode(DX_BLENDMODE_ALPHA, 200);
 		DrawBox(0, 0, 600, 600, BLACK, true);
 		background2(150, 150);

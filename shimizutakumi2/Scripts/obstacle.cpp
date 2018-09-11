@@ -1,5 +1,7 @@
 #include "obstacle.h"
 
+extern CScrol& GetScrol();
+
 CObstacle::CObstacle() {}
 
 CObstacle::CObstacle(int x, int y, int r) {
@@ -10,7 +12,7 @@ CObstacle::CObstacle(int x, int y, int r) {
 }
 
 void CObstacle::Draw() {
-	DrawCircle(x - scrX, y - scrY, R, BLACK, true);
+	DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, BLACK, true);
 }
 
 void CObstacle::Loop() {

@@ -7,6 +7,7 @@
 #include "over.h"
 #include "weapon.h"
 #include "select.h"
+#include "possession.h"
 
 class CPause {
 private:

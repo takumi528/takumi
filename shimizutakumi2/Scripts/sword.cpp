@@ -1,7 +1,8 @@
 #include "sword.h"
 
-CPlayer GetPlayer();
-CMap GetMap();
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
+extern CScrol& GetScrol();
 
 CSword::CSword() {
 	x = 800;
@@ -54,7 +55,7 @@ void CSword::Loop() {
 
 void CSword::Draw() {
 	if (flag == true) {
-		DrawCircle(x - scrX, y - scrY, R, PURPLE, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, PURPLE, true);
 		//sword(x - R - scrX, y - R - scrY, false, true);
 	}
 }

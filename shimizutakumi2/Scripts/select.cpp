@@ -1,9 +1,9 @@
 #include"select.h"
 
-extern CPossession GetPossession();
+extern CPossession& GetPossession();
 
 //flagは作成できるかどうか
-extern int parts[30];
+/*extern int parts[30];
 extern int weapon[30];
 extern bool weaponflag[30];
 extern char weaponname[30][20];
@@ -11,7 +11,7 @@ extern int gunpower[30];
 extern int swordpower[30];
 extern int armar[30];
 extern int armarguard[30];
-extern bool armarflag[30];
+extern bool armarflag[30];*/
 
 extern int wearweapon, weararmar;//どれを装備しているか
 
@@ -197,13 +197,13 @@ void CSelect::Loop() {
 				switch (scene) {
 				case 31:
 				default:
-					if (armar[sentaku31] > 0 && weararmar != sentaku31) {
+					if (GetPossession().GetArmar(sentaku31) > 0 && weararmar != sentaku31) {
 						weararmar = sentaku31;
 						count2 = 5;
 					}
 					break;
 				case 32:
-					if (weapon[sentaku31] > 0 && wearweapon != sentaku31) {
+					if (GetPossession().GetWeapon(sentaku31) > 0 && wearweapon != sentaku31) {
 						wearweapon = sentaku31;
 						count2 = 5;
 					}
@@ -339,20 +339,20 @@ void CSelect::Draw() {
 		redbar2(0, sentaku3 * 120);
 	}
 	if (scene == 31) {
-		if (armar[sentaku31] > 0 && weararmar != sentaku31) {
+		if (GetPossession().GetArmar(sentaku31) > 0 && weararmar != sentaku31) {
 			background31_2(0, 0);
 		}
 		else {
 			background31_1(0, 0);
 		}
 		for (int i = 1; i <= 25; i++) {
-			if (armar[i] <= 0) {
+			if (GetPossession().GetArmar(i) <= 0) {
 				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
 			}
 		}
 	}
 	if (scene == 32) {
-		if (weapon[sentaku31] > 0 && wearweapon != sentaku31) {
+		if (GetPossession().GetWeapon(sentaku31) > 0 && wearweapon != sentaku31) {
 			background31_2(0, 0);
 		}
 		else {
@@ -360,7 +360,7 @@ void CSelect::Draw() {
 		}
 		gunicons(250, 50);
 		for (int i = 1; i <= 25; i++) {
-			if (weapon[i] <= 0) {
+			if (GetPossession().GetWeapon(i) <= 0) {
 				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
 			}
 		}
@@ -378,7 +378,7 @@ void CSelect::Draw() {
 	}
 
 	if (scene == 41) {
-		if (armarflag[sentaku41] == false) {
+		if (GetPossession().GetArmarflag(sentaku41) == false) {
 			background41_1(0, 0);
 		}
 		else {
@@ -395,16 +395,16 @@ void CSelect::Draw() {
 			DrawFormatString(50, 190, BLACK, "ネジ　…　40コ");
 		}
 		DrawFormatString(50, 320, BLACK, "守備力");
-		DrawFormatString(110, 320, BLACK, "%d", armarguard[sentaku41]);
+		DrawFormatString(110, 320, BLACK, "%d", GetPossession().GetArmarguard(sentaku41));
 
 		for (int i = 1; i <= 25; i++) {
-			if (armarflag[i] == false) {
+			if (GetPossession().GetArmarflag(i) == false) {
 				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
 			}
 		}
 	}
 	if (scene == 42) {
-		if (weaponflag[sentaku41] == false) {
+		if (GetPossession().GetWeaponflag(sentaku41) == false) {
 			background41_1(0, 0);
 		}
 		else {
@@ -420,9 +420,9 @@ void CSelect::Draw() {
 			DrawFormatString(50, 190, BLACK, "ネジ　…　30コ");
 		}
 		DrawFormatString(50, 320, BLACK, "攻撃力");
-		DrawFormatString(110, 320, BLACK, "%d", gunpower[sentaku41]);
+		DrawFormatString(110, 320, BLACK, "%d", GetPossession().GetGunpower(sentaku41));
 		for (int i = 1; i <= 25; i++) {
-			if (weaponflag[i] == false) {
+			if (GetPossession().GetWeaponflag(i) == false) {
 				blackbox(250 + ((i - 1) % 5) * 100, 50 + ((i - 1) / 5) * 100);
 			}
 		}
@@ -438,7 +438,7 @@ void CSelect::Draw() {
 			blackbox2(0, 0);
 			mybag(210, 110);
 			SetFontSize(30);
-			DrawFormatString(320, 180, BLACK, "%d", parts[1]);
+			DrawFormatString(320, 180, BLACK, "%d", GetPossession().GetParts(1));
 		}
 	}
 

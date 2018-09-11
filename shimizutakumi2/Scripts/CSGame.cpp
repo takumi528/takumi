@@ -14,24 +14,23 @@ CPub pub;
 CItemManager item;
 CPossession possession;
 CObstacleManager obstacle;
-extern int DROP;
+CSGame game;
 
+CSGame::CSGame() {};
 
 void CSGame::Start() {
-	scrY = map.GetHeight() * 40 - 600;
-	scrX = player.GetX() - 300;
+	scrol.ScrSet();
 	if (stage == 100) {
-		type = 0;
+		pub.Changetype(0);
 	}
 	else {
-		type = 1;
+		pub.Changetype(1);
 		enemy.Disappear();
 		item.DIsappear();
 	}
-	retry = false;
-	back = false;
-	nextstage = false;
-	kakunin = 10;
+	pub.Changeretry(0);
+	pub.Changeback(0);
+	pub.Changenextstage(0);
 	map.Set(stage);
 	map.Load();
 	player.Appear();
@@ -56,7 +55,7 @@ void CSGame::Loop() {
 		DROP = rand() % 2;
 	}
 
-	if (type == 0) {
+	if (pub.GetType() == 0) {
 		sel.Loop();
 		possession.Loop();
 		if (sel.GetScene() == 2) {
@@ -67,22 +66,22 @@ void CSGame::Loop() {
 			}
 		}
 	}
-	if (retry == true) {
+	if (pub.GetRetry() == true) {
 		map.FixReset();
 		Game.FlipScene(new CSGame(stage), Flip::FADE_OUT_IN);
-		retry = false;
+		pub.Changeretry(0);
 	}
-	if (back == true) {
+	if (pub.GetBack() == true) {
 		map.FixReset();
 		Game.FlipScene(new CSGame(100), Flip::FADE_OUT_IN);
-		back = false;
+		pub.Changeback(0);
 	}
-	if (nextstage == true) {
+	if (pub.GetNextstage() == true) {
 		map.FixReset();
 		Game.FlipScene(new CSGame(stage + 1), Flip::FADE_OUT_IN);
-		nextstage = false;
+		pub.Changenextstage(0);
 	}
-	if (type == 1){
+	if (pub.GetType() == 1){
 		scrol.Loop();
 
 		enemy.Appear();
@@ -110,7 +109,7 @@ void CSGame::Loop() {
 }
 
 void CSGame::Draw() {
-	if (type == 0) {
+	if (pub.GetType() == 0) {
 		sel.Draw();
 	}
 	else {
@@ -122,64 +121,75 @@ void CSGame::Draw() {
 		item.Draw();
 		enemy.Draw();
 		pause.Draw();
-		if (type == 2) {
+		if (pub.GetType() == 2) {
 			over.Draw();
 		}
 	    clear.Draw();
 	}
 	pub.Draw();
-
 }
 
 void CSGame::End() {
 
 }
 
-CWeaponManager GetWeaponManager() {
+int CSGame::GetDROP() {
+	return DROP;
+}
+
+CWeaponManager& GetWeaponManager() {
 	return weapon;
 }
 
-CPlayer GetPlayer() {
+CPlayer& GetPlayer() {
 	return player;
 }
 
-CSword GetSword() {
+CSword& GetSword() {
 	return sword;
 }
 
-CEnemyManager GetEnemyManager() {
+CEnemyManager& GetEnemyManager() {
 	return enemy;
 }
 
 
-CScrol GetScrol() {
+CScrol& GetScrol() {
 	return scrol;
 }
 
-CMap GetMap() {
+CMap& GetMap() {
 	return map;
 }
 
-CPause GetPause() {
+CPause& GetPause() {
 	return pause;
 }
 
-CClear GetClear() {
+CClear& GetClear() {
 	return clear;
 }
 
-CItemManager GetItemManager() {
+CItemManager& GetItemManager() {
 	return item;
 }
 
-CSelect GetSelect() {
+CSelect& GetSelect() {
 	return sel;
 }
 
-CPossession GetPossession() {
+CPossession& GetPossession() {
 	return possession;
 }
 
-CObstacleManager GetObstacleManager() {
+CObstacleManager& GetObstacleManager() {
 	return obstacle;
+}
+
+CSGame& GetGame() {
+	return game;
+}
+
+CPub& GetPub() {
+	return pub;
 }

@@ -1,10 +1,11 @@
 #include "player.h"
 #include "over.h"
 
-extern CMap GetMap();
-extern CEnemyManager GetEnemyManager();
-extern CWeaponManager GetWeaponManager();
-extern CObstacleManager GetObstacleManager();
+extern CMap& GetMap();
+extern CEnemyManager& GetEnemyManager();
+extern CWeaponManager& GetWeaponManager();
+extern CObstacleManager& GetObstacleManager();
+extern CScrol& GetScrol();
 
 CPlayer::CPlayer() {
 }
@@ -203,7 +204,7 @@ void CPlayer::Loop() {
 void CPlayer::Draw() {
 	DrawFormatString(0, 0, RED, "%d", y);//‰¼
 	if (invincible % 5 == 0) {
-		DrawCircle(x - scrX, y - scrY, R, RED, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, RED, true);
 	}
 
 	DrawFormatString(100, 0, BLUE, "%d", vx);

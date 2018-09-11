@@ -19,6 +19,7 @@
 class CSGame :public CScene {
 	//～変数宣言～
 	int stage;
+	int DROP;//ステージごとにドロップするアイテムを決める
 
 	//初期化　画像のロードなども
 	void Start();
@@ -30,5 +31,7 @@ class CSGame :public CScene {
 	void End();
 
 public:
+	CSGame();
 	CSGame(int stage):stage(stage) {}
+	int GetDROP();
 };

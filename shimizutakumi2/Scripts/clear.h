@@ -3,6 +3,7 @@
 #include "pub.h"
 #include "player.h"
 #include "map.h"
+#include "scrol.h"
 
 class CClear {
 private:

@@ -4,14 +4,14 @@
 int parts[30];
 int weapon[30];
 bool weaponflag[30];
-char weaponname[30][20] = {"a","aa"};
+char weaponname[30][20] = { "a","aa" };
 int gunpower[30] = { 1,20,20,10,5,5,10 };
 int swordpower[30] = { 1,50,50,50,50,50,50 };
 int armar[30];
 int armarguard[30];
 bool armarflag[30];
 
-int wearweapon,weararmar;//‚Ç‚ê‚ð‘•”õ‚µ‚Ä‚¢‚é‚©
+int wearweapon, weararmar;//‚Ç‚ê‚ð‘•”õ‚µ‚Ä‚¢‚é‚©
 
 CPossession::CPossession() {
 	for (int i = 1; i <= 25; i++) {
@@ -131,4 +131,46 @@ void CPossession::Createitem(int a) {
 	}
 }
 
+int CPossession::GetWearweapon() {
+	return wearweapon;
+}
 
+int CPossession::GetWeararmar() {
+	return weararmar;
+}
+
+int CPossession::GetGunpower(int a) {
+	return gunpower[a];
+}
+
+int CPossession::GetSwordpower(int a) {
+	return swordpower[a];
+}
+
+int CPossession::GetArmarguard(int a) {
+	return armarguard[a];
+}
+
+int CPossession::GetArmar(int a) {
+	return armar[a];
+}
+
+int CPossession::GetWeapon(int a) {
+	return weapon[a];
+}
+
+int CPossession::GetParts(int a){
+	return parts[a];
+}
+
+bool CPossession::GetArmarflag(int a) {
+	return armarflag[a];
+}
+
+bool CPossession::GetWeaponflag(int a) {
+	return weaponflag[a];
+}
+
+void CPossession::PlusParts(int a, int b) {
+	parts[a] += b;
+}

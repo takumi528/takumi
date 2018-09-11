@@ -1,15 +1,13 @@
 
 #include "weapon.h"
-extern CPlayer GetPlayer();
-extern CMap GetMap();
-extern CEnemyManager GetEnemyManager();
+extern CPlayer& GetPlayer();
+extern CMap& GetMap();
+extern CEnemyManager& GetEnemyManager();
+extern CScrol& GetScrol();
+extern CPossession& GetPossession();
+extern CWeaponManager& GetWeaponManager();
 
-extern int Wsignal;
-extern int wearweapon;
 
-bool beamflag;//ビーム使いすぎてショートしたらfalse
-bool beamflag2;//ビームを出している間true
-int throwpower;//ボムを投げる強さ(ボムの届く距離が変動)
 
 CWeapon::CWeapon() {
 
@@ -114,19 +112,19 @@ void CEweapon::Move() {
 }
 
 void CWeapon::Loop() {
-	if (y - scrY < 0 || Disappear() == true) {
+	if (y - GetScrol().GetScrY() < 0 || Disappear() == true) {
 		deleteFlag = true;
 	}
 }
 
 void CWeapon2::Loop() {
-	if (y + height - scrY < 0) {
+	if (y + height - GetScrol().GetScrY() < 0) {
 		deleteFlag = true;
 	}
 }
 
 void CWeapon3::Loop() {
-	if (beamflag == false || Input.GetKeyExit(Input.key.Z)) {
+	if (GetWeaponManager().GetBeamflag() == false || Input.GetKeyExit(Input.key.Z)) {
 		deleteFlag = true;
 	}
 }
@@ -144,32 +142,32 @@ void CWeapon4::Loop() {
 }
 
 void CEweapon::Loop() {
-	if (y - scrY < 0 || Disappear() == true) {
+	if (y - GetScrol().GetScrY() < 0 || Disappear() == true) {
 		deleteFlag = true;
 	}
 }
 
 void CWeapon::Draw() {
-	DrawCircle(x - scrX, y - scrY, R, WHITE, true);
+	DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, WHITE, true);
 }
 
 void CWeapon2::Draw() {
-	DrawBox(x - scrX, y - scrY, x - scrX + width, y - scrY + height, WHITE, true);
+	DrawBox(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), x - GetScrol().GetScrX() + width, y - GetScrol().GetScrY() + height, WHITE, true);
 }
 
 void CWeapon3::Draw() {
-	DrawBox(GetPlayer().GetX() - scrX - width / 2, 0, GetPlayer().GetX() - scrX + width / 2, GetPlayer().GetY() - scrY, WHITE, true);
+	DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - width / 2, 0, GetPlayer().GetX() - GetScrol().GetScrX() + width / 2, GetPlayer().GetY() - GetScrol().GetScrY(), WHITE, true);
 }
 
 void CWeapon4::Draw() {
-	DrawCircle(karix - scrX, kariy - scrY, 3, WHITE, true);
+	DrawCircle(karix - GetScrol().GetScrX(), kariy - GetScrol().GetScrY(), 3, WHITE, true);
 	if (reach == true) {
-		DrawCircle(x - scrX, y - scrY, R, RED, true);
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, RED, true);
 	}
 }
 
 void CEweapon::Draw() {
-	DrawCircle(x - scrX, y - scrY, R, WHITE, true);
+	DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, WHITE, true);
 }
 
 bool CWeapon::Disappear() {
@@ -243,7 +241,7 @@ CEweaponManager::CEweaponManager() {
 }
 
 void CWeaponManager::Appear(int x,int y) {
-	switch (wearweapon) {
+	switch (GetPossession().GetWearweapon()) {
 	case 1:
 	default:
 		weapon.push_back(new CWeapon(x, y, 10, 3, 1, 0));
@@ -275,7 +273,7 @@ void CWeaponManager::Appear(int x,int y) {
 }
 
 void CEweaponManager::Appear(int x, int y) {
-	if (wearweapon == 3) {
+	if (GetPossession().GetWearweapon() == 3) {
 		eweapon.push_back(new CEweapon(x, y, 10, 1, 0));
 		eweapon.push_back(new CEweapon(x, y, 10, 1, 1));
 		eweapon.push_back(new CEweapon(x, y, 10, 1, 2));
@@ -317,16 +315,16 @@ void CWeaponManager::Draw() {
 	for (auto i = weapon.begin(); i != weapon.end(); i++) {
 		(*i)->Draw();
 	}
-	if (wearweapon == 5) {
+	if (GetPossession().GetWearweapon() == 5) {
 		if (beamflag == true) {
-			DrawBox(GetPlayer().GetX() - scrX - 50, GetPlayer().GetY() - scrY + GetPlayer().GetR() + 10, GetPlayer().GetX() - scrX - 50 + (100 - count), GetPlayer().GetY() - scrY + GetPlayer().GetR() + 20, WHITE, true);
+			DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - 50, GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 10, GetPlayer().GetX() - GetScrol().GetScrX() - 50 + (100 - count), GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 20, WHITE, true);
 		}
 		else {
-			DrawBox(GetPlayer().GetX() - scrX - 50, GetPlayer().GetY() - scrY + GetPlayer().GetR() + 10, GetPlayer().GetX() - scrX - 50 + (100 - count), GetPlayer().GetY() - scrY + GetPlayer().GetR() + 20, RED, true);
+			DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - 50, GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 10, GetPlayer().GetX() - GetScrol().GetScrX() - 50 + (100 - count), GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 20, RED, true);
 		}
 	}
-	if (wearweapon == 6) {
-		DrawBox(GetPlayer().GetX() - scrX - 50, GetPlayer().GetY() - scrY + GetPlayer().GetR() + 10, GetPlayer().GetX() - scrX - 50 + throwpower / 3, GetPlayer().GetY() - scrY + GetPlayer().GetR() + 20, WHITE, true);
+	if (GetPossession().GetWearweapon() == 6) {
+		DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - 50, GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 10, GetPlayer().GetX() - GetScrol().GetScrX() - 50 + throwpower / 3, GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 20, WHITE, true);
 	}
 	DrawFormatString(0, 300, BLUE, "%d", count);
 }
@@ -348,7 +346,7 @@ void CWeaponManager::Loop() {
 	/*if (Input.GetKeyExit(Input.key.Z)) {
 		beamflag = false;
 	}*/
-	if (wearweapon == 5) {
+	if (GetPossession().GetWearweapon() == 5) {
 		if (count <= 0) {
 			beamflag = true;
 		}
@@ -356,7 +354,7 @@ void CWeaponManager::Loop() {
 			beamflag = false;
 		}
 	}
-	if (wearweapon == 6) {
+	if (GetPossession().GetWearweapon() == 6) {
 		if (Input.GetKeyDown(Input.key.Z)) {
 			if (throwpower < 300) {
 				throwpower += 6;
@@ -377,12 +375,12 @@ void CEweaponManager::Loop() {
 
 bool CWeaponManager::Hit(int x, int y,int r) {
 	for (auto i = weapon.begin(); i != weapon.end(); i++) {
-		if (wearweapon == 1 || wearweapon == 2 || wearweapon == 3) {
+		if (GetPossession().GetWearweapon() == 1 || GetPossession().GetWearweapon() == 2 || GetPossession().GetWearweapon() == 3) {
 			if ((x - (*i)->GetX())*(x - (*i)->GetX()) + (y - (*i)->GetY())*(y - (*i)->GetY()) <= (r + (*i)->GetR()) * (r + (*i)->GetR())) {
 				return true;
 			}
 		}
-		else if(wearweapon == 4){
+		else if(GetPossession().GetWearweapon() == 4){
 			if (((*i)->GetX() > x - r && (*i)->GetX() < x + r && (*i)->GetY() > y - r && (*i)->GetY() < y + r) || ((*i)->GetX() > x - r - (*i)->GetWidth() && (*i)->GetX() < x + r - (*i)->GetWidth() && (*i)->GetY() > y - r && (*i)->GetY() < y + r) || ((*i)->GetX() > x - r && (*i)->GetX() < x + r && (*i)->GetY() > y - r - (*i)->GetHeight() && (*i)->GetY() < y + r - (*i)->GetHeight()) || ((*i)->GetX() > x - r - (*i)->GetWidth() && (*i)->GetX() < x + r - (*i)->GetWidth() && (*i)->GetY() > y - r - (*i)->GetHeight() && (*i)->GetY() < y + r - (*i)->GetHeight())) {
 				return true;
 			}
@@ -390,7 +388,7 @@ bool CWeaponManager::Hit(int x, int y,int r) {
 				return true;
 			}
 		}
-		else if (wearweapon == 5) {
+		else if (GetPossession().GetWearweapon() == 5) {
 			if (y <= GetPlayer().GetY()) {
 				if (((GetPlayer().GetX() > x - r + (*i)->GetWidth() / 2) && (GetPlayer().GetX() < x + r + (*i)->GetWidth() / 2)) || ((GetPlayer().GetX() > x - r - (*i)->GetWidth() / 2) && (GetPlayer().GetX() < x + r - (*i)->GetWidth() / 2))) {
 					return true;
@@ -400,7 +398,7 @@ bool CWeaponManager::Hit(int x, int y,int r) {
 				}
 			}
 		}
-		else if (wearweapon == 6) {
+		else if (GetPossession().GetWearweapon() == 6) {
 			if ((*i)->GetReach() == true) {
 				if ((x - (*i)->GetX())*(x - (*i)->GetX()) + (y - (*i)->GetY())*(y - (*i)->GetY()) <= (r + (*i)->GetR()) * (r + (*i)->GetR())) {
 					return true;
@@ -423,7 +421,7 @@ bool CEweaponManager::Hit(int x, int y, int r) {
 
 void CWeaponManager::PAttack() {
 	if (Input.GetKeyDown(Input.key.Z)) {
-		if (wearweapon == 5) {
+		if (GetPossession().GetWearweapon() == 5) {
 			if (beamflag == true) {
 				if (beamflag2 == false) {
 					beamflag2 = true;
@@ -432,14 +430,14 @@ void CWeaponManager::PAttack() {
 				count += 2;
 			}
 		}
-		else if(wearweapon != 6){
+		else if(GetPossession().GetWearweapon() != 6){
 			if (count <= 0) {
 				Appear(GetPlayer().GetX(), GetPlayer().GetY());
 			}
 		}
 	}
 	if (Input.GetKeyExit(Input.key.Z)) {
-		if (wearweapon == 6) {
+		if (GetPossession().GetWearweapon() == 6) {
 			Appear(GetPlayer().GetX(), GetPlayer().GetY());
 			throwpower = 0;
 		}
@@ -457,4 +455,8 @@ int CEweaponManager::GetPower() {
 	for (auto i = eweapon.begin(); i != eweapon.end(); i++) {
 		return (*i)->GetPower();
 	}
+}
+
+bool CWeaponManager::GetBeamflag() {
+	return beamflag;
 }

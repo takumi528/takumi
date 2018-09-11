@@ -1,6 +1,7 @@
 #include "over.h"
 
-extern CPlayer GetPlayer();
+extern CPlayer& GetPlayer();
+extern CPub& GetPub();
 
 COver::COver() {
 	sentaku = 1;
@@ -13,12 +14,12 @@ void COver::Load() {
 }
 
 void COver::Loop() {
-	if (type == 1) {
+	if (GetPub().GetType() == 1) {
 		if (GetPlayer().GetLife() <= 0) {
-			type = 2;
+			GetPub().Changetype(2);
 		}
 	}
-	if (type == 2) {
+	if (GetPub().GetType() == 2) {
 		if (Input.GetKeyEnter(Input.key.DOWN)) {
 			if (sentaku < 2) {
 				sentaku++;
@@ -33,10 +34,10 @@ void COver::Loop() {
 			switch (sentaku) {
 			case 1:
 			default:
-				retry = true;
+				GetPub().Changeretry(1);
 				break;
 			case 2:
-				back = true;
+				GetPub().Changeback(1);
 			}
 		}
 	}

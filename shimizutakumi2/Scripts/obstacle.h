@@ -2,6 +2,7 @@
 #include "Suken.h"
 #include "pub.h"
 #include "map.h"
+#include "scrol.h"
 
 class CObstacle {
 private:

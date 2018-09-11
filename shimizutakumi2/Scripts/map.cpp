@@ -1,16 +1,14 @@
 #include "map.h"
 
-extern CPlayer GetPlayer();
-extern CEnemyManager GetEnemyManager();
+extern CPlayer& GetPlayer();
+extern CEnemyManager& GetEnemyManager();
+extern CScrol& GetScrol();
 
-int fixcount;//固定エリアの敵の数、0になるとfixを解く(enemyの出現時++)
-int fixdelete;//fixdelete > 0　のとき　fixを解除
 
 CMap::CMap() {
 	fix = false;
 	fixX = -1000;
 	fixY = -1000;
-	fixcount = 0;
 }
 
 void CMap::Load() {
@@ -34,10 +32,6 @@ void CMap::Set(int stage) {
 }
 
 void CMap::Loop() {
-	if (fixdelete > 0) {
-		FixReset2();
-		fixdelete--;
-	}
 
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
@@ -79,6 +73,7 @@ void CMap::FixReset2() {//固定エリアの敵をすべて倒した時にfixをfalseにする
 			}
 		}
 	}
+	fix = false;
 	fixX = -1000;
 	fixY = -1000;
 }
@@ -88,21 +83,21 @@ void CMap::Draw() {
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (mce.Get(mce.layer.A, i, j) == 1) {
-				chip1(i * 40 - scrX, j * 40 - scrY);
+				chip1(i * 40 - GetScrol().GetScrX(), j * 40 - GetScrol().GetScrY());
 			}
 		}
 	}
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (mce.Get(mce.layer.A, i, j) == 2) {
-				chip2(i * 40 - scrX, j * 40 - scrY);
+				chip2(i * 40 - GetScrol().GetScrX(), j * 40 - GetScrol().GetScrY());
 			}
 		}
 	}
 	for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (mce.Get(mce.layer.A, i, j) == 3) {
-				chip3(i * 40 - scrX, j * 40 - scrY);
+				chip3(i * 40 - GetScrol().GetScrX(), j * 40 - GetScrol().GetScrY());
 			}
 		}
 	}
@@ -110,12 +105,11 @@ void CMap::Draw() {
 		DrawFormatString(200, 0, WHITE, "aaaaa");
 	}
 
-	DrawFormatString(300, 300, RED, "%d", fixdelete);
 
 	/*for (int i = 0; i < mce.GetWidth(); i++) {
 		for (int j = 0; j < mce.GetHeight(); j++) {
 			if (mce.Get(mce.layer.C, i, j) == 1) {
-				DrawCircle(i * 40 - scrX, j * 40 - scrY, 300, GREEN, true);
+				DrawCircle(i * 40 - GetScrol().GetScrX(), j * 40 - GetScrol().GetScrY(), 300, GREEN, true);
 			}
 		}
 	}*/
