@@ -6,6 +6,8 @@ extern CEnemyManager& GetEnemyManager();
 extern CWeaponManager& GetWeaponManager();
 extern CObstacleManager& GetObstacleManager();
 extern CScrol& GetScrol();
+extern CSword& GetSword();
+extern CPossession& GetPossession();
 
 CPlayer::CPlayer() {
 }
@@ -27,6 +29,9 @@ void CPlayer::Appear() {
 	left = false;
 	up = false;
 	down = false;
+	state = 0;
+	statecount = 0;
+	rad = 0;
 }
 
 void CPlayer::Move() {
@@ -68,6 +73,7 @@ void CPlayer::Move() {
 					}
 					else {
 						kaihiU = 20;
+						stopcount = 10;
 					}
 				}
 				else if (down == true) {
@@ -83,6 +89,7 @@ void CPlayer::Move() {
 					}
 					else {
 						kaihiD = 20;
+						stopcount = 10;
 					}
 				}
 				else {
@@ -123,29 +130,93 @@ void CPlayer::Move() {
 }
 
 void CPlayer::Loop() {
-	if (Input.GetKeyDown(Input.key.RIGHT)) {
+	if (statecount <= 0) {
+		state = 0;
+	}
+
+	if (stopcount > 0) {
+		state = 2;
+	}
+	else if (state != 3 && state != 4 && state != 5 && (up == true || down == true || right == true || left == true)) {
+		state = 1;
+	}
+	if (GetPossession().GetWearweapon() != 6) {
+		if (Input.GetKeyDown(Input.key.Z)) {
+			GetWeaponManager().PAttack();
+		}
+	}
+	else {
+		if (Input.GetKeyExit(Input.key.Z)) {
+			GetWeaponManager().PAttack();
+		}
+	}
+	if (Input.GetKeyEnter(Input.key.X)) {
+		GetSword().PAttack();
+		switch (state) {
+		case 0:
+		case 1:
+		case 2:
+		default:
+			state = 3;
+			break;
+		case 3:
+			state = 4;
+			break;
+		case 4:
+			state = 5;
+		}
+		statecount = 30;
+	}
+
+
+	if (Input.GetKeyDown(Input.key.RIGHT) && left == false) {
 		right = true;
 	}
 	else {
 		right = false;
 	}
-	if (Input.GetKeyDown(Input.key.LEFT)) {
+	if (Input.GetKeyDown(Input.key.LEFT) && right == false) {
 		left = true;
 	}
 	else {
 		left = false;
 	}
-	if (Input.GetKeyDown(Input.key.UP)) {
+	if (Input.GetKeyDown(Input.key.UP) && down == false) {
 		up = true;
 	}
 	else {
 		up = false;
 	}
-	if (Input.GetKeyDown(Input.key.DOWN)) {
+	if (Input.GetKeyDown(Input.key.DOWN) && up == false) {
 		down = true;
 	}
 	else {
 		down = false;
+	}
+
+	if (Input.GetKeyEnter(Input.key.UP)) {
+		rad = 0;
+	}
+	if (Input.GetKeyEnter(Input.key.RIGHT)) {
+		rad = 1;
+	}
+	if (Input.GetKeyEnter(Input.key.DOWN)) {
+		rad = 2;
+	}
+	if (Input.GetKeyEnter(Input.key.LEFT)) {
+		rad = 3;
+	}
+	if (up == true && down == false && right == false && left == false) {
+		rad = 0;
+	}
+	if (up == false && down == true && right == false && left == false) {
+		rad = 2;
+	}
+	if (up == false && down == false && right == true && left == false) {
+		rad = 1;
+	}
+	if (up == false && down == false && right == false && left == true) {
+		rad = 3;
 	}
 
 	if (invincible <= 0) {
@@ -159,6 +230,10 @@ void CPlayer::Loop() {
 		else if (Hit() == 2) {
 			y -= GetEnemyManager().GetKnock();
 		}
+	}
+
+	if (statecount > 0) {
+		statecount--;
 	}
 
 	if (invincible > 0) {
@@ -207,7 +282,22 @@ void CPlayer::Draw() {
 		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY(), R, RED, true);
 	}
 
-	DrawFormatString(100, 0, BLUE, "%d", vx);
+	//ˆÈ‰º‚Í‰¼
+	DrawFormatString(100, 0, BLUE, "%d", state);
+	switch (rad) {
+	case 0:
+	default:
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY() - 9, 2, WHITE, true);
+		break;
+	case 1:
+		DrawCircle(x - GetScrol().GetScrX() + 9, y - GetScrol().GetScrY(), 2, WHITE, true);
+		break;
+	case  2:
+		DrawCircle(x - GetScrol().GetScrX(), y - GetScrol().GetScrY() + 9, 2, WHITE, true);
+		break;
+	case 3:
+		DrawCircle(x - GetScrol().GetScrX() - 9, y - GetScrol().GetScrY(), 2, WHITE, true);
+	}
 }
 
 int CPlayer::GetX() {
@@ -254,4 +344,20 @@ bool CPlayer::EweaponDisappear(int x, int y, int R) {
 		return true;
 	}
 	return false;
+}
+
+int CPlayer::GetState() {
+	return state;
+}
+
+int CPlayer::GetRad(int a) {
+	if (rad < 0 - a) {
+		return rad + a + 4;
+	}
+	else if (rad > 3 - a) {
+		return rad + a - 4;
+	}
+	else {
+		return rad + a;
+	}
 }

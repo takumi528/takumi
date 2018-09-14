@@ -90,11 +90,11 @@ void CSGame::Loop() {
 			item.Loop();
 			player.Move();
 			player.Loop();
-			weapon.PAttack();
+			//weapon.PAttack();
 			weapon.Loop();
 			weapon.Move();
 			sword.Loop();
-			sword.PAttack();
+			//sword.PAttack();
 			enemy.Move();
 			enemy.Loop();
 			pub.Loop();

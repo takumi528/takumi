@@ -30,9 +30,9 @@ void CSword::Appear(int x,int y) {
 
 void CSword::PAttack() {
 	if (count <= 0) {
-		if (Input.GetKeyEnter(Input.key.X)) {
+		//if (Input.GetKeyEnter(Input.key.X)) {
 			Appear(GetPlayer().GetX(), GetPlayer().GetY());
-		}
+		//}
 	}
 }
 
@@ -62,16 +62,30 @@ void CSword::Draw() {
 
 bool CSword::Hit(int x,int y,int r) {
 	if (flag == true) {
-		if(damage <= 0){
-			if ((x - this->x)*(x - this->x) + (y - this->y)*(y - this->y) <= (r + this->R)*(r + this->R)) {
+		if ((x - this->x)*(x - this->x) + (y - this->y)*(y - this->y) <= (r + this->R)*(r + this->R)) {
+			switch(GetPlayer().GetRad(0)){
+			case 0:
+			default:
 				if (y <= this->y) {
-					damage = 5;
+					return true;
+				}
+				break;
+			case 1:
+				if (x >= this->x) {
+					return true;
+				}
+				break;
+			case 2:
+				if (y >= this->y) {
+					return true;
+				}
+				break;
+			case 3:
+				if (x <= this->x) {
+					return true;
 				}
 			}
 		}
-	}
-	if (damage > 0) {
-		return true;
 	}
 	return false;
 }

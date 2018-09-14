@@ -15,7 +15,7 @@ protected:
 	int R;
 	bool deleteFlag;
 	int power;
-	int direction;//0:直進、1:右斜め前、2:左斜め前
+	int direction;//0～3->player.radと同じ、rad + 10->右斜め前、rad - 10->左斜め前
 
 	int explodecount;//ボムが爆発している時間
 	bool reach;//ボムが到達するとtrue;
@@ -42,7 +42,7 @@ public:
 class CWeapon2 :public CWeapon {
 private:
 public:
-	CWeapon2(int x, int y, int width, int heght, int v, int power);
+	CWeapon2(int x, int y, int width, int heght, int v, int power, int direction);
 	void Move();
 	void Draw();
 	void Loop();
@@ -60,7 +60,7 @@ public:
 class CWeapon4 :public CWeapon {
 private:
 public:
-	CWeapon4(int x, int y, int v, int R, int power, int explodecount);
+	CWeapon4(int x, int y, int v, int R, int power, int explodecount,int direction);
 	void Move();
 	void Draw();
 	void Loop();

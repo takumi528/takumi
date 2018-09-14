@@ -184,7 +184,20 @@ void CEnemy0::Loop() {
 	}
 	if (SHit() == true) {
 		life -= GetSword().GetPower() * GetPossession().GetSwordpower(GetPossession().GetWearweapon());
-		y -= GetSword().GetKnock();
+		switch (GetPlayer().GetRad(0)) {
+		case 0:
+		default:
+			y -= GetSword().GetKnock();
+			break;
+		case 1:
+			x += GetSword().GetKnock();
+			break;
+		case 2:
+			y += GetSword().GetKnock();
+			break;
+		case 3:
+			x += GetSword().GetKnock();
+		}
 	}
 	if (life <= 0) {
 		deleteFlag = true;

@@ -27,7 +27,7 @@ CWeapon::CWeapon(int x,int y,int v,int R,int power,int direction) {
 	deleteFlag = false;
 }
 
-CWeapon2::CWeapon2(int x, int y, int width, int height, int v, int power) {
+CWeapon2::CWeapon2(int x, int y, int width, int height, int v, int power, int direction) {
 	this->x = x;
 	this->y = y;
 	this->width = width;
@@ -35,6 +35,7 @@ CWeapon2::CWeapon2(int x, int y, int width, int height, int v, int power) {
 	this->v = v;
 	this->power = power;
 	this->R = 0;
+	this->direction = direction;
 	deleteFlag = false;
 }
 
@@ -45,12 +46,13 @@ CWeapon3::CWeapon3(int width, int power) {
 	deleteFlag = false;
 }
 
-CWeapon4::CWeapon4(int x, int y, int v, int R, int power, int explodecount) {
+CWeapon4::CWeapon4(int x, int y, int v, int R, int power, int explodecount, int direction) {
 	this->x = x;
 	this->y = y;
 	this->v = v;
 	this->R = R;
 	this->power = power;
+	this->direction = direction;
 	this->explodecount = explodecount;
 	deleteFlag = false;
 	karix = GetPlayer().GetX();
@@ -69,21 +71,70 @@ CEweapon::CEweapon(int x, int y, int v, int power, int direction) {
 
 
 void CWeapon::Move() {
-	if (direction == 0) {
-		y -= v;
-	}
-	if (direction == 1) {
-		y -= v * 0.8;
-		x += v * 0.5;
-	}
-	if (direction == 2) {
-		y -= v * 0.8;
-		x -= v * 0.5;
-	}
+		switch (direction) {
+		case 0:
+		default:
+			y -= v;
+			break;
+		case 1:
+			x += v;
+			break;
+		case 2:
+			y += v;
+			break;
+		case 3:
+			x -= v;
+			break;
+		case -10:
+			y -= v * 0.8;
+			x -= v * 0.5;
+			break;
+		case 10:
+			y -= v * 0.8;
+			x += v * 0.5;
+			break;
+		case -9:
+			y -= v * 0.5;
+			x += v * 0.8;
+			break;
+		case 11:
+			y += v * 0.5;
+			x += v * 0.8;
+			break;
+		case -8:
+			y += v * 0.8;
+			x += v * 0.5;
+			break;
+		case 12:
+			y += v * 0.8;
+			x -= v * 0.5;
+			break;
+		case -7:
+			y += v * 0.5;
+			x -= v * 0.8;
+			break;
+		case 13:
+			y -= v * 0.5;
+			x -= v * 0.8;
+		}
 }
 
 void CWeapon2::Move() {
-	y -= v;
+	switch (direction) {
+	case 0:
+	default:
+		y -= v;
+		break;
+	case 1:
+		x += v;
+		break;
+	case 2:
+		y += v;
+		break;
+	case 3:
+		x -= v;
+		break;
+	}
 }
 
 void CWeapon3::Move() {}
@@ -93,7 +144,13 @@ void CWeapon4::Move() {
 		kariy -= v;
 	}
 	if (kariy < y) {
-		kariy = y;
+		kariy += v;
+	}
+	if (karix > x) {
+		karix -= v;
+	}
+	if (karix < x) {
+		karix += v;
 	}
 }
 
@@ -112,7 +169,7 @@ void CEweapon::Move() {
 }
 
 void CWeapon::Loop() {
-	if (y - GetScrol().GetScrY() < 0 || Disappear() == true) {
+	if (y - GetScrol().GetScrY() < -100 || x - GetScrol().GetScrX() < -100 || y - GetScrol().GetScrY() > 700 || x - GetScrol().GetScrX() > 700 || Disappear() == true) {
 		deleteFlag = true;
 	}
 }
@@ -130,7 +187,7 @@ void CWeapon3::Loop() {
 }
 
 void CWeapon4::Loop() {
-	if (kariy == y) {
+	if (kariy == y && karix == x) {
 		reach = true;
 	}
 	if (reach == true && explodecount > 0) {
@@ -156,7 +213,20 @@ void CWeapon2::Draw() {
 }
 
 void CWeapon3::Draw() {
-	DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - width / 2, 0, GetPlayer().GetX() - GetScrol().GetScrX() + width / 2, GetPlayer().GetY() - GetScrol().GetScrY(), WHITE, true);
+	switch (GetPlayer().GetRad(0)) {
+	case 0:
+	default:
+		DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - width / 2, 0, GetPlayer().GetX() - GetScrol().GetScrX() + width / 2, GetPlayer().GetY() - GetScrol().GetScrY(), WHITE, true);
+		break;
+	case 1:
+		DrawBox(GetPlayer().GetX() - GetScrol().GetScrX(), GetPlayer().GetY() - GetScrol().GetScrY() - width / 2, 600, GetPlayer().GetY() - GetScrol().GetScrY() + width / 2, WHITE, true);
+		break;
+	case 2:
+		DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - width / 2, GetPlayer().GetY() - GetScrol().GetScrY(), GetPlayer().GetX() - GetScrol().GetScrX() + width / 2, 600, WHITE, true);
+		break;
+	case 3:
+		DrawBox(0, GetPlayer().GetY() - GetScrol().GetScrY() - width / 2, GetPlayer().GetX() - GetScrol().GetScrX(), GetPlayer().GetY() - GetScrol().GetScrY() + width / 2, WHITE, true);
+	}
 }
 
 void CWeapon4::Draw() {
@@ -244,31 +314,60 @@ void CWeaponManager::Appear(int x,int y) {
 	switch (GetPossession().GetWearweapon()) {
 	case 1:
 	default:
-		weapon.push_back(new CWeapon(x, y, 10, 3, 1, 0));
+		weapon.push_back(new CWeapon(x, y, 10, 3, 1, GetPlayer().GetRad(0)));
 		count = 5;
 		break;
 	case 2:
-		weapon.push_back(new CWeapon(x, y, 10, 3, 1, 0));
-		weapon.push_back(new CWeapon(x, y, 10, 3, 1, 1));
-		weapon.push_back(new CWeapon(x, y, 10, 3, 1, 2));
+		weapon.push_back(new CWeapon(x, y, 10, 3, 1, GetPlayer().GetRad(0)));
+		weapon.push_back(new CWeapon(x, y, 10, 3, 1, GetPlayer().GetRad(0) + 10));
+		weapon.push_back(new CWeapon(x, y, 10, 3, 1, GetPlayer().GetRad(0) - 10));
 		count = 5;
 		break;
 	case 3:
-		weapon.push_back(new CWeapon(x, y - 10, 10, 3, 1, 0));
-		weapon.push_back(new CWeapon(x - 10, y, 10, 3, 1, 0));
-		weapon.push_back(new CWeapon(x + 10, y, 10, 3, 1, 0));
+		weapon.push_back(new CWeapon(x, y - 10, 10, 3, 1, GetPlayer().GetRad(0)));
+		weapon.push_back(new CWeapon(x - 10, y, 10, 3, 1, GetPlayer().GetRad(0)));
+		weapon.push_back(new CWeapon(x + 10, y, 10, 3, 1, GetPlayer().GetRad(0)));
 		count = 5;
 		break;
 	case 4:
-		weapon.push_back(new CWeapon2(x - 4, y - 30, 8, 30, 15, 1));
-		count = 10;
+		switch (GetPlayer().GetRad(0)) {
+		case 0:
+		default:
+			weapon.push_back(new CWeapon2(x - 4, y - 30, 8, 30, 15, 1, GetPlayer().GetRad(0)));
+			count = 10;
+			break;
+		case 1:
+			weapon.push_back(new CWeapon2(x + 15, y - 4, 30, 8, 15, 1, GetPlayer().GetRad(0)));
+			count = 10;
+			break;
+		case 2:
+			weapon.push_back(new CWeapon2(x - 4, y + 15, 8, 30, 15, 1, GetPlayer().GetRad(0)));
+			count = 10;
+			break;
+		case 3:
+			weapon.push_back(new CWeapon2(x - 30, y - 4, 30, 8, 15, 1, GetPlayer().GetRad(0)));
+			count = 10;
+		}
 		break;
 	case 5:
 		weapon.push_back(new CWeapon3(18, 1));
 		break;
 	case 6:
-		weapon.push_back(new CWeapon4(x, y - throwpower, 10, 80, 1, 50));
-		break;
+		switch (GetPlayer().GetRad(0)) {
+		case 0:
+		default:
+			weapon.push_back(new CWeapon4(x, y - throwpower, 6, 80, 1, 50, GetPlayer().GetRad(0)));
+			break;
+		case 1:
+			weapon.push_back(new CWeapon4(x + throwpower, y, 6, 80, 1, 50, GetPlayer().GetRad(0)));
+			break;
+		case 2:
+			weapon.push_back(new CWeapon4(x, y + throwpower, 6, 80, 1, 50, GetPlayer().GetRad(0)));
+			break;
+		case 3:
+			weapon.push_back(new CWeapon4(x - throwpower, y, 6, 80, 1, 50, GetPlayer().GetRad(0)));
+			break;
+		}
 	}
 }
 
@@ -326,7 +425,7 @@ void CWeaponManager::Draw() {
 	if (GetPossession().GetWearweapon() == 6) {
 		DrawBox(GetPlayer().GetX() - GetScrol().GetScrX() - 50, GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 10, GetPlayer().GetX() - GetScrol().GetScrX() - 50 + throwpower / 3, GetPlayer().GetY() - GetScrol().GetScrY() + GetPlayer().GetR() + 20, WHITE, true);
 	}
-	DrawFormatString(0, 300, BLUE, "%d", count);
+	DrawFormatString(0, 300, BLUE, "%d", GetPlayer().GetRad(0));
 }
 
 void CEweaponManager::Draw() {
@@ -389,13 +488,56 @@ bool CWeaponManager::Hit(int x, int y,int r) {
 			}
 		}
 		else if (GetPossession().GetWearweapon() == 5) {
-			if (y <= GetPlayer().GetY()) {
+			/*if (y <= GetPlayer().GetY()) {
 				if (((GetPlayer().GetX() > x - r + (*i)->GetWidth() / 2) && (GetPlayer().GetX() < x + r + (*i)->GetWidth() / 2)) || ((GetPlayer().GetX() > x - r - (*i)->GetWidth() / 2) && (GetPlayer().GetX() < x + r - (*i)->GetWidth() / 2))) {
 					return true;
 				}
 				else if (GetPlayer().GetX() <= x - r + (*i)->GetWidth() / 2 && GetPlayer().GetX() >= x + r - (*i)->GetWidth() / 2) {
 					return true;
 				}
+			}*/
+			switch (GetPlayer().GetRad(0)) {
+			case 0:
+			default:
+				if (y <= GetPlayer().GetY()) {
+					if (((x > GetPlayer().GetX() - (*i)->GetWidth() / 2 - r) && (x < GetPlayer().GetX() + (*i)->GetWidth() / 2 - r)) || ((x > GetPlayer().GetX() - (*i)->GetWidth() / 2 + r) && (x < GetPlayer().GetX() + (*i)->GetWidth() / 2 + r))) {
+						return true;
+					}
+					else if (x < GetPlayer().GetX() - (*i)->GetWidth() / 2 + r && x > GetPlayer().GetX() + (*i)->GetWidth() / 2 - r) {
+						return true;
+					}
+				}
+				break;
+			case 1:
+				if (x >= GetPlayer().GetX()) {
+					if (((y > GetPlayer().GetY() - (*i)->GetWidth() / 2 - r) && (y < GetPlayer().GetY() + (*i)->GetWidth() / 2 - r)) || ((y > GetPlayer().GetY() - (*i)->GetWidth() / 2 + r) && (y < GetPlayer().GetY() + (*i)->GetWidth() / 2 + r))) {
+						return true;
+					}
+					else if (y < GetPlayer().GetY() - (*i)->GetWidth() / 2 + r && y > GetPlayer().GetY() + (*i)->GetWidth() / 2 - r) {
+						return true;
+					}
+				}
+				break;
+			case 2:
+				if (y >= GetPlayer().GetY()) {
+					if (((x > GetPlayer().GetX() - (*i)->GetWidth() / 2 - r) && (x < GetPlayer().GetX() + (*i)->GetWidth() / 2 - r)) || ((x > GetPlayer().GetX() - (*i)->GetWidth() / 2 + r) && (x < GetPlayer().GetX() + (*i)->GetWidth() / 2 + r))) {
+						return true;
+					}
+					else if (x < GetPlayer().GetX() - (*i)->GetWidth() / 2 + r && x > GetPlayer().GetX() + (*i)->GetWidth() / 2 - r) {
+						return true;
+					}
+				}
+				break;
+			case 3:
+				if (x <= GetPlayer().GetX()) {
+					if (((y > GetPlayer().GetY() - (*i)->GetWidth() / 2 - r) && (y < GetPlayer().GetY() + (*i)->GetWidth() / 2 - r)) || ((y > GetPlayer().GetY() - (*i)->GetWidth() / 2 + r) && (y < GetPlayer().GetY() + (*i)->GetWidth() / 2 + r))) {
+						return true;
+					}
+					else if (y < GetPlayer().GetY() - (*i)->GetWidth() / 2 + r && y > GetPlayer().GetY() + (*i)->GetWidth() / 2 - r) {
+						return true;
+					}
+				}
+				break;
 			}
 		}
 		else if (GetPossession().GetWearweapon() == 6) {
@@ -420,7 +562,7 @@ bool CEweaponManager::Hit(int x, int y, int r) {
 }
 
 void CWeaponManager::PAttack() {
-	if (Input.GetKeyDown(Input.key.Z)) {
+//	if (Input.GetKeyDown(Input.key.Z)) {
 		if (GetPossession().GetWearweapon() == 5) {
 			if (beamflag == true) {
 				if (beamflag2 == false) {
@@ -435,13 +577,13 @@ void CWeaponManager::PAttack() {
 				Appear(GetPlayer().GetX(), GetPlayer().GetY());
 			}
 		}
-	}
-	if (Input.GetKeyExit(Input.key.Z)) {
+	//}
+	//if (Input.GetKeyExit(Input.key.Z)) {
 		if (GetPossession().GetWearweapon() == 6) {
 			Appear(GetPlayer().GetX(), GetPlayer().GetY());
 			throwpower = 0;
 		}
-	}
+	//}
 	beamflag2 = false;
 }
 
